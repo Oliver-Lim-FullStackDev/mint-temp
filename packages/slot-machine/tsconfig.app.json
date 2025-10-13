@@ -1,0 +1,13 @@
+{
+  "extends": "@mint/config/reactjs.json",
+  "compilerOptions": {
+    "outDir": "dist",
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "declaration": true,
+    "declarationDir": "dist",
+    "declarationMap": false,
+    "emitDeclarationOnly": true,
+  },
+  "include": ["src"]
+}

@@ -1,0 +1,45 @@
+<!doctype html>
+<html>
+  <head>
+    <title>HTML 5 Slot Machine</title>
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/bootstrap@5.2.3/dist/css/bootstrap-reboot.min.css"
+    />
+  </head>
+  <body>
+    <div id="slots">
+      <div id="jackpot">Jackpot: <span id="jp">0</span></div>
+
+      <div class="reels">
+        <div class="reel"></div>
+        <div class="reel"></div>
+        <div class="reel"></div>
+        <div class="reel"></div>
+        <div class="reel"></div>
+      </div>
+
+      <div id="controls">
+        <button type="button" id="spin">SPIN</button>
+        <label>
+          <input type="checkbox" name="autoplay" id="autoplay" />
+          Autoplay
+        </label>
+
+        <div id="balance-info">
+        <div class="balance-item">
+          Spins: <span id="spins-remaining">20</span>
+        </div>
+        <div class="balance-item">
+          Credits: <span id="credits">100</span>
+        </div>
+        <div class="balance-item">
+          Win: <span id="win-amount">0</span>
+        </div>
+      </div>
+    </div>
+
+    <div id="jackpot-notification"></div>
+  </div>
+  </body>
+</html>

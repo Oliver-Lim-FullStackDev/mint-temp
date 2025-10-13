@@ -1,0 +1,16 @@
+{
+  "name": "@mint/types",
+  "version": "1.0.0",
+  "description": "Shared types for Mint applications",
+  "main": "index.ts",
+  "types": "index.ts",
+  "private": true,
+  "exports": {
+    ".": "./index.ts",
+    "./store": "./store.ts",
+    "./currency": "./currency.ts"
+  },
+  "files": [
+    "*.ts"
+  ]
+}

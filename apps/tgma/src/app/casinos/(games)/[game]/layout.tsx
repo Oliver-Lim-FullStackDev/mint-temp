@@ -1,0 +1,19 @@
+import type { ReactNode } from 'react';
+import { ServerMainLayout } from '@/layouts/tgma/main/layout.server';
+import { MainContentOnlyLayout } from '@/layouts/tgma/main-content-only/layout';
+
+type NextLayoutProps = import('.next/types/app/casinos/(games)/[game]/layout').LayoutProps
+
+// Declare the games that should use MainLayout
+const MAIN_LAYOUT_GAMES = new Set<string>(['minty-spins']);
+
+export default async function Layout({ children, params }: NextLayoutProps) {
+  const { game: gameParam } = await params;
+  const useMainLayout = MAIN_LAYOUT_GAMES.has(gameParam);
+
+  return useMainLayout ? (
+    <ServerMainLayout>{children}</ServerMainLayout>
+  ) : (
+    <MainContentOnlyLayout>{children}</MainContentOnlyLayout>
+  );
+}

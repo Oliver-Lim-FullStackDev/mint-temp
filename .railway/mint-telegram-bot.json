@@ -1,0 +1,8 @@
+{
+  "build": {
+    "command": "corepack enable && pnpm install && pnpm --filter @mint/telegram-bot run build"
+  },
+  "deploy": {
+    "command": "pnpm --filter @mint/telegram-bot start"
+  }
+}

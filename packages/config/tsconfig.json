@@ -1,0 +1,45 @@
+{
+  "$schema": "https://json.schemastore.org/tsconfig",
+  "compilerOptions": {
+    "baseUrl": ".",
+    "declaration": true,
+    "declarationMap": true,
+    "esModuleInterop": true,
+    "experimentalDecorators": true,
+    "incremental": true,
+    "isolatedModules": true,
+    "lib": ["es2022", "DOM", "DOM.Iterable"],
+    "module": "ESNext",
+    "moduleResolution": "bundler",
+    "noUncheckedIndexedAccess": true,
+    "resolveJsonModule": true,
+    "skipLibCheck": true,
+    "sourceMap": true,
+    "strict": true,
+    "strictNullChecks": true,
+    "target": "ES2022",
+    "outDir": "dist",
+    "paths": {
+      "@mint/config": ["../../packages/config"],
+      "@mint/config/*": ["../../packages/config/*"],
+      "_@mint/ui": ["../../packages/ui"],
+      "@mint/mui": ["../../packages/mui"],
+      "@mint/ui/*": ["../../packages/ui/src/*"],
+      "@mint/mui/*": ["../../packages/mui/src/*"],
+
+      "@mint/ui": ["../../packages/ui/src/components/core"],
+      "@mint/ui/minimals/*": ["../../packages/mui/src/*"],
+      "@mint/ui/components/*": [
+        "../../packages/mui/src/components/*",
+        "../../packages/ui/src/components/*"
+      ],
+
+      // Relative-to-package-or-app folders
+      "@/*": ["./src/*"],
+      "@public/*": ["./public/*"],
+      // For the sake of drop-in updates to the mui module
+      // this ensures ui can keep its internal imports with "src/*" path
+      "src/*": ["../../packages/mui/src/*"]
+    }
+  }
+}

@@ -1,0 +1,9 @@
+{
+  "name": "MINT Web App",
+  "description": "MINT web experience",
+  "url": "https://app.mint.io/casinos",
+  "iconUrl": "https://app.mint.io/mint-banner.png",
+  "platforms": ["web"],
+  "termsOfUseUrl": "https://mint.io/docs/terms-and-conditions",
+  "privacyPolicyUrl": "https://mint.io/docs/privacy"
+}

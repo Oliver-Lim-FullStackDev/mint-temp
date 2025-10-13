@@ -1,0 +1,47 @@
+{
+  "name": "@mint/apps",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "ci:packages:build": "pnpm run packages:build",
+    "ci:packages:deps": "pnpm i --filter=\"./packages/*\"",
+    "ci:packages:lint": "pnpm run packages:lint",
+    "ci:packages:test": "vitest --run",
+    "ci:packages:rollup": "pnpm run ci:packages:deps && pnpm run ci:packages:build && pnpm run ci:packages:lint && pnpm run ci:packages:typecheck && pnpm run ci:packages:test",
+    "commit": "git cz",
+    "dev": "turbo run dev",
+    "packages:build": "turbo run build --filter=\"./packages/*\"",
+    "packages:lint": "turbo run lint --filter=\"./packages/*\"",
+    "packages:lint:fix": "turbo run lint:fix --filter=\"./packages/*\"",
+    "packages:test": "vitest --run --retry 3",
+    "prepare": "husky"
+  },
+  "devDependencies": {
+    "@changesets/cli": "catalog:",
+    "@eslint/js": "catalog:",
+    "@mint/infra": "workspace:*",
+    "@rollup/plugin-node-resolve": "catalog:",
+    "@turbo/gen": "catalog:",
+    "@vitest/coverage-v8": "catalog:",
+    "@vitest/ui": "catalog:",
+    "husky": "catalog:",
+    "next": "catalog:",
+    "rimraf": "catalog:",
+    "tslib": "catalog:",
+    "tsx": "catalog:",
+    "turbo": "catalog:",
+    "vite": "catalog:",
+    "vite-plugin-dts": "catalog:",
+    "vite-plugin-mkcert": "catalog:",
+    "vite-plugin-solid": "catalog:",
+    "vite-tsconfig-paths": "catalog:",
+    "vitest": "^2.1.6"
+  },
+  "packageManager": "pnpm@10.16.1+sha512.0e155aa2629db8672b49e8475da6226aa4bdea85fdcdfdc15350874946d4f3c91faaf64cbdc4a5d1ab8002f473d5c3fcedcd197989cf0390f9badd3c04678706",
+  "pnpm": {
+    "overrides": {
+      "@react-pdf/types": "2.7.0"
+    }
+  },
+  "dependencies": {}
+}

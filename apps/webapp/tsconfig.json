@@ -1,0 +1,28 @@
+{
+  "extends": "@mint/config/nextjs.json",
+  "compilerOptions": {
+    "baseUrl": ".",
+    "rootDir": "../..",
+    "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.app.tsbuildinfo",
+    "allowSyntheticDefaultImports": true,
+    "allowArbitraryExtensions": true,
+    "noImplicitAny": false,
+
+    "plugins": [{ "name": "next" }],
+    "noEmit": true
+  },
+  "include": [
+    "global.d.ts",
+    "next-env.d.ts",
+    "**/*.ts",
+    "**/*.tsx",
+    ".next/types/**/*.ts",
+    "../../packages/types/**/*.ts",
+    "../../packages/client/**/*.ts",
+    // "../../packages/ui/.next/types/**/*.ts"
+  ],
+  "exclude": [
+    "node_modules"
+  ],
+  "references": []
+}

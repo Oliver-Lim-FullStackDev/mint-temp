@@ -1,0 +1,13 @@
+{
+  "name": "@mint/infra",
+  "private": true,
+  "version": "0.0.1",
+  "type": "module",
+  "bin": {
+    "with-caddy-ca": "mint/dev/with-caddy-ca.sh"
+  },
+  "scripts": {
+    "dev:setup": "bash packages/infra/mint/dev/dev-setup.sh",
+    "dev:proxy": "caddy run --config mint/dev/Caddyfile"
+  }
+}

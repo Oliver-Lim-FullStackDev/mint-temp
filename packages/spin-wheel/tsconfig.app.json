@@ -1,0 +1,5 @@
+{
+  "extends": "@mint/config/reactjs.json",
+  "compilerOptions": {},
+  "include": ["src"]
+}

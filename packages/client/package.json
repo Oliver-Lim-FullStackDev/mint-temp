@@ -1,0 +1,17 @@
+{
+  "name": "@mint/client",
+  "version": "1.0.0",
+  "description": "Mint API client utilities",
+  "main": "src/index.ts",
+  "types": "src/index.ts",
+  "private": true,
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "files": [
+    "src"
+  ],
+  "dependencies": {
+    "js-cookie": "^3.0.5"
+  }
+}

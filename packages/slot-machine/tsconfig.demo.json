@@ -1,0 +1,10 @@
+{
+  "extends": "@mint/config/reactjs.json",
+  "compilerOptions": {
+    "outDir": "demo/assets",
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "declaration": true
+  },
+  "include": ["demo"]
+}

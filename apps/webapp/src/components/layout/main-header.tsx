@@ -1,0 +1,440 @@
+'use client'
+
+import { useEffect, useRef, type ReactNode } from 'react';
+import { alpha, styled, useTheme, useMediaQuery } from '@mint/ui/components/core/styles';
+
+import {
+  Avatar,
+  Box,
+  Button,
+  Container,
+  IconButton,
+  Stack,
+  Typography,
+} from '@mint/ui/components/core';
+import PrivyAuthButton from '../auth/privy/privy-auth-button';
+
+type HeaderNavItem = {
+  id: string;
+  label: string;
+  active?: boolean;
+  icon?: ReactNode;
+  iconSrc?: string;
+  onClick?: () => void;
+};
+
+type HeaderWallet = {
+  balanceLabel?: string;
+  currencyLabel?: string;
+  currencyIcon?: ReactNode;
+  onActionClick?: () => void;
+};
+
+type HeaderUtilityAction = {
+  id: string;
+  'aria-label': string;
+  onClick?: () => void;
+  icon?: ReactNode;
+};
+
+export type MainHeaderProps = {
+  logo?: ReactNode;
+  navItems?: HeaderNavItem[];
+  wallet?: HeaderWallet;
+  utilityActions?: HeaderUtilityAction[];
+};
+
+const DEFAULT_NAV_ITEMS: HeaderNavItem[] = [
+  {
+    id: 'casino',
+    label: 'Casino',
+    active: true,
+    iconSrc: 'assets/icons/header/casino.svg',
+  },
+  {
+    id: 'sports',
+    label: 'Sports',
+    iconSrc: 'assets/icons/header/ball.svg',
+  },
+  {
+    id: 'promotions',
+    label: 'Promotions',
+    iconSrc: 'assets/icons/header/fire.svg',
+  },
+];
+
+const DEFAULT_UTILITY_ACTIONS: HeaderUtilityAction[] = [
+  {
+    id: 'notifications',
+    'aria-label': 'Open notifications',
+  },
+];
+
+function DefaultLogo() {
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down('md'));
+  return (
+    <Box
+      sx={{
+        width: { xs: 36, sm: 36, lg: 80 },
+        height: 20,
+        display: 'flex',
+        alignItems: 'center',
+      }}
+    >
+      <img
+        alt="Full logo"
+        src={isMobile ? './logo/v2-single-logo.svg' : './logo/v2-full-logo.svg'}
+        width="auto"
+        height="40px"
+      />
+    </Box>
+  );
+}
+
+const HeaderSurface = styled(Box)(({ theme }) => ({
+  minHeight: 64,
+  padding: theme.spacing(1.25, 2),
+  display: 'flex',
+  alignItems: 'center',
+  gap: theme.spacing(2),
+  background: 'rgba(18, 28, 38, 0.62)',
+  borderRadius: Number(theme.shape.borderRadius) * 2,
+  boxShadow:
+    'inset 0px -1px 1px rgba(0, 0, 0, 0.25), inset 0px 1px 1px rgba(23, 255, 228, 0.25), inset 0px 4px 24px rgba(255, 255, 255, 0.08)',
+  backdropFilter: 'blur(var(--layout-header-blur, 14px))',
+  border: `1px solid ${alpha('#6EF2E1', 0.15)}`,
+  [theme.breakpoints.up('sm')]: {
+    minHeight: 72,
+    padding: theme.spacing(1.5, 3),
+  },
+  [theme.breakpoints.up('lg')]: {
+    padding: theme.spacing(2, 6),
+  },
+}));
+
+const NavIconPlaceholder = styled('span')(({ theme }) => ({
+  width: 20,
+  height: 20,
+  borderRadius: Number(theme.shape.borderRadius),
+  display: 'block',
+  background: 'linear-gradient(180deg, rgba(150, 154, 160, 0.4) 0%, rgba(150, 154, 160, 0.7) 100%)',
+}));
+
+const WalletContainer = styled(Box)(({ theme }) => ({
+  display: 'flex',
+  alignItems: 'center',
+  gap: theme.spacing(1),
+  padding: theme.spacing(0.5, 1),
+  borderRadius: Number(theme.shape.borderRadius) * 2,
+  backgroundColor: alpha('#00F1CB', 0.14),
+}));
+
+const WalletActionButton = styled(IconButton)(({ theme }) => ({
+  width: 32,
+  height: 32,
+  borderRadius: Number(theme.shape.borderRadius) * 1.5,
+  backgroundColor: '#00F1CB',
+  boxShadow: '0px 0px 10px rgba(0, 241, 203, 0.45)',
+  '&:hover': {
+    backgroundColor: '#33F6DA',
+  },
+}));
+
+const UtilityButton = styled(IconButton)(({ theme }) => ({
+  width: 40,
+  height: 40,
+  borderRadius: Number(theme.shape.borderRadius) * 1.5,
+  backgroundColor: alpha('#919EAB', 0.12),
+  color: 'var(--p-contrast-text)',
+  transition: theme.transitions.create(['background-color', 'transform'], {
+    duration: theme.transitions.duration.short,
+  }),
+  '&:hover': {
+    backgroundColor: alpha('#00F1CB', 0.24),
+    transform: 'translateY(-1px)',
+  },
+}));
+
+function DefaultNavIcon({ active }: { active?: boolean }) {
+  return (
+    <Box
+    component="span"
+      sx={{
+        width: 20,
+        height: 20,
+        borderRadius: 1.5,
+        position: 'relative',
+        background: active
+          ? 'linear-gradient(180deg, rgba(255, 255, 255, 0.95) 0%, rgba(255, 255, 255, 0.75) 100%)'
+          : undefined,
+        overflow: 'hidden',
+      }}
+    >
+      {!active && <NavIconPlaceholder />}
+    </Box>
+  );
+}
+
+function DefaultWalletIcon() {
+  return (
+    <Avatar
+      src="assets/icons/header/usdt.svg"
+      sx={{
+        width: 28,
+        height: 28,
+        borderRadius: (theme) => Number(theme.shape.borderRadius) * 1.75,
+        backgroundColor: 'var(--p-dark)',
+        color: 'var(--p-contrast-text)',
+        fontSize: 14,
+        fontWeight: 600,
+      }}
+    />
+  );
+}
+
+function DefaultUtilityIcon() {
+  return (
+    <Box sx={{ width: 36, height: 36 }}>
+      <img src="/assets/icons/navbar/v2-ic-user.svg" alt="User" width={36} height={36} />
+    </Box>
+  );
+}
+
+type NavItemProps = {
+  item: HeaderNavItem;
+};
+
+function HeaderNavItemButton({ item }: NavItemProps) {
+  const { active, label, onClick } = item;
+
+  return (
+    <Box
+      sx={{
+        position: 'relative',
+        height: '100%',
+        display: 'flex',
+        alignItems: 'center',
+      }}
+    >
+      {active && (
+        <Box
+          sx={{
+            position: 'absolute',
+            top: -21,
+            left: '50%',
+            width: 96,
+            height: 10,
+            transform: 'translateX(-50%)',
+            borderRadius: 999,
+            background:
+              'radial-gradient(50% 50% at 50% 50%, rgba(0, 241, 203, 0.5) 0%, rgba(0, 241, 203, 0) 100%)',
+            pointerEvents: 'none',
+          }}
+        />
+      )}
+
+      <Button
+        color="inherit"
+        startIcon={
+          item.icon ? (
+            item.icon
+          ) : item.iconSrc ? (
+            <img
+              src={item.iconSrc}
+              alt={label}
+              width={18}
+              height={18}
+              style={{
+                opacity: active ? 1 : 0.7,
+                filter: active ? 'none' : 'grayscale(60%)',
+              }}
+            />
+          ) : (
+            <DefaultNavIcon active={active} />
+          )
+        }
+        onClick={onClick}
+        sx={{
+          position: 'relative',
+          zIndex: 1,
+          minHeight: 36,
+          minWidth: 72,
+          px: 1.5,
+          borderRadius: (theme) => Number(theme.shape.borderRadius) * 1.5,
+          gap: 1,
+          textTransform: 'none',
+          fontWeight: 600,
+          fontSize: 14,
+          lineHeight: 1.5,
+          color: active ? 'var(--p-contrast-text)' : 'var(--text-secondary)',
+          backgroundColor: active ? 'rgba(0, 241, 203, 0.2)' : 'transparent',
+          boxShadow: active
+            ? '0px 0px 16px rgba(0, 241, 203, 0.24)'
+            : 'inset 0px 0px 0px 1px rgba(145, 158, 171, 0.28)',
+          '&:hover': {
+            backgroundColor: 'rgba(0, 241, 203, 0.18)',
+            boxShadow: '0px 0px 16px rgba(0, 241, 203, 0.32)',
+          },
+        }}
+      >
+        {label}
+      </Button>
+    </Box>
+  );
+}
+
+function HeaderWalletSummary({
+  balanceLabel = '1,000,000',
+  currencyIcon,
+  onActionClick,
+}: HeaderWallet) {
+  return (
+    <WalletContainer>
+      <Stack direction="row" alignItems="center" spacing={1}>
+        <Box sx={{ display: 'flex', alignItems: 'center' }}>
+          {currencyIcon ?? <DefaultWalletIcon />}
+        </Box>
+        <Typography
+          variant="body2"
+          sx={{ fontWeight: 600, fontSize: 15, color: '#fff', lineHeight: 1 }}
+        >
+          {balanceLabel}
+        </Typography>
+      </Stack>
+
+      <WalletActionButton onClick={onActionClick} size="small">
+        <Box
+          sx={{
+            width: 14,
+            height: 14,
+            backgroundColor: '#000',
+            maskImage: 'url(/assets/icons/header/plus.svg)',
+            WebkitMaskImage: 'url(/assets/icons/header/plus.svg)',
+            maskRepeat: 'no-repeat',
+            WebkitMaskRepeat: 'no-repeat',
+            maskPosition: 'center',
+            WebkitMaskPosition: 'center',
+            maskSize: 'contain',
+            WebkitMaskSize: 'contain',
+          }}
+        />
+      </WalletActionButton>
+    </WalletContainer>
+  );
+}
+
+function HeaderUtilityButton({ action }: { action: HeaderUtilityAction }) {
+  const { onClick, icon, 'aria-label': ariaLabel } = action;
+
+  return (
+    <UtilityButton onClick={onClick} aria-label={ariaLabel}>
+      {icon ?? <DefaultUtilityIcon />}
+    </UtilityButton>
+  );
+}
+
+export function MainHeader({
+  logo,
+  navItems,
+  wallet,
+  utilityActions,
+}: MainHeaderProps) {
+  const safeAreaTop = 'env(safe-area-inset-top, 0px)';
+  const headerRef = useRef<HTMLDivElement | null>(null);
+
+  useEffect(() => {
+    const node = headerRef.current;
+    if (!node || typeof window === 'undefined') {
+      return;
+    }
+
+    const setHeaderHeightVar = () => {
+      const height = node.offsetHeight;
+      document.documentElement.style.setProperty('--layout-header-height', `${height}px`);
+    };
+
+    setHeaderHeightVar();
+
+    const resizeObserver =
+      typeof ResizeObserver !== 'undefined'
+        ? new ResizeObserver(setHeaderHeightVar)
+        : undefined;
+
+    resizeObserver?.observe(node);
+
+    window.addEventListener('resize', setHeaderHeightVar);
+
+    return () => {
+      resizeObserver?.disconnect();
+      window.removeEventListener('resize', setHeaderHeightVar);
+      document.documentElement.style.removeProperty('--layout-header-height');
+    };
+  }, []);
+
+  const itemsToRender = navItems && navItems.length > 0 ? navItems : DEFAULT_NAV_ITEMS;
+  const actionsToRender =
+    utilityActions && utilityActions.length > 0 ? utilityActions : DEFAULT_UTILITY_ACTIONS;
+
+  return (
+    <Box
+      ref={headerRef}
+      component="header"
+      sx={{
+        position: 'fixed',
+        top: 0,
+        left: 0,
+        right: 0,
+        zIndex: 'var(--layout-header-zIndex, 1200)',
+        display: 'flex',
+        justifyContent: 'center',
+      }}
+    >
+      <Box
+        sx={{
+          width: '100%',
+          px: { xs: 1.5, sm: 3, lg: 4 },
+          pt: { xs: `calc(${safeAreaTop} + 8px)`, sm: `calc(${safeAreaTop} + 16px)`, lg: `calc(${safeAreaTop} + 24px)` },
+          pb: { xs: 1.5, sm: 2, lg: 3 },
+          background: 'linear-gradient(180deg, rgba(0, 0, 0, 0.9) 0%, rgba(0, 0, 0, 0) 100%)',
+          display: 'flex',
+          justifyContent: 'center',
+          pointerEvents: 'auto',
+        }}
+      >
+        <Container disableGutters maxWidth="xl" sx={{ width: '100%' }}>
+          <HeaderSurface>
+            <Box sx={{ flexShrink: 0 }}>{logo ?? <DefaultLogo />}</Box>
+
+            <Stack
+              direction="row"
+              alignItems="center"
+              spacing={1.5}
+              sx={{
+                flex: 1,
+                display: { xs: 'none', sm: 'flex' },
+              }}
+            >
+              {itemsToRender.map((item) => (
+                <HeaderNavItemButton key={item.id} item={item} />
+              ))}
+            </Stack>
+
+            <Stack
+              direction="row"
+              alignItems="center"
+              spacing={{ xs: 1, sm: 1.5 }}
+              sx={{ flexShrink: 0 }}
+            >
+              <HeaderWalletSummary {...(wallet ?? {})} />
+              {actionsToRender.map((action) => (
+                <HeaderUtilityButton key={action.id} action={action} />
+              ))}
+              <PrivyAuthButton />
+            </Stack>
+          </HeaderSurface>
+        </Container>
+      </Box>
+    </Box>
+  );
+}

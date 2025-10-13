@@ -1,0 +1,44 @@
+# ==============================================================================
+# Caddyfile for Mint Local Development
+#
+# Description:
+#   Configures local HTTPS reverse proxying with Caddy.
+#   Provides trusted certificates via Caddy’s internal CA and routes traffic
+#   from custom dev domains to local app servers.
+#
+# Usage:
+#   1. Ensure Caddy is installed and trusted (see install-caddy.sh).
+#   2. Place this file at ./Caddyfile in your repo root.
+#   3. Run: `caddy run --config ./Caddyfile --watch`
+#
+# Behavior:
+#   - Disables automatic HTTP→HTTPS redirects.
+#   - Defines two local domains:
+#       https://mint.dev → Next.js TGMA app (localhost:3000)
+#       https://api.mint.dev → NestJS API (localhost:3001)
+#   - Certificates are signed by Caddy’s internal CA and trusted locally.
+#
+# Notes:
+#   - `bind 0.0.0.0` makes services accessible from LAN, not just localhost.
+#   - `http_port 8080` (commented) can be enabled if :80 is unavailable.
+#
+# Reference:
+#   https://caddyserver.com/docs/caddyfile
+# ==============================================================================
+
+{
+  auto_https disable_redirects
+  # http_port 8080
+}
+
+mint.dev {
+  bind 0.0.0.0
+  tls internal
+  reverse_proxy 127.0.0.1:3000
+}
+
+api.mint.dev {
+  bind 0.0.0.0
+  tls internal
+  reverse_proxy 127.0.0.1:3001
+}

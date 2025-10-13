@@ -1,0 +1,8 @@
+{
+  "build": {
+    "command": "corepack enable && pnpm install && pnpm turbo run build --filter=@mint/api"
+  },
+  "deploy": {
+    "command": "pnpm --filter=@mint/api start"
+  }
+}

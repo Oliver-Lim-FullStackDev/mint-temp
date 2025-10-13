@@ -1,0 +1,42 @@
+{
+  "$schema": "https://turbo.build/schema.json",
+  "globalDependencies": ["**/.env.*local"],
+  "globalEnv": [
+    "TELEGRAM_BOT_TOKEN",
+    "TELEGRAM_BOT_URL"
+  ],
+  "tasks": {
+    "build": {
+      "dependsOn": ["^build"],
+      "outputs": [".next/**", "!.next/cache/**", "dist/**"],
+      "inputs": ["!packages/_*/**"]
+    },
+    "dev": {
+      "persistent": true,
+      "dependsOn": ["^dev"],
+      "cache": false
+    },
+    "dev:https": {
+      "persistent": true,
+      "dependsOn": ["^dev"],
+      "cache": false
+    },
+    "dev:proxy": {
+      "persistent": true,
+      "cache": false
+    },
+    "lint": {
+      "cache": true
+    },
+    "lint:fix": {
+      "cache": true
+    },
+    "test": {
+      "cache": true
+    },
+    "typecheck": {
+      "dependsOn": ["^typecheck"],
+      "cache": true
+    }
+  }
+}

@@ -1,0 +1,238 @@
+/** **************************************
+* Color System - Design Tokens
+*************************************** */
+
+:root {
+  /* ======================================
+   * PRIMARY COLORS
+   * ====================================== */
+  --p-lighter: #C8FFF6;
+  --p-light: #5DFFE5;
+  --p-main: #00F1CB;
+  --p-dark: #008A72;
+  --p-darker: #00241D;
+  --p-contrast-text: #FFFFFF;
+
+  /* Primary with opacity variations */
+  --p-0: rgba(0, 241, 203, 0);
+  --p-8: rgba(0, 241, 203, 0.08);
+  --p-12: rgba(0, 241, 203, 0.12);
+  --p-16: rgba(0, 241, 203, 0.16);
+  --p-24: rgba(0, 241, 203, 0.24);
+  --p-32: rgba(0, 241, 203, 0.32);
+  --p-48: rgba(0, 241, 203, 0.48);
+  --p-64: rgba(0, 241, 203, 0.64);
+  --p-80: rgba(0, 241, 203, 0.80);
+
+  /* ======================================
+   * SECONDARY COLORS
+   * ====================================== */
+  --secondary-lighter: #F7FFCD;
+  --secondary-light: #E7FF7B;
+  --secondary-main: #D2FF1C;
+  --secondary-dark: #91B400;
+  --secondary-darker: #303B00;
+  --secondary-contrast-text: #1C252E;
+
+  /* ======================================
+   * INFO COLORS
+   * ====================================== */
+  --info-lighter: #CAFDF5;
+  --info-light: #61F3F3;
+  --info-main: #00B8D9;
+  --info-dark: #006C9C;
+  --info-darker: #003768;
+  --info-contrast-text: #FFFFFF;
+
+  /* ======================================
+   * SUCCESS COLORS
+   * ====================================== */
+  --success-lighter: #D3FCD2;
+  --success-light: #77ED8B;
+  --success-main: #22C55E;
+  --success-dark: #118D57;
+  --success-darker: #065F46;
+  --success-contrast-text: #FFFFFF;
+
+  /* ======================================
+   * WARNING COLORS
+   * ====================================== */
+  --warning-lighter: #FFF5CC;
+  --warning-light: #FFD666;
+  --warning-main: #FFAB00;
+  --warning-dark: #B76E00;
+  --warning-darker: #7A4100;
+  --warning-contrast-text: #1C252E;
+
+  /* ======================================
+   * ERROR COLORS
+   * ====================================== */
+  --error-lighter: #FFE9D5;
+  --error-light: #FFAC82;
+  --error-main: #FF5630;
+  --error-dark: #B71D18;
+  --error-darker: #7A0916;
+  --error-contrast-text: #FFFFFF;
+
+  /* ======================================
+   * GREY COLORS
+   * ====================================== */
+  --grey-0: #FFFFFF;
+  --grey-100: #F9FAFB;
+  --grey-200: #F4F6F8;
+  --grey-300: #DFE3E8;
+  --grey-400: #C4CDD5;
+  --grey-500: #919EAB;
+  --grey-600: #637381;
+  --grey-700: #454F5B;
+  --grey-800: #1C252E;
+  --grey-900: #161C24;
+
+  /* ======================================
+   * COMMON COLORS
+   * ====================================== */
+  --common-black: #000000;
+  --common-white: #FFFFFF;
+
+  /* ======================================
+   * TEXT COLORS
+   * ====================================== */
+  --text-primary: #FFFFFF;
+  --text-secondary: #969AA0;
+  --text-disabled: #637381;
+  --text-primary-darker: #00241D;
+
+  /* ======================================
+   * BACKGROUND COLORS
+   * ====================================== */
+  --background-default: #161C24;
+  --background-paper: #1C252E;
+  --background-neutral: #F4F6F8;
+
+  /* ======================================
+   * ACTION COLORS
+   * ====================================== */
+  --action-active: #637381;
+  --action-hover: rgba(145, 158, 171, 0.08);
+  --action-selected: rgba(145, 158, 171, 0.12);
+  --action-disabled: rgba(145, 158, 171, 0.80);
+  --action-disabled-background: rgba(145, 158, 171, 0.24);
+  --action-focus: rgba(145, 158, 171, 0.24);
+
+  /* ======================================
+   * DIVIDER COLORS
+   * ====================================== */
+  --divider: rgba(145, 158, 171, 0.20);
+
+  /* ======================================
+   * CHART COLORS
+   * ====================================== */
+  --chart-violet: #826AF9;
+  --chart-blue: #2D99FF;
+  --chart-green: #2CD9C5;
+  --chart-yellow: #FFE700;
+  --chart-orange: #FF8F00;
+  --chart-red: #FF5630;
+
+  /* ======================================
+   * GRADIENT COLORS
+   * ====================================== */
+  --gradient-primary: linear-gradient(135deg, var(--p-light) 0%, var(--p-main) 100%);
+  --gradient-info: linear-gradient(135deg, var(--info-light) 0%, var(--info-main) 100%);
+  --gradient-success: linear-gradient(135deg, var(--success-light) 0%, var(--success-main) 100%);
+  --gradient-warning: linear-gradient(135deg, var(--warning-light) 0%, var(--warning-main) 100%);
+  --gradient-error: linear-gradient(135deg, var(--error-light) 0%, var(--error-main) 100%);
+
+  /* ======================================
+   * SHADOW COLORS
+   * ====================================== */
+  --shadow-primary: 0 8px 16px 0 rgba(0, 241, 203, 0.24);
+  --shadow-info: 0 8px 16px 0 rgba(0, 184, 217, 0.24);
+  --shadow-success: 0 8px 16px 0 rgba(34, 197, 94, 0.24);
+  --shadow-warning: 0 8px 16px 0 rgba(255, 171, 0, 0.24);
+  --shadow-error: 0 8px 16px 0 rgba(255, 86, 48, 0.24);
+  --shadow-card: 0 0 2px 0 rgba(145, 158, 171, 0.20), 0 12px 24px -4px rgba(145, 158, 171, 0.12);
+  --shadow-dialog: 0 0 2px 0 rgba(145, 158, 171, 0.20), 0 20px 40px -4px rgba(145, 158, 171, 0.12);
+  --shadow-dropdown: 0 0 2px 0 rgba(145, 158, 171, 0.20), 0 12px 24px -4px rgba(145, 158, 171, 0.12);
+
+  /* ======================================
+   * ALPHA VARIATIONS (for transparency)
+   * ====================================== */
+  --alpha-4: rgba(145, 158, 171, 0.04);
+  --alpha-8: rgba(145, 158, 171, 0.08);
+  --alpha-12: rgba(145, 158, 171, 0.12);
+  --alpha-16: rgba(145, 158, 171, 0.16);
+  --alpha-20: rgba(145, 158, 171, 0.20);
+  --alpha-24: rgba(145, 158, 171, 0.24);
+  --alpha-32: rgba(145, 158, 171, 0.32);
+  --alpha-48: rgba(145, 158, 171, 0.48);
+  --alpha-64: rgba(145, 158, 171, 0.64);
+  --alpha-80: rgba(145, 158, 171, 0.80);
+
+  /* ======================================
+   * BRAND SPECIFIC COLORS
+   * ====================================== */
+  --brand-primary-blue-main: #00F1CB;
+  --brand-accent: var(--p-main);
+  --brand-highlight: var(--p-light);
+
+  /* ======================================
+   * SEMANTIC COLORS
+   * ====================================== */
+  --semantic-online: #22C55E;
+  --semantic-offline: #637381;
+  --semantic-away: #FFAB00;
+  --semantic-busy: #FF5630;
+
+  /* ======================================
+   * CARD & SHADOW VARIABLES
+   * ====================================== */
+  --primary-contrast-text: #FFFFFF;
+  --card-radius: 16px;
+  --card-x1: 0;
+  --card-y1: 0;
+  --card-blur1: 2px;
+  --card-spread1: 0;
+  --card-x2: 0;
+  --card-y2: 12px;
+  --card-blur2: 24px;
+  --card-spread2: -4px;
+  --shadow-20: rgba(0, 0, 0, 0.20);
+  --shadow-12: rgba(0, 0, 0, 0.12);
+}
+
+/* ======================================
+ * DARK MODE OVERRIDES
+ * ====================================== */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background-default: #161C24;
+    --background-paper: #1C252E;
+    --text-primary: #FFFFFF;
+    --text-secondary: #969AA0;
+  }
+}
+
+/* ======================================
+ * UTILITY CLASSES
+ * ====================================== */
+.color-primary { color: var(--p-main) !important; }
+.color-secondary { color: var(--secondary-main) !important; }
+.color-info { color: var(--info-main) !important; }
+.color-success { color: var(--success-main) !important; }
+.color-warning { color: var(--warning-main) !important; }
+.color-error { color: var(--error-main) !important; }
+
+.bg-primary { background-color: var(--p-main) !important; }
+.bg-secondary { background-color: var(--secondary-main) !important; }
+.bg-info { background-color: var(--info-main) !important; }
+.bg-success { background-color: var(--success-main) !important; }
+.bg-warning { background-color: var(--warning-main) !important; }
+.bg-error { background-color: var(--error-main) !important; }
+
+.border-primary { border-color: var(--p-main) !important; }
+.border-secondary { border-color: var(--secondary-main) !important; }
+.border-info { border-color: var(--info-main) !important; }
+.border-success { border-color: var(--success-main) !important; }
+.border-warning { border-color: var(--warning-main) !important; }
+.border-error { border-color: var(--error-main) !important; }
