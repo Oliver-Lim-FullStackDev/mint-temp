@@ -1,3 +1,5 @@
+'use client';
+
 import type { ReactNode } from 'react';
 import type { BoxProps } from '@mint/ui/components/core';
 
@@ -10,6 +12,7 @@ import {
   Typography,
 } from '@mint/ui/components/core';
 import { Iconify } from '@mint/ui/components/iconify';
+import type { IconifyName } from '@mint/ui/components/iconify';
 
 type FooterLink = {
   label: string;
@@ -26,6 +29,7 @@ type FooterSocialLink = {
   href: string;
   'aria-label': string;
   icon?: ReactNode;
+  iconName?: IconifyName;
 };
 
 export type MainFooterProps = {
@@ -79,31 +83,31 @@ const DEFAULT_SOCIAL_LINKS: FooterSocialLink[] = [
     id: 'x',
     href: '#',
     'aria-label': 'Open Mint.io on X',
-    icon: <Iconify icon="mingcute:twitter-fill" width={24} height={24} />,
+    iconName: 'socials:twitter',
   },
   {
     id: 'youtube',
     href: '#',
     'aria-label': 'Open Mint.io on Telegram',
-    icon: <Iconify icon="mingcute:youtube-fill" width={24} height={24} />,
+    iconName: 'socials:youtube',
   },
   {
     id: 'discord',
     href: '#',
     'aria-label': 'Open Mint.io on Discord',
-    icon: <Iconify icon="mingcute:discord-fill" width={24} height={24} />,
+    iconName: 'socials:discord',
   },
   {
     id: 'instagram',
     href: '#',
     'aria-label': 'Open Mint.io on Instagram',
-    icon: <Iconify icon="mingcute:instagram-fill" width={24} height={24} />,
+    iconName: 'socials:instagram',
   },
   {
     id: 'linkedin',
     href: '#',
     'aria-label': 'Open Mint.io on Linkedin',
-    icon: <Iconify icon="mingcute:linkedin-fill" width={24} height={24} />,
+    iconName: 'socials:linkedin',
   },
 ];
 
@@ -197,31 +201,45 @@ export function MainFooter({
             {logo ?? <DefaultFooterLogo />}
 
             <Stack direction="row" spacing={1} alignItems="center">
-              {socialLinks.map((social) => (
-                <IconButton
-                  key={social.id}
-                  component="a"
-                  href={social.href}
-                  aria-label={social['aria-label']}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  sx={{
-                    width: 40,
-                    height: 40,
-                    borderRadius: 2.5,
-                    backgroundColor: 'rgba(145, 158, 171, 0.12)',
-                    color: 'var(--p-contrast-text)',
-                    boxShadow: '0px 0px 16px rgba(0, 241, 203, 0.1)',
-                    transition: 'background-color 0.2s ease, transform 0.2s ease',
-                    '&:hover': {
-                      backgroundColor: 'rgba(0, 241, 203, 0.24)',
-                      transform: 'translateY(-2px)',
-                    },
-                  }}
-                >
-                  {social.icon}
-                </IconButton>
-              ))}
+              {socialLinks.map((social) => {
+                const iconNode =
+                  social.icon ??
+                  (social.iconName ? (
+                    <Iconify
+                      icon={social.iconName}
+                      width={24}
+                      height={24}
+                      sx={{ color: 'inherit', transition: 'color 0.2s ease' }}
+                    />
+                  ) : null);
+
+                return (
+                  <IconButton
+                    key={social.id}
+                    component="a"
+                    href={social.href}
+                    aria-label={social['aria-label']}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    sx={{
+                      width: 40,
+                      height: 40,
+                      borderRadius: 2.5,
+                      backgroundColor: 'rgba(145, 158, 171, 0.12)',
+                      color: 'var(--p-contrast-text)',
+                      boxShadow: '0px 0px 16px rgba(0, 241, 203, 0.1)',
+                      transition: 'background-color 0.2s ease, transform 0.2s ease, color 0.2s ease',
+                      '&:hover': {
+                        backgroundColor: 'rgba(0, 241, 203, 0.24)',
+                        transform: 'translateY(-2px)',
+                        color: 'var(--p-contrast-text)',
+                      },
+                    }}
+                  >
+                    {iconNode}
+                  </IconButton>
+                );
+              })}
             </Stack>
           </Stack>
 

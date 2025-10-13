@@ -12,6 +12,8 @@ import {
   Stack,
   Typography,
 } from '@mint/ui/components/core';
+import { Iconify } from '@mint/ui/components/iconify';
+import type { IconifyName } from '@mint/ui/components/iconify';
 import PrivyAuthButton from '../auth/privy/privy-auth-button';
 
 type HeaderNavItem = {
@@ -19,6 +21,7 @@ type HeaderNavItem = {
   label: string;
   active?: boolean;
   icon?: ReactNode;
+  iconName?: IconifyName;
   iconSrc?: string;
   onClick?: () => void;
 };
@@ -35,6 +38,7 @@ type HeaderUtilityAction = {
   'aria-label': string;
   onClick?: () => void;
   icon?: ReactNode;
+  iconName?: IconifyName;
 };
 
 export type MainHeaderProps = {
@@ -49,17 +53,17 @@ const DEFAULT_NAV_ITEMS: HeaderNavItem[] = [
     id: 'casino',
     label: 'Casino',
     active: true,
-    iconSrc: 'assets/icons/header/casino.svg',
+    iconName: 'mint:header-casino',
   },
   {
     id: 'sports',
     label: 'Sports',
-    iconSrc: 'assets/icons/header/ball.svg',
+    iconName: 'mint:header-sports',
   },
   {
     id: 'promotions',
     label: 'Promotions',
-    iconSrc: 'assets/icons/header/fire.svg',
+    iconName: 'mint:header-promotions',
   },
 ];
 
@@ -67,6 +71,7 @@ const DEFAULT_UTILITY_ACTIONS: HeaderUtilityAction[] = [
   {
     id: 'notifications',
     'aria-label': 'Open notifications',
+    iconName: 'mint:header-user',
   },
 ];
 
@@ -195,9 +200,7 @@ function DefaultWalletIcon() {
 
 function DefaultUtilityIcon() {
   return (
-    <Box sx={{ width: 36, height: 36 }}>
-      <img src="/assets/icons/navbar/v2-ic-user.svg" alt="User" width={36} height={36} />
-    </Box>
+    <Iconify icon="mint:header-user" width={28} height={28} sx={{ color: 'inherit' }} />
   );
 }
 
@@ -236,24 +239,43 @@ function HeaderNavItemButton({ item }: NavItemProps) {
 
       <Button
         color="inherit"
-        startIcon={
-          item.icon ? (
-            item.icon
-          ) : item.iconSrc ? (
-            <img
-              src={item.iconSrc}
-              alt={label}
-              width={18}
-              height={18}
-              style={{
-                opacity: active ? 1 : 0.7,
-                filter: active ? 'none' : 'grayscale(60%)',
-              }}
-            />
-          ) : (
-            <DefaultNavIcon active={active} />
-          )
-        }
+        startIcon={(() => {
+          if (item.icon) {
+            return item.icon;
+          }
+
+          if (item.iconName) {
+            return (
+              <Iconify
+                icon={item.iconName}
+                width={20}
+                height={20}
+                sx={{
+                  color: 'inherit',
+                  opacity: active ? 1 : 0.72,
+                  transition: 'opacity 0.2s ease, color 0.2s ease',
+                }}
+              />
+            );
+          }
+
+          if (item.iconSrc) {
+            return (
+              <Box component="img"
+                src={item.iconSrc}
+                alt={label}
+                sx={{
+                  width: 18,
+                  height: 18,
+                  opacity: active ? 1 : 0.7,
+                  filter: active ? 'none' : 'grayscale(60%)',
+                }}
+              />
+            );
+          }
+
+          return <DefaultNavIcon active={active} />;
+        })()}
         onClick={onClick}
         sx={{
           position: 'relative',
@@ -304,21 +326,7 @@ function HeaderWalletSummary({
       </Stack>
 
       <WalletActionButton onClick={onActionClick} size="small">
-        <Box
-          sx={{
-            width: 14,
-            height: 14,
-            backgroundColor: '#000',
-            maskImage: 'url(/assets/icons/header/plus.svg)',
-            WebkitMaskImage: 'url(/assets/icons/header/plus.svg)',
-            maskRepeat: 'no-repeat',
-            WebkitMaskRepeat: 'no-repeat',
-            maskPosition: 'center',
-            WebkitMaskPosition: 'center',
-            maskSize: 'contain',
-            WebkitMaskSize: 'contain',
-          }}
-        />
+        <Iconify icon="mint:header-plus" width={14} height={14} sx={{ color: '#000' }} />
       </WalletActionButton>
     </WalletContainer>
   );
@@ -329,7 +337,17 @@ function HeaderUtilityButton({ action }: { action: HeaderUtilityAction }) {
 
   return (
     <UtilityButton onClick={onClick} aria-label={ariaLabel}>
-      {icon ?? <DefaultUtilityIcon />}
+      {icon ??
+        (action.iconName ? (
+          <Iconify
+            icon={action.iconName}
+            width={24}
+            height={24}
+            sx={{ color: 'inherit' }}
+          />
+        ) : (
+          <DefaultUtilityIcon />
+        ))}
     </UtilityButton>
   );
 }
