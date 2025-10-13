@@ -31,9 +31,10 @@ export function AppBackground() {
         src="assets/background/bg-app.png"
         alt="Background gradient"
         sx={{
-          width: "2560px",
-          height: "1440px",
-          objectFit: "cover",
+          width: '100%',
+          height: '100%',
+          objectFit: 'cover',
+          display: 'block',
         }}
       />
     </Box>
