@@ -4,17 +4,21 @@ import { useBoolean } from 'minimal-shared/hooks';
 import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 
-import { Alert, Box, IconButton, InputAdornment, Link, LoadingButton } from '@mint/ui/components/core';
-import { RouterLink } from '@mint/ui/minimals/routes/components';
-import { useRouter } from '@mint/ui/minimals/routes/hooks';
-import { paths } from '@mint/ui/minimals/routes/paths';
+import { Alert, Box, IconButton, InputAdornment, Link } from '@mint/ui';
+
+import { LoadingButton } from '@mint/ui';
+
+import { RouterLink } from '@mint/ui/routes/components';
+import { useRouter } from '@mint/ui/routes/hooks';
+import { paths } from '@mint/ui/routes/paths';
 
 import { Field, Form } from '@mint/ui/components/hook-form';
 import { Iconify } from '@mint/ui/components/iconify';
 
-import { FormHead } from '@mint/ui/minimals/auth/components/form-head';
-import { useAuthContext } from '@mint/ui/minimals/auth/hooks';
-import { getErrorMessage } from '@mint/ui/minimals/auth/utils';
+import { TonAuthInfo } from '@/components/auth/ton-auth-info';
+import { FormHead } from '@mint/ui/auth/components/form-head';
+import { useAuthContext } from '@mint/ui/auth/hooks';
+import { getErrorMessage } from '@mint/ui/auth/utils';
 
 // ----------------------------------------------------------------------
 

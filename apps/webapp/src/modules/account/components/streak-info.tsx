@@ -1,14 +1,15 @@
 'use client';
 
-import React from 'react';
-import { GlassBox, Text } from '@mint/ui/components';
+import { Text } from '@/components/core';
 import {
   Button,
+  GlassBox,
   Skeleton,
   Stack,
-} from '@mint/ui/components/core';
-import { styled } from '@mint/ui/components/core/styles';
+  styled
+} from '@mint/ui';
 import { Iconify } from '@mint/ui/components/iconify';
+import React from 'react';
 import { useStreakInfo } from '../hooks/useAccountData';
 
 // Styled components
@@ -82,7 +83,7 @@ export const StreakInfo: React.FC<StreakInfoProps> = ({ apiConfig }) => {
               {streak.streakReward?.amount || 51}
             </Text>
           </Stack>
-
+          
           {/* Energy Icon */}
           <Stack direction="row" alignItems="center" spacing={0.5}>
             <Iconify icon="solar:lightning-bold" sx={{ fontSize: 20, color: '#FFD700' }} />
@@ -90,7 +91,7 @@ export const StreakInfo: React.FC<StreakInfoProps> = ({ apiConfig }) => {
               34
             </Text>
           </Stack>
-
+          
           {/* Raffle Ticket Icon */}
           <Stack direction="row" alignItems="center" spacing={0.5}>
             <Iconify icon="solar:ticket-bold" sx={{ fontSize: 20, color: '#FF6B6B' }} />

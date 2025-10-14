@@ -1,5 +1,5 @@
-# Mint Web App
-Mint.io web application
+# Webapp
+Mint.io WebApp
 
 ## Project setup
 
@@ -15,13 +15,15 @@ pnpm dev:https:proxy
 ```
 
 **URLs:**
-- Web App: https://mint.dev
+- Webapp: https://mint.dev
+- Telegram: https://mint.dev/casinos?tgma
 - API (direct): https://api.mint.dev/api
 
 ### Environment Variables
 
-Set the following public URLs when running the web application locally:
+The following environment variables are required for the Telegram Stars API:
 
+- `TELEGRAM_BOT_TOKEN` - Your Telegram Bot token for creating invoices
 - `NEXT_PUBLIC_MINT_ENV` - Select between "production" and "staging" to point to the correct env
 
 ```bash

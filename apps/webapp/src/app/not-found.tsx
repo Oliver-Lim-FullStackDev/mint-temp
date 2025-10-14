@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 
 import { NotFoundView } from '@/components/404';
-import { CONFIG } from '@/global-config';
+import { CONFIG } from '@mint/ui/global-config';
 
 
 // ----------------------------------------------------------------------

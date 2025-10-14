@@ -2,10 +2,9 @@
 
 import React, { useMemo } from 'react';
 import Image from 'next/image';
-import { GlassBox, Text } from '@mint/ui/components';
-import { Box, Stack } from '@mint/ui/components/core';
-import { Table, TableBody, TableCell, TableRow } from '@mint/ui/components/table';
+import { Box, GlassBox, Stack, Table, TableBody, TableCell, TableRow } from '@mint/ui/components';
 import { Iconify } from '@mint/ui/components/iconify';
+import { Text } from '@/components/core';
 
 type RewardMap = Record<string, number>;
 

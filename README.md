@@ -3,8 +3,7 @@
 ## Apps
 - `@mint/api` [API](./apps/api/README.md)
 - `@mint/telegram-bot` [Telegram Bot](./apps/telegram-bot/README.md)
-- `@mint/tgma` [TGMA](./apps/tgma/README.md)
-- `@mint/webapp` [Webapp](./apps/webapp/README.md)
+- `@mint/webapp` [WebApp](./apps/webapp/README.md)
 
 ## Packages
 - `@mint/config` [Config](./packages/config/README.md)
@@ -32,7 +31,7 @@ pnpm --filter=@mint/infra dev:setup
 
 **3. Start HTTPS proxy (Caddy):**
    - Must run in its own terminal in parallel.
-   - Run it every time when you run the TGMA app & API
+   - Run it every time when you run the webapp & API
 ```bash
 pnpm --filter=@mint/infra dev:proxy
 ```
@@ -45,11 +44,6 @@ pnpm --filter=@mint/api start:dev:proxy
 **5. Start `@mint/webapp`:**
 ```bash
 pnpm --filter=@mint/webapp dev:https:proxy
-```
-
-**6. Start `@mint/tgma`:**
-```bash
-pnpm --filter=@mint/tgma dev:https:proxy
 ```
 
 

@@ -1,5 +1,5 @@
-import { ServerMainLayout } from '@/layouts/web/main/layout.server';
+import TelegramLayout from '@/modules/telegram/layouts/telegram-layout';
 
-export default async function Layout({ children }: { children: React.ReactNode }) {
-  return <ServerMainLayout>{children}</ServerMainLayout>;
+export default function Layout({ children }: { children: React.ReactNode }) {
+  return <TelegramLayout>{children}</TelegramLayout>;
 }

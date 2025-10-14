@@ -1,5 +1,5 @@
 import { paths } from '@/routes/paths';
-import { Box, Grid } from '@mint/ui/components/core';
+import { Box, Grid } from '@mint/ui/components';
 import { ListItemSkeleton } from '@/components/list/list-skeleton';
 import type { Game } from '../games.types';
 import { GamesListItem } from './games-list-item';

@@ -3,6 +3,7 @@ import { useQuery } from '@tanstack/react-query';
 export interface ItemPrice {
   usd: number;
   ton?: number;
+  stars?: number;
 }
 
 export function useItemPrice(itemId: string) {

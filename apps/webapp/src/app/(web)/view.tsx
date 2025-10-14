@@ -1,9 +1,9 @@
 'use client';
 
-import Link from "next/link";
-import { Text } from "@mint/ui/components";
 import { ComingSoon } from "@/components/coming-soon";
+import { Text } from "@/components/core";
 import { paths } from "@/routes/paths";
+import Link from "next/link";
 
 export function HomeView() {
   return (

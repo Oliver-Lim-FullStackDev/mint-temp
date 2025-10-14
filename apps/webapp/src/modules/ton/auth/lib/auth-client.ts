@@ -1,3 +1,4 @@
+// apps/webapp/src/lib/authClient.ts
 import { NonceResponse, TonProofPayload, User } from '@/types';
 import { mintApi } from '@mint/client';
 import { Account, TonProofItemReplySuccess } from '@tonconnect/ui-react';

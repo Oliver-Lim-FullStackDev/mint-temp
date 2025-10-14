@@ -1,56 +1,106 @@
-import type { ComponentProps } from 'react';
-
-import { Box } from '@mint/ui/components/core';
+import type { NavSectionProps } from '@mint/ui/components/nav-section';
+import type { HeaderSectionProps } from '@mint/ui/layouts/core/header-section';
+import { Box, Breakpoint, Button, merge } from '@mint/ui/components';
+import { Logo } from '@mint/ui/components/logo';
+import { HeaderSection } from '@mint/ui/layouts/core/header-section';
+import { paths } from '@/routes/paths';
 import { UIProvider } from '@/modules/ui/ui-context';
 import type { LayoutSectionProps } from '@/layouts/core/layout-section';
 import type { MainSectionProps } from '@/layouts/core/main-section';
 import { LayoutSection } from '@/layouts/core/layout-section';
 import { MainSection } from '@/layouts/core/main-section';
+import { AccountDrawer } from '@/layouts/components/account-drawer';
 import NavbarFooterMenu from '@/components/navbar-footer-menu';
+import { NavbarHeader } from '@/components/navbar-header';
+import { Text } from '@/components/core';
 import { ACCOUNT_DRAWER_PORTAL_ID } from '@/layouts/constants';
-import { MainHeader } from '@/components/layout/main-header';
-import { MainFooter } from '@/components/layout/main-footer';
-import { AppBackground } from '@/components/layout/app-background';
 
 type LayoutBaseProps = Pick<LayoutSectionProps, 'sx' | 'children' | 'cssVars'>;
 
 export type MainLayoutProps = LayoutBaseProps & {
-  headerProps?: ComponentProps<typeof MainHeader>;
-  footerProps?: ComponentProps<typeof MainFooter>;
-  mainProps?: MainSectionProps;
+  layoutQuery?: Breakpoint;
+  slotProps?: {
+    header?: HeaderSectionProps;
+    nav?: {
+      data?: NavSectionProps['data'];
+    };
+    main?: MainSectionProps;
+  };
 };
 
 export function MainLayout({
   cssVars,
-  sx,
   children,
-  headerProps,
-  footerProps,
-  mainProps,
+  slotProps,
+  layoutQuery = 'md',
 }: MainLayoutProps) {
-  const sectionSx = Array.isArray(sx)
-    ? sx
-    : sx
-      ? [sx]
-      : [];
-
   const renderHeader = () => {
+    const headerSlotProps: HeaderSectionProps['slotProps'] = {
+      container: {
+        maxWidth: false,
+        sx: {
+          pt: 'var(--tg-safe-top, 0px)',
+          background: `
+            linear-gradient(
+              180deg,
+              rgba(0,0,0,1) 0,
+              rgba(0,0,0,1) var(--tg-safe-top, 0px),
+              rgba(0,0,0,0) 100%
+            )`,
+        },
+      },
+    };
+
+    const headerSlots: HeaderSectionProps['slots'] = {
+      topArea: null,
+      bottomArea: null,
+      leftArea: (
+        <>
+          <Logo
+            href={paths.casinos.root}
+            sx={{ mr: 1, sm: { display: 'none' } }}
+          />
+        </>
+      ),
+      centerArea: (
+        <Button variant="contained" color="primary" href={paths.auth.signIn}>
+          <Text variant="button">Sign in</Text>
+        </Button>
+      ),
+      rightArea: (
+        <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+          <NavbarHeader />
+          <AccountDrawer portalContainerId={ACCOUNT_DRAWER_PORTAL_ID} />
+        </Box>
+      ),
+    };
+
     return (
-      <MainHeader
-        {...headerProps}
+      <HeaderSection
+        layoutQuery={layoutQuery}
+        {...slotProps?.header}
+        disableOffset
+        disableElevation
+        slots={{ ...headerSlots, ...slotProps?.header?.slots }}
+        slotProps={merge(headerSlotProps, slotProps?.header?.slotProps ?? {})}
+        sx={slotProps?.header?.sx || {
+          // Safe on SSR: var may be absent when not in Telegram (defaults to 0)
+          position: 'fixed',
+          left: '50%',
+          transform: 'translateX(-50%)',
+          maxWidth: 440,       // match parent’s width / TODO make global and set to layouts as well
+        }}
       />
     );
   };
 
-  const renderFooter = () => (
-    <MainFooter {...footerProps} />
-  );
+  const renderFooter = () => null;
 
   const renderMain = () => (
     <MainSection
-    {...mainProps}
+      {...slotProps?.main}
       sx={{
-        ...(mainProps?.sx || {}),
+        ...(slotProps?.main?.sx || {}),
         paddingTop: 'calc(var(--layout-header-height, 0) + 24px)',
       }}
     >
@@ -75,8 +125,7 @@ export function MainLayout({
           sx={{
             width: '100%',
             minHeight: '100vh',
-            // important: the wrapper remains a column container so the header/footer stack correctly
-            display: 'flex',
+            display: 'flex',          // important: we’re a column container
             flexDirection: 'column',
             justifyContent: 'center',
             position: 'relative',
@@ -86,18 +135,14 @@ export function MainLayout({
             boxSizing: 'border-box',
           }}
         >
-          <AppBackground />
           <LayoutSection
             headerSection={renderHeader()}
             footerSection={renderFooter()}
             cssVars={{ ...cssVars }}
-            sx={[{ position: 'relative', zIndex: 1 }, ...sectionSx]}
           >
             {renderMain()}
           </LayoutSection>
-          <Box sx={{ position: 'relative', zIndex: 1 }}>
-            <NavbarFooterMenu />
-          </Box>
+          <NavbarFooterMenu />
           <Box
             id={ACCOUNT_DRAWER_PORTAL_ID}
             sx={{ position: 'relative', zIndex: 'var(--layout-account-drawer-zIndex)' }}

@@ -1,25 +1,27 @@
 'use client';
 
 import React, { useMemo } from 'react';
-import Image from 'next/image';
-import { TonConnectButton, useTonAddress, useTonConnectUI } from '@tonconnect/ui-react';
 import { useFormatBalance } from '@/hooks/useFormatBalance';
+import { useTelegram } from '@/hooks/useTelegram';
 import { useSession } from '@/modules/account/session-store';
+import { useUserAuth } from '@/modules/telegram/context/user-auth-telegram-provider';
 import { useUI } from '@/modules/ui/use-ui';
+import { TonConnectButton, useTonAddress, useTonConnectUI } from '@tonconnect/ui-react';
 import {
   Avatar,
   Box,
   Button,
   Divider,
+  GlassBox,
   Skeleton,
   Stack,
   Typography
-} from '@mint/ui/components/core';
-import { GlassBox } from '@mint/ui/components/glass-box';
+} from '@mint/ui';
 import { Iconify } from '@mint/ui/components/iconify';
+import Image from 'next/image';
 import { PROFILE_BACKGROUND_TEXTURE } from '../constants/background-images';
 import { useGameResources } from '../hooks/useAccountData';
-// import { ReferralSection } from './referral-section';
+import { ReferralSection } from './referral-section';
 
 interface ProfileSummaryProps {
   apiConfig?: any;
@@ -27,9 +29,9 @@ interface ProfileSummaryProps {
 
 export const ProfileSummary: React.FC<ProfileSummaryProps> = ({ apiConfig }) => {
   const { data: resources } = useGameResources(apiConfig);
+  const { user } = useUserAuth();
   const state = useUI();
   const { session } = useSession();
-  const player = session?.player;
   const { formatBalanceFull } = useFormatBalance();
   const tonAddress = useTonAddress();
   const [tonConnectUI] = useTonConnectUI();
@@ -81,21 +83,24 @@ export const ProfileSummary: React.FC<ProfileSummaryProps> = ({ apiConfig }) => 
 
   // Generate referral link
   const referralLink = useMemo(() => {
-    if (!player?.referralId) {
+    if (!user?.player?.referralId) {
       return;
     }
 
-    const baseUrl = process.env.NEXT_PUBLIC_MINT_URL || 'https://mint.io';
-    return `${baseUrl}/?ref=${player.referralId}`;
-  }, [player?.referralId]);
+    const { referralId } = user.player;
+    return `${process.env.NEXT_PUBLIC_TELEGRAM_BOT_URL}/?startapp=ref=${referralId}`;
 
-  const referralCount = player?.referralCount || 0;
+    // TODO migrate to webapp
+    // return `${process.env.NEXT_PUBLIC_MINT_URL}/?ref=${referralId}`;
+  }, [user?.player?.referralId]);
+
+  const referralCount = user?.player?.referralCount || 0;
 
   const mintBucks = balances?.MBX?.balanceCents / 100 || 0;
   const raffleTickets = balances?.RTP?.balanceCents / 100 || 0;
   const xp = balances?.XPP?.balanceCents / 100 || 0;
 
-  if (!player) {
+  if (!user) {
     return (
       <Stack spacing={3} alignItems="center" sx={{ p: 2 }}>
         <Stack direction="row" alignItems="center" justifyContent="space-between" width="100%" sx={{ px: 2 }}>
@@ -150,8 +155,8 @@ export const ProfileSummary: React.FC<ProfileSummaryProps> = ({ apiConfig }) => 
 
         {/* Profile Avatar */}
         <Avatar
-          src={player?.profileImageUrl || '/mint/account-avatar-placeholder.png'}
-          alt={player?.displayName || player?.username}
+          src={user?.profileImageUrl || user?.player?.profileImageUrl || '/mint/account-avatar-placeholder.png'}
+          alt={user?.displayName || user?.player?.username}
           sx={{
             width: 80,
             height: 80,
@@ -163,13 +168,13 @@ export const ProfileSummary: React.FC<ProfileSummaryProps> = ({ apiConfig }) => 
             zIndex: 1,
           }}
         >
-          {player?.displayName?.charAt(0).toUpperCase() || 'M'}
+          {user?.displayName?.charAt(0).toUpperCase() || 'M'}
         </Avatar>
       </Box>
 
       {/* displayName */}
       <Typography variant="h2" zIndex={1} fontSize="2rem !important" textTransform="uppercase" fontWeight="900" textAlign="center" color="text-primary">
-        {player?.displayName || player?.username || 'MINT User'}
+        {user?.displayName || user?.player?.username || 'MINT User'}
       </Typography>
 
       <Box

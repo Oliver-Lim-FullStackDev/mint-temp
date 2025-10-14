@@ -1,7 +1,7 @@
 'use client';
 
 import { Suspense } from 'react';
-import { Box, CircularProgress } from '@mint/ui/components/core';
+import { Box, CircularProgress } from '@mint/ui/components';
 import { SlotGameInitDto } from './mint-slots/mint-game-slots.dto';
 import { MintGameSlots } from "./mint-slots/mint-game-slots.client";
 

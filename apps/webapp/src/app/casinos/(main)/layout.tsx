@@ -1,7 +1,7 @@
-import { ServerMainLayout } from '@/layouts/web/main/layout.server';
+import { ServerMainLayout } from '@/layouts/tgma/main/layout.server';
 
 type Props = {
-  children: React.ReactNode;
+  children: React.ReactNode
 };
 
 export default function Layout({ children }: Props) {

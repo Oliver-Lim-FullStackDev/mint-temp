@@ -1,12 +1,11 @@
 import type { Metadata } from 'next';
 import { notFound, redirect } from 'next/navigation';
-import { apiFetch } from '@mint/client';
 import type { SlotGameInitDto } from '@/modules/games/components/mint-slots/mint-game-slots.dto';
 import type { Game } from '@/modules/games/games.types';
-import { ErrorPage } from '@/components/error-page';
+import { apiFetch } from '@mint/client';
 import { GameView } from './view';
+import { ErrorPage } from '@/components/error-page';
 
-export const dynamic = 'force-dynamic';
 
 export const metadata: Metadata = {
   title: 'Game',

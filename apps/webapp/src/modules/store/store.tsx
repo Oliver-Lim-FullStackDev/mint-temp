@@ -1,10 +1,11 @@
 'use client';
 
+import { InfoDialog } from '@/components/core';
 import { PageHeader } from '@/components/headers/page-header';
-import { InfoDialog } from '@mint/ui/components';
-import { useInfoDialog } from '@mint/ui/hooks';
-import { Box, Container } from '@mint/ui/components/core';
+import { useInfoDialog } from '@/hooks/useInfoDialog';
+import { Box, Container } from '@mint/ui/components';
 import Loader from '@mint/ui/components/loading-screen/loader';
+import { RankingShareButton } from '../account/components/ranking-share-button';
 import ErrorState from './components/error-state';
 import ItemsList from './components/items-list';
 import PurchaseSuccessModal from './components/purchase-success-modal';
@@ -24,13 +25,14 @@ export default function Store({ initialItems }: StoreProps = {}) {
     isLoading,
     error,
     modalState,
+    telegramInitialized,
     handlePurchase,
     handleRetry,
     handleCloseModal,
     handleClearError,
   } = useStore(true, initialItems);
 
-  if (loading && items.length === 0) {
+  if (!telegramInitialized || isLoading) {
     return <Loader />;
   }
 
@@ -62,7 +64,7 @@ export default function Store({ initialItems }: StoreProps = {}) {
           onInfoClick={() => {
             openDialog(
               "Store",
-              "Welcome to the Store. Claim your free daily spins every 8 hours, or grab extra packs with $TON. Use them in Minty Spins to rack up MintBucks (MBX), XP, and Raffle Tickets. More spins, more chances."
+              "Welcome to the Store. Claim your free daily spins every 8 hours, or grab extra packs with Stars or $TON. Use them in Minty Spins to rack up MintBucks (MBX), XP, and Raffle Tickets. More spins, more chances."
             );
           }}
         />
@@ -83,6 +85,9 @@ export default function Store({ initialItems }: StoreProps = {}) {
         title={title}
         content={content}
       />
+      <Box sx={{ mt: 2 }}>
+        <RankingShareButton />
+      </Box>
     </Container>
   );
 }

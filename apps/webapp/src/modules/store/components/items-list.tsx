@@ -1,6 +1,6 @@
 'use client';
 
-import { Grid, Typography, Box, CircularProgress } from '@mint/ui/components/core';
+import { Grid, Typography, Box, CircularProgress } from '@mint/ui';
 import { StoreItem } from '../types';
 import { SubProvider } from '../types/sub-provider.enum';
 import ItemCard from './item-card';

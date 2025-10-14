@@ -1,11 +1,11 @@
 import { useMemo } from 'react';
-import type { SxProps, Theme } from '@mint/ui/components/core';
-import { Box, ToggleButton, ToggleButtonGroup } from '@mint/ui/components/core';
-import { GlassBox, Text } from '@mint/ui/components';
+import type { SxProps, Theme } from '@mint/ui';
+import { Box, GlassBox, ToggleButton, ToggleButtonGroup } from '@mint/ui/components';
 import { Iconify } from '@mint/ui/components/iconify';
-import { RouterLink } from '@mint/ui/minimals/routes/components';
-import { usePathname } from '@mint/ui/minimals/routes/hooks';
+import { RouterLink } from '@mint/ui/routes/components';
+import { usePathname } from '@mint/ui/routes/hooks';
 import { paths } from '@/routes/paths';
+import { Text } from '@/components/core';
 
 const CATEGORIES = [
   { icon: 'solar:gamepad-bold', iconWidth: 24, value: paths.casinos.root, label: 'Casino Games' },

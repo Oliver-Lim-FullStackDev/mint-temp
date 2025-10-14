@@ -1,11 +1,11 @@
 'use client';
 
-import { Container } from '@mint/ui/components/core';
-import { EmptyContent } from '@mint/ui/components';
+import { Container } from '@mint/ui/components';
 import { GameLauncher } from '@/modules/games/components/game-launcher';
 import { MintGameLauncher } from '@/modules/games/components/mint-game-launcher';
 import type { SlotGameInitDto } from '@/modules/games/components/mint-slots/mint-game-slots.dto';
 import type { Game } from '@/modules/games/games.types';
+import { EmptyContent } from '@/components/empty-content';
 
 interface GameViewProps {
   game: Game;

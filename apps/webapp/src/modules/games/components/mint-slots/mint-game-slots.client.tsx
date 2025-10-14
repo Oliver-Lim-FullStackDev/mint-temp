@@ -1,18 +1,18 @@
 'use client';
 
-import { useMemo, useRef, useState } from 'react';
-import Image from 'next/image';
-import ReactConfetti from 'react-canvas-confetti/dist/presets/realistic';
-import { flushSync } from 'react-dom';
-import { useThrottledCallback } from 'use-debounce';
-import { apiFetch } from '@mint/client';
-import { Text } from '@mint/ui/components';
-import { Box, Button, Divider } from '@mint/ui/components/core';
-import { Iconify } from '@mint/ui/components/iconify';
+import { Text } from '@/components/core';
 import { flyTo } from '@/lib/animations/fly-to';
 import { useBalances, useUpdateBalanceAmount, useUpdateBalancesFromRewardObject } from '@/modules/account/session-store';
 import { GamesMenu } from '@/modules/games/components/games-menu';
 import { paths } from '@/routes/paths';
+import { apiFetch } from '@mint/client';
+import { Box, Button, Divider } from '@mint/ui/components';
+import { Iconify } from '@mint/ui/components/iconify';
+import Image from 'next/image';
+import { useMemo, useRef, useState } from 'react';
+import ReactConfetti from 'react-canvas-confetti/dist/presets/realistic';
+import { flushSync } from 'react-dom';
+import { useThrottledCallback } from 'use-debounce';
 import { MintGameSlotsWinsTable } from './mint-game-slots-wins-table';
 import { SlotGameInitDto, SlotGameResultDto } from './mint-game-slots.dto';
 import Slots from './slots';
@@ -288,11 +288,15 @@ export function MintGameSlots({
           autorun={{ speed: 0.3, duration: CONFETTI_DURATION }}
         />
       )}
+      <Box sx={{ my: 2 }}>
+        <RankingShareButton />
+      </Box>
     </Box>
   );
 }
 
 
+import { RankingShareButton } from '@/modules/account/components/ranking-share-button';
 import React from 'react';
 
 // Zero-config bridge so JSX sees a real React component

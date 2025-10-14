@@ -1,10 +1,9 @@
 'use client';
 
-import { useEffect, useState } from 'react';
-import Image from 'next/image';
+import { Box, Typography } from '@mint/ui';
 import { useTonAddress, useTonConnectUI } from '@tonconnect/ui-react';
-import { Box } from '@mint/ui/components/core';
-import { Typography } from '@mint/ui/components';
+import Image from 'next/image';
+import { useEffect, useState } from 'react';
 import { StoreItem } from '../types';
 import { SubProvider } from '../types/sub-provider.enum';
 import { getCardStyle } from '../utils/card-styles';

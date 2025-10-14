@@ -1,15 +1,15 @@
-import type { BoxProps, CardProps, Theme } from '@mint/ui/components/core';
+import type { BoxProps, CardProps, Theme } from '@mint/ui';
 
-import { varAlpha } from '@mint/ui/minimal-shared';
+import { varAlpha } from 'minimal-shared/utils';
 import {
   Box,
   Link,
   Card,
   CardContent
-} from '@mint/ui/components/core'
+} from '@mint/ui/components'
 
-import { RouterLink } from '@mint/ui/minimals/routes/components';
-import { AvatarShape } from '@mint/ui/minimals/assets/illustrations';
+import { RouterLink } from '@mint/ui/routes/components';
+import { AvatarShape } from '@mint/ui/assets/illustrations';
 import { Image } from '@mint/ui/components/image';
 import { Iconify } from '@mint/ui/components/iconify';
 

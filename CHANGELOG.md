@@ -1,10 +1,5 @@
 # Changelog
 
-## v2.0 — 2025-10-13
-
-### Changelog (v2.0)
-- Add "Referred By" and "Request Referrer" in BO [#869amfrqr](https://app.clickup.com/t/869amfrqr) 
-
 ## v1.4.1 — 2025-10-04
 
 ### Changelog (v1.4.1)

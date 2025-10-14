@@ -2,7 +2,7 @@
 
 import { useEffect, useState, useRef } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
-import { Box, Typography, Button, CircularProgress } from "@mint/ui/components/core";
+import { Box, Typography, Button, CircularProgress } from "@mint/ui/components";
 import { Iconify } from "@mint/ui/components/iconify";
 import { useSocialMediaMission } from "@/modules/missions/hooks/useSocialMediaMission";
 import { SocialNetwork } from "@/modules/missions/config/social-media-config";
@@ -106,6 +106,8 @@ export default function SocialRedirectPage() {
         return "socials:instagram";
       case SocialNetwork.TIKTOK:
         return "socials:tiktok";
+      case SocialNetwork.TELEGRAM:
+        return "eva:message-circle-fill";
       default:
         return "socials:twitter";
     }
@@ -119,6 +121,8 @@ export default function SocialRedirectPage() {
         return "Instagram";
       case SocialNetwork.TIKTOK:
         return "TikTok";
+      case SocialNetwork.TELEGRAM:
+        return "Telegram";
       default:
         return "";
     }

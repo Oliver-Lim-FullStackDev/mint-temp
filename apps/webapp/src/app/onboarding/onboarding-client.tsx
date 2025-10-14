@@ -1,12 +1,13 @@
 'use client';
 
+import Cookies from 'js-cookie';
 import { useEffect, useRef, useState } from 'react';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { apiFetch } from '@mint/client';
-import { Text } from "@mint/ui/components";
-import { Box, Button, Container, Typography } from '@mint/ui/components/core';
+import { Box, Button, Container, Typography } from '@mint/ui';
 import { paths } from '@/routes/paths';
+import { Text } from '@/components/core';
 
 const REDIRECTS = {
   home: paths.casinos.root,
@@ -25,7 +26,7 @@ const onboardingSteps: OnboardingStep[] = [
   {
     id: 1,
     title: 'GM',
-    description: 'When we say GM, we mean Get Minted. Jump in, play for free, and start stacking. It all kicks off right here.',
+    description: 'When we say GM, we mean Get Minted. Jump in, play for free, and start stacking. It all kicks off right here on Telegram.',
     startTime: 0,
     endTime: 4,
     icon: '/assets/images/onboarding/step1.png',

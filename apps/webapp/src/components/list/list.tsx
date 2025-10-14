@@ -3,7 +3,7 @@ import {
   Grid,
   Stack,
   Button,
-  CircularProgress } from '@mint/ui/components/core';
+  CircularProgress } from '@mint/ui';
 import { paths } from '@/routes/paths';
 
 import { ListItemSkeleton } from './list-skeleton';

@@ -1,6 +1,6 @@
 'use client';
 
-import { Button } from '@mint/ui/components/core';
+import { Button } from '@mint/ui';
 import { StoreItem } from '../types';
 import { SubProvider } from '../types/sub-provider.enum';
 import BaseItemCard from './base-item-card';

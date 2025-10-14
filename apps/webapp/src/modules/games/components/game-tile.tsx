@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useMemo } from 'react';
-import { Box, CircularProgress, Typography } from '@mint/ui/components/core';
+import { Box, CircularProgress, Typography } from '@mint/ui';
 import { useGame } from '@/modules/games/hooks/use-game';
 import type { Game } from '@/modules/games/games.types';
 import { Amount } from '@/components/amount';

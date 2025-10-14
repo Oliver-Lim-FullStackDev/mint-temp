@@ -1,5 +1,5 @@
-import type { TypographyProps } from '@mint/ui/components/core';
-import { Typography } from '@mint/ui/components/core';
+import type { TypographyProps } from '@mint/ui';
+import { Typography } from '@mint/ui';
 
 interface AmountProps extends TypographyProps {
   amount: number | string;

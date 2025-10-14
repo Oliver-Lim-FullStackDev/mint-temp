@@ -1,20 +1,21 @@
 'use client';
 
+import { Box, Button, CircularProgress, GlassCard } from '@mint/ui/components';
+import { Iconify } from '@mint/ui/components/iconify';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import React, { useState, useEffect } from 'react';
-import { Box, Button, CircularProgress } from '@mint/ui/components/core';
-import { GlassCard, InfoDialog, Text } from '@mint/ui/components';
-import { useInfoDialog } from '@mint/ui/hooks';
-import TabSelector, { TabOption } from '@mint/ui/components/tab/tab-selector';
-import Loader from '@mint/ui/components/loading-screen/loader';
-import { Iconify } from '@mint/ui/components/iconify';
 
-import { useUpdateBalance, useBalances, useUpdateBalancesFromRewards } from '@/modules/account/session-store';
+import TabSelector, { TabOption } from '@/components/core/tab-selector';
 import { PageHeader } from '@/components/headers/page-header';
 import { useMissions, useOptInCampaign, type Campaign, type CampaignReward } from './hooks/useMissions';
 import { useSocialMediaMission } from './hooks/useSocialMediaMission';
+import { useUpdateBalance, useBalances, useUpdateBalancesFromRewards } from '@/modules/account/session-store';
 
+import { InfoDialog } from '@/components/core';
+import { Text } from '@/components/core/text';
+import { useInfoDialog } from '@/hooks/useInfoDialog';
+import Loader from '@mint/ui/components/loading-screen/loader';
 import { getPlatformFromCampaignKey, getSocialMediaConfig } from './config/social-media-config';
 
 // Utility function to filter out specific campaigns

@@ -1,4 +1,6 @@
 import React from 'react';
+import { TelegramSafeTop } from '@/modules/telegram/components/telegram-safe-top';
+
 type Props = { children: React.ReactNode };
 
 export default async function AppBody({ children }: Props) {
@@ -7,8 +9,8 @@ export default async function AppBody({ children }: Props) {
       style={{
         backgroundColor: 'black',
         position: 'relative',
-        paddingTop: 'env(safe-area-inset-top, 0px)'
       }}
+      data-tg={1}
     >
       <noscript>
         <iframe
@@ -18,6 +20,8 @@ export default async function AppBody({ children }: Props) {
           style={{ display: 'none', visibility: 'hidden' }}
         />
       </noscript>
+
+      <TelegramSafeTop />
 
       {children}
     </body>

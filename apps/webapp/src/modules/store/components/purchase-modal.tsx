@@ -1,17 +1,17 @@
 'use client';
 
-import type { StoreItem } from '../types';
-import type { SubProvider } from '../types/sub-provider.enum';
-
+import { useEffect, useState } from 'react';
 import Image from 'next/image';
-import { useTonAddress, TonConnectButton } from '@tonconnect/ui-react';
-import { Box, Typography } from '@mint/ui/components/core';
-import { GlassDialog } from '@mint/ui/components';
-import { use8HourDailyRewards } from '@/hooks/use8HourDailyRewards';
-import CountdownTimer from '@/components/countdown-timer';
+import { StoreItem } from '../types';
+import { SubProvider } from '../types/sub-provider.enum';
+import { Box, Typography, CircularProgress } from '@mint/ui';
+import { GlassDialog } from '@mint/ui';
 import { useStoreItemWithPrices } from '../hooks/useStoreItemsWithPrices';
+import { useTonAddress, TonConnectButton } from '@tonconnect/ui-react';
+import { use8HourDailyRewards } from '@/hooks/use8HourDailyRewards';
 import { getModalButtons, type ModalState } from '../utils/modal-button-types';
 import { ModalButtonFactory } from './modal-buttons';
+import CountdownTimer from '@/components/countdown-timer';
 import { getItemType } from '../utils/item-types';
 
 interface PurchaseModalProps {

@@ -1,6 +1,6 @@
-import { Box, Skeleton } from '@mint/ui/components/core';
-import type { BoxProps } from '@mint/ui/components/core';
+import { Box, Skeleton } from '@mint/ui/components';
 
+import type { BoxProps } from '@mint/ui';
 
 // ----------------------------------------------------------------------
 

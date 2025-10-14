@@ -1,6 +1,6 @@
 'use client';
 
-import { Box, Typography, Button, Paper, Alert } from '@mint/ui/components/core';
+import { Box, Typography, Button, Paper, Alert } from '@mint/ui';
 import { Iconify } from '@mint/ui/components/iconify';
 
 interface ErrorStateProps {

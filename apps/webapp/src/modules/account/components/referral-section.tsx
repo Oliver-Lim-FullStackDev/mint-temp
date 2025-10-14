@@ -1,8 +1,8 @@
 'use client';
 
+import { Text } from '@/components/core';
+import { Box, Button, GlassBox, Stack } from '@mint/ui';
 import { useEffect, useState } from 'react';
-import { Box, Button, Stack } from '@mint/ui/components/core';
-import { GlassBox, Text } from '@mint/ui/components';
 
 export interface ReferralSectionProps {
   referralLink?: string | null;

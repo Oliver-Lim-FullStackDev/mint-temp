@@ -2,7 +2,7 @@ import { StoreItem } from '../types';
 import { SubProvider } from '../types/sub-provider.enum';
 import { getItemType } from './item-types';
 
-export type ModalButtonType = 'daily' | 'ton';
+export type ModalButtonType = 'daily' | 'stars' | 'ton';
 
 export interface ModalButtonState {
   type: ModalButtonType;
@@ -20,6 +20,7 @@ export interface ModalState {
   tonBalance?: number;
   priceData?: {
     usd: number;
+    stars: number;
     ton: number;
     tonPriceUsd: number;
   };
@@ -39,6 +40,22 @@ export function getDailyButtonText(state: ModalState): string {
     return 'Claim';
   }
   return 'Unavailable';
+}
+
+/**
+ * Generates button text for Stars payment buttons
+ */
+export function getStarsButtonText(state: ModalState): string {
+  if (state.loading) {
+    return 'Fetching price...';
+  }
+  if (state.isPurchaseLoading) {
+    return 'Processing...';
+  }
+  if (state.priceData && !isNaN(state.priceData.stars) && state.priceData.stars > 0) {
+    return `Buy for ${state.priceData.stars} Stars`;
+  }
+  return 'Buy with Stars';
 }
 
 /**
@@ -82,10 +99,7 @@ export function getModalButtons(
   const buttons: ModalButtonState[] = [];
 
   // Handle free items (daily)
-  const usdPrice = item.price.usd ?? 0;
-  const tonPrice = item.price.ton ?? 0;
-
-  if (usdPrice === 0 && tonPrice === 0) {
+  if (item.price.usd === 0 && item.price.stars === 0) {
     if (itemType === 'daily') {
       buttons.push({
         type: 'daily',
@@ -106,12 +120,23 @@ export function getModalButtons(
   } else {
     // Handle paid items
     buttons.push({
-      type: 'ton',
-      canClick: (state.isTonConnected || false) && !(state.loading || state.isPurchaseLoading),
-      isLoading: state.loading || state.balancesLoading || state.isPurchaseLoading || false,
-      buttonText: getTonButtonText(state),
-      onClick: () => onPurchase(SubProvider.TON),
+      type: 'stars',
+      canClick: !(state.loading || state.isPurchaseLoading),
+      isLoading: state.loading || state.isPurchaseLoading || false,
+      buttonText: getStarsButtonText(state),
+      onClick: () => onPurchase(SubProvider.STARS),
     });
+
+    // Only show TON button if wallet is connected
+    if (state.isTonConnected) {
+      buttons.push({
+        type: 'ton',
+        canClick: !(state.loading || state.isPurchaseLoading),
+        isLoading: state.loading || state.balancesLoading || state.isPurchaseLoading || false,
+        buttonText: getTonButtonText(state),
+        onClick: () => onPurchase(SubProvider.TON),
+      });
+    }
   }
 
   return buttons;

@@ -1,8 +1,8 @@
 'use client';
 
-import { GlassBox, Text } from "@mint/ui/components";
-import { Link, Stack } from '@mint/ui/components/core';
+import { GlassBox, Link, Stack } from '@mint/ui/components';
 import { Iconify } from '@mint/ui/components/iconify';
+import { Text } from '@/components/core';
 
 interface SupportSectionProps {
   username: string;
@@ -47,7 +47,7 @@ export const SupportSection = ({ username }: SupportSectionProps) => {
 
       {/* Help center */}
       <Link
-        href="https://mint.io/docs"
+        href="https://mint.io/docs/telegram"
         underline="none"
         target="_blank"
         sx={{ '&:hover': { textDecoration: 'none' } }}

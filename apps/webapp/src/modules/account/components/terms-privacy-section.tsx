@@ -1,5 +1,5 @@
-import { Box, Link } from '@mint/ui/components/core';
-import { Text } from '@mint/ui/components';
+import { Box, Link } from '@mint/ui/components';
+import { Text } from '@/components/core';
 
 export const TermsPrivacySection = () => {
   return (

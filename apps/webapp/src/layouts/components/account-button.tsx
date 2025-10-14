@@ -1,5 +1,5 @@
-import type { IconButtonProps } from '@mint/ui/components/core';
-import { Avatar } from '@mint/ui/components/core';
+import type { IconButtonProps } from '@mint/ui';
+import { Avatar } from '@mint/ui/components';
 
 
 // ----------------------------------------------------------------------

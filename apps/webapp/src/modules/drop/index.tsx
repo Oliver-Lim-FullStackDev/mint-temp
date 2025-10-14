@@ -1,10 +1,9 @@
 'use client';
 
+import { Box, Typography, Button, GlassCard } from '@mint/ui/components';
 import Image from 'next/image';
-import { Box, Typography, Button } from '@mint/ui/components/core';
-import { GlassCard } from '@mint/ui/components';
-import Loader from '@mint/ui/components/loading-screen/loader';
 import { useDrop, DropData, DropSectionItem } from './hooks/useDrop';
+import Loader from '@mint/ui/components/loading-screen/loader';
 
 export function Drops() {
   const { data, isLoading } = useDrop();

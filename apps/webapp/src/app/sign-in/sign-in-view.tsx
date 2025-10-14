@@ -1,6 +1,10 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import { Box } from '@mint/ui';
+import { useRouter } from '@mint/ui/routes/hooks';
+import { useAuthContext } from '@mint/ui/auth/hooks';
+import { TonAuthInfo } from '@/components/auth/ton-auth-info';
 
 
 export function SignInView() {

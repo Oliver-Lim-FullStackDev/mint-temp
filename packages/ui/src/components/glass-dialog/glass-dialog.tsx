@@ -1,8 +1,7 @@
+import type { DialogProps } from '@mint/ui';
+
+import { Dialog } from '@mint/ui';
 import { forwardRef } from 'react';
-
-import type { DialogProps } from '../core';
-
-import { Dialog } from '../core';
 
 export interface GlassDialogProps extends Omit<DialogProps, 'PaperComponent'> {
   children?: React.ReactNode;

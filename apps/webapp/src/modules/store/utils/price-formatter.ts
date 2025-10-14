@@ -7,11 +7,15 @@ import { StorePrice } from '../types';
  */
 export function formatPrice(price: StorePrice): string {
   // Check if it's free
-  if ((price.usd ?? 0) === 0 && (price.ton ?? 0) === 0) return 'Free';
+  if (price.usd === 0 && price.stars === 0) return 'Free';
 
-  // Priority order: USD > TON
+  // Priority order: USD > Stars > TON
   if (price.usd && price.usd > 0) {
     return `$${price.usd}`;
+  }
+
+  if (price.stars && price.stars > 0) {
+    return `${price.stars} ⭐`;
   }
 
   if (price.ton && price.ton > 0) {
@@ -31,6 +35,10 @@ export function formatPriceMulti(price: StorePrice): string {
 
   if (price.usd && price.usd > 0) {
     parts.push(`$${price.usd}`);
+  }
+
+  if (price.stars && price.stars > 0) {
+    parts.push(`${price.stars} ⭐`);
   }
 
   if (price.ton && price.ton > 0) {

@@ -1,9 +1,10 @@
-import type { Theme, SxProps, CSSObject } from '@mint/ui/components/core';
+import type { Theme, SxProps, CSSObject } from '@mui/material/styles';
 
-import Image from 'next/image';
-import { Box } from '@mint/ui/components/core';
+import { Box, GlobalStyles } from '@mui/material';
 import { mergeClasses } from 'minimal-shared/utils';
-import { layoutClasses } from '@mint/ui/minimals/layouts/core/classes';
+import { layoutClasses } from '@mint/ui/layouts/core/classes';
+import { layoutSectionVars } from '@mint/ui/layouts/core/css-vars';
+import Image from 'next/image';
 
 
 export type LayoutSectionProps = React.ComponentProps<'div'> & {

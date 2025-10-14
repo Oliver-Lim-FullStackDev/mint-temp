@@ -1,12 +1,15 @@
 'use client';
 
-import Image from 'next/image';
-import { Box, Button } from '@mint/ui/components/core';
-import { GlassBox, InfoDialog, Text } from '@mint/ui/components';
-import { useInfoDialog } from '@mint/ui/hooks';
+import { Box, Button } from '@mint/ui/components';
 import { Iconify } from '@mint/ui/components/iconify';
+import Image from 'next/image';
+import { InfoDialog, Text } from '@/components/core';
 import { useFormatBalance } from '@/hooks/useFormatBalance';
+import { useInfoDialog } from '@/hooks/useInfoDialog';
+import RankingShareModal from '@/modules/account/components/ranking-share-modal';
 import { useBalances } from '@/modules/account/session-store';
+import { useCallback } from 'react';
+import { GlassBox } from '../glass-box';
 import { NavbarHeaderPlaceholder } from './navbar-header-placeholder';
 
 // ----------------------------------------------------------------------
@@ -17,6 +20,14 @@ export function NavbarHeader({ }: NavbarHeaderProps) {
   const balances = useBalances();
   const { formatBalance } = useFormatBalance();
   const { isOpen, openDialog, closeDialog, title, content } = useInfoDialog();
+  const handleShare = useCallback(() => {
+    openDialog(
+      'Refer & Earn',
+      <>
+        <RankingShareModal />
+      </>
+    );
+  }, [openDialog]);
 
   // TODO Temporary lock until we have SSR Session fully functional
   if (!balances.MBX || !balances.RTP || !balances.XPP) {
@@ -29,7 +40,7 @@ export function NavbarHeader({ }: NavbarHeaderProps) {
 
 
   const handleInviteClick = () => {
-
+    handleShare();
   };
 
   return (
