@@ -4,7 +4,6 @@ import { useMemo } from 'react';
 import BannerCarrousel, { CarrouselItem } from '@/components/banner-carrousel';
 import { Text } from '@/components/core';
 import { EmptyContent } from '@/components/empty-content';
-import { RankingShareButton } from '@/modules/account/components/ranking-share-button';
 import { GamesList } from '@/modules/games/components/games-list';
 import { GamesMenu } from '@/modules/games/components/games-menu';
 import type { Game } from '@/modules/games/games.types';
@@ -116,14 +115,11 @@ export function CasinoView({ games, hasError = false }: CasinoViewProps) {
       </Box>
 
       <Box sx={{ py: 1.5 }}>
-        {showEmptyState ? (
+      {showEmptyState ? (
           <EmptyContent filled title="No games found" sx={{ py: 10 }} />
         ) : (
           <GamesList games={sortedGames} />
         )}
-      </Box>
-      <Box sx={{ my: 2 }}>
-        <RankingShareButton />
       </Box>
     </Container>
   );

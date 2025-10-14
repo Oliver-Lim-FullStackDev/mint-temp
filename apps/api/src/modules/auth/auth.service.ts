@@ -121,7 +121,6 @@ export class AuthService {
     const clientType = extractClientType(this.request);
     const tgUserPic = await getTgUserPic(isValidTGUser.id!);
 
-
     const telegramRegisterPayload: Record<string, any> = {
       username: username,
       country_code: process.env.HEROGAMING_FRONTEND_COUNTRY_CODE || 'GB',

@@ -24,8 +24,7 @@ const filterExcludedCampaigns = (campaigns: Campaign[]): Campaign[] => {
   const excludedKeys = [
     'daily-reward-campaign',
     'daily-reward-campaign-registration',
-    'mint-leaderboard',
-    'share-and-earn',
+    'mint-leaderboard'
   ];
   return campaigns.filter(campaign => !excludedKeys.includes(campaign.key));
 };

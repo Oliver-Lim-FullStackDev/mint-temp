@@ -11,10 +11,7 @@ import { PartnerPlayerQueryDto, PartnerPlayerDto } from '../dto';
 export class PartnersService {
   constructor(private readonly hg: HeroGamingClient) {}
 
-  async fetchFromHero(
-    key: string,
-    filters?: PartnerPlayerQueryDto,
-  ): Promise<PartnerPlayerDto[]> {
+  async fetchFromHero(key: string, filters?: PartnerPlayerQueryDto): Promise<PartnerPlayerDto[]> {
     try {
       const query: Record<string, any> = { filter: { request_referrer: key } };
 
@@ -25,14 +22,10 @@ export class PartnersService {
       if (filters?.createdAtTo) query.filter.created_at_to = filters.createdAtTo;
       if (filters?.page) query.page = filters.page;
 
-      const response = await this.hg.vx.get<HeroPlayersResponse>(
-        HeroGamingApiRoutes.admin.players,
-        query,
-        {
-          Authorization: `Basic ${process.env.HEROGAMING_MINT_API_ADMIN_TOKEN}`,
-          'Content-Type': 'application/json',
-        },
-      );
+      const response = await this.hg.vx.get<HeroPlayersResponse>(HeroGamingApiRoutes.admin.players, query, {
+        Authorization: `Basic ${process.env.HEROGAMING_MINT_API_ADMIN_TOKEN}`,
+        'Content-Type': 'application/json',
+      });
 
       if (response?.errors) {
         throw new UnauthorizedException(response.errors[0].join(' '));
@@ -46,7 +39,7 @@ export class PartnersService {
   }
 
   private mapToPartnerFormat(rawPlayers: HeroPlayer[]): PartnerPlayerDto[] {
-    return rawPlayers.map(player => ({
+    return rawPlayers.map((player) => ({
       id: String(player.internalId ?? player.dealerId ?? player.mapsPlayerId),
       username: player.username ?? player.displayName ?? 'unknown',
       createdAt: player.createdAt,
@@ -60,7 +53,7 @@ export class PartnersService {
   }
 
   private findBalance(accounts: HeroAccount[] = [], currency: string): number {
-    const account = accounts.find(a => a.currency === currency);
+    const account = accounts.find((a) => a.currency === currency);
     return account ? account.balanceCents / 100 : 0;
   }
 }

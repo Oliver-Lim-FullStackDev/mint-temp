@@ -3,7 +3,6 @@ import { REQUEST } from '@nestjs/core';
 import { Inject, Injectable, Scope } from '@nestjs/common';
 import * as qs from 'qs';
 
-
 /**
  * API version type
  */
@@ -17,7 +16,7 @@ class VersionedClient {
     private readonly baseUrl: string,
     private token: string,
     private readonly version: ApiVersion,
-    private readonly heroGamingClient: HeroGamingClient
+    private readonly heroGamingClient: HeroGamingClient,
   ) {}
 
   /**
@@ -128,9 +127,7 @@ export class HeroGamingClient {
   v2: VersionedClient;
   v3: VersionedClient;
 
-  constructor(
-    @Inject(REQUEST) public readonly request: Request,
-  ) {
+  constructor(@Inject(REQUEST) public readonly request: Request) {
     this.baseUrl = process.env.HEROGAMING_API_URL!;
     this.token = process.env.HEROGAMING_API_TOKEN!; // not in use as not all endpoints use the same token
 

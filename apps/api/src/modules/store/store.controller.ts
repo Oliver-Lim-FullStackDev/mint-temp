@@ -34,12 +34,12 @@ export class StoreController {
           itemWithPrices.price = {
             ...item.price,
             stars: starsPrice,
-            ton: tonPrice
+            ton: tonPrice,
           };
         }
 
         return itemWithPrices;
-      })
+      }),
     );
 
     return itemsWithPrices;
@@ -67,12 +67,10 @@ export class StoreController {
       itemWithPrices.price = {
         ...item.price,
         stars: starsPrice,
-        ton: tonPrice
+        ton: tonPrice,
       };
     }
 
     return itemWithPrices;
   }
-
-
 }

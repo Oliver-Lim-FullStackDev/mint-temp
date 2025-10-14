@@ -13,7 +13,7 @@ export async function GET(
     console.error('Error fetching game data:', error);
     return NextResponse.json(
       { error: 'Failed to fetch game' },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }

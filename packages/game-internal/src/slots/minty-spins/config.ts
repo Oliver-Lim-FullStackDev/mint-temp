@@ -1,17 +1,16 @@
-import { SlotGameConfig } from './slot-game.types';
+import type { SlotGameConfig } from '../types';
 
 const PUBLIC_ASSETS_PATH = '/assets/games/minty-spins';
 const PUBLIC_SYMBOLS_PATH = `${PUBLIC_ASSETS_PATH}/symbols`;
 const PUBLIC_SOUNDS_PATH = `${PUBLIC_ASSETS_PATH}/sounds`;
 
-export const slotGameConfig: SlotGameConfig = {
-  pfStrategy: 'vrf',
+export const mintySpinsConfig: SlotGameConfig = {
   gameId: 'mint_super_slots',
   currency: 'SPN',
   initialSpins: 0,
   initialCredits: 0,
   spinCost: 1,
-
+  randomness: { type: 'PF' },
   images: {
     path: PUBLIC_SYMBOLS_PATH,
   },
@@ -46,7 +45,7 @@ export const slotGameConfig: SlotGameConfig = {
         1: 1,
       },
       wojak: {
-        1: 1
+        1: 1,
       },
     },
     jackpot: {
@@ -56,15 +55,15 @@ export const slotGameConfig: SlotGameConfig = {
     },
     // per-symbol rewards (these numbers will be multiplied by patternMultipliers on a win)
     rewards: {
-      minty:     { MBX: 50, SPN: 0, XPP: 37, RTP: 3 },
-      trump:     { MBX: 45, SPN: 0, XPP: 20, RTP: 2 },
-      musk:      { MBX: 20, SPN: 0, XPP: 25, RTP: 2 },
-      pepe:      { MBX: 20, SPN: 0, XPP: 20, RTP: 1 },
-      chad:      { MBX: 20, SPN: 0, XPP: 15, RTP: 1 },
-      saylor:    { MBX: 10, SPN: 0, XPP: 10, RTP: 0 },
-      bogdanoff: { MBX: 5,  SPN: 0, XPP: 0,  RTP: 0 },
-      wojak:     { MBX: 10, SPN: 0, XPP: 0,  RTP: 0 },
-      trezor:    { MBX: 5,  SPN: 0, XPP: 0,  RTP: 0 },
+      minty: { MBX: 50, SPN: 0, XPP: 37, RTP: 3 },
+      trump: { MBX: 45, SPN: 0, XPP: 20, RTP: 2 },
+      musk: { MBX: 20, SPN: 0, XPP: 25, RTP: 2 },
+      pepe: { MBX: 20, SPN: 0, XPP: 20, RTP: 1 },
+      chad: { MBX: 20, SPN: 0, XPP: 15, RTP: 1 },
+      saylor: { MBX: 10, SPN: 0, XPP: 10, RTP: 0 },
+      bogdanoff: { MBX: 5, SPN: 0, XPP: 0, RTP: 0 },
+      wojak: { MBX: 10, SPN: 0, XPP: 0, RTP: 0 },
+      trezor: { MBX: 5, SPN: 0, XPP: 0, RTP: 0 },
     },
   },
 
@@ -76,30 +75,32 @@ export const slotGameConfig: SlotGameConfig = {
 
   // --- visuals (DISPLAY ONLY; TABLES/ICONS) ---
   visuals: {
-    multipliers: [{
-      key: '3-horizontal',
-      label: 'Row of 3',
-      multiplier: 1.0,
-      imageUrl: `${PUBLIC_SYMBOLS_PATH}/3-horizontal.svg`,
-    },
-    {
-      key: '3-diagonal',
-      label: '3 Diagonal',
-      multiplier: 2.0,
-      imageUrl: `${PUBLIC_SYMBOLS_PATH}/3-diagonal.svg`,
-    },
-    {
-      key: '4-horizontal',
-      label: 'Row of 4',
-      multiplier: 3.0,
-      imageUrl: `${PUBLIC_SYMBOLS_PATH}/4-horizontal.svg`,
-    },
-    {
-      key: '5-horizontal',
-      label: 'Row of 5',
-      multiplier: 4.0,
-      imageUrl: `${PUBLIC_SYMBOLS_PATH}/5-horizontal.svg`,
-    }],
+    multipliers: [
+      {
+        key: '3-horizontal',
+        label: 'Row of 3',
+        multiplier: 1.0,
+        imageUrl: `${PUBLIC_SYMBOLS_PATH}/3-horizontal.svg`,
+      },
+      {
+        key: '3-diagonal',
+        label: '3 Diagonal',
+        multiplier: 2.0,
+        imageUrl: `${PUBLIC_SYMBOLS_PATH}/3-diagonal.svg`,
+      },
+      {
+        key: '4-horizontal',
+        label: 'Row of 4',
+        multiplier: 3.0,
+        imageUrl: `${PUBLIC_SYMBOLS_PATH}/4-horizontal.svg`,
+      },
+      {
+        key: '5-horizontal',
+        label: 'Row of 5',
+        multiplier: 4.0,
+        imageUrl: `${PUBLIC_SYMBOLS_PATH}/5-horizontal.svg`,
+      },
+    ],
     winCombos: [
       {
         key: 'minty',

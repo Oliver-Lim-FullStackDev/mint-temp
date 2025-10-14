@@ -63,7 +63,7 @@ const sxBtnLightSwipe = {
     },
 }
 
-export default function RankingShareModal({ copyHighlight = true }: { copyHighlight?: boolean }) {
+export default function RankingShareModal({ copyHighlight }: { copyHighlight?: boolean }) {
     const { user } = useUserAuth();
     const [copied, setCopied] = useState(false);
     const theme = useTheme()
@@ -82,11 +82,6 @@ export default function RankingShareModal({ copyHighlight = true }: { copyHighli
     }, [user?.player?.referralId]);
 
     const referralCount = user?.player?.referralCount || 0;
-    const MBX_per_referral = 100
-    const XPP_per_referral = 75
-
-    const MBX_earnings = referralCount * MBX_per_referral
-    const XPP_earnings = referralCount * XPP_per_referral
 
     const handleShareTelegram = useCallback(() => {
         const shareUrl = 'https://t.me/share/url?url=https://t.me/MintDotIO_bot/MINT?startapp=9&src=share&text=Join'; // SHOULD BE A ENV VAR ?
@@ -167,8 +162,8 @@ export default function RankingShareModal({ copyHighlight = true }: { copyHighli
 
                 <Stack direction="row" spacing={1.25} alignItems="center">
                     <ListItemCoin
-                        MBX={MBX_per_referral}
-                        XPP={XPP_per_referral}
+                        MBX={100}
+                        XPP={75}
                     />
                 </Stack>
             </Box>
@@ -270,10 +265,10 @@ export default function RankingShareModal({ copyHighlight = true }: { copyHighli
                         Your referral earnings:
                     </Text>
 
-                   {(!!MBX_earnings || !!XPP_earnings )&& <ListItemCoin
-                      XPP={XPP_earnings}
-                      MBX={MBX_earnings}
-                    />}
+                    <ListItemCoin
+                        XPP={127014}
+                        MBX={450021}
+                    />
                 </Stack>
             </Box>
         </>

@@ -75,9 +75,7 @@ export class GamesService {
       //   "originals": { "tags": ["originals"], limit: 123, ... },
       //   "tinyrex": { "tags": ["tinyrex"], limit: 123, ... }
       // }
-      query = Object.fromEntries(
-        params.tags.map(tag => [tag, { ...params, tags: [tag] }])
-      );
+      query = Object.fromEntries(params.tags.map((tag) => [tag, { ...params, tags: [tag] }]));
     }
 
     const response = await this.hg.v2.post<GameSearchResponse>(HeroGamingApiRoutes.gamesSearch, {

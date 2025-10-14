@@ -22,6 +22,12 @@
     "paths": {
       "@mint/config": ["../../packages/config"],
       "@mint/config/*": ["../../packages/config/*"],
+      "@mint/gamestudio-api": ["../../packages/gamestudio-api/src/index.ts"],
+      "@mint/gamestudio-api/*": ["../../packages/gamestudio-api/src/*"],
+      "@mint/game-internal": ["../../packages/game-internal/src/index.ts"],
+      "@mint/game-internal/*": ["../../packages/game-internal/src/*"],
+      "@mint/slots": ["../../packages/mint-slots"],
+      "@mint/slots/*": ["../../packages/mint-slots/src/*"],
       "@mint/ui": ["../../packages/ui"],
       "@mint/ui/*": ["../../packages/ui/src/*"],
 

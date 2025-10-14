@@ -6,12 +6,19 @@
   "private": true,
   "license": "Mint.io",
   "scripts": {
+    "build:deps": "pnpm --filter @mint/gamestudio-api... run build && pnpm --filter @mint/game-internal... run build",
+    "prebuild": "pnpm run build:deps",
     "build": "nest build",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
+    "prestart": "pnpm run build:deps",
     "start": "nest start",
+    "prestart:dev": "pnpm run build:deps",
     "start:dev": "nest start --watch",
+    "prestart:dev:proxy": "pnpm run build:deps",
     "start:dev:proxy": "cross-env HOST=127.0.0.1 PORT=3001 nest start --watch",
+    "prestart:dev:debug": "pnpm run build:deps",
     "start:debug": "nest start --debug --watch",
+    "prestart:prod": "pnpm run build:deps",
     "start:prod": "node dist/main",
     "lint": "eslint \"{src,apps,libs,test}/**/*.ts\" --fix",
     "test": "jest",
@@ -22,6 +29,7 @@
   },
   "dependencies": {
     "@mint/config": "workspace:^",
+    "@mint/gamestudio-api": "workspace:^",
     "@mint/slots": "workspace:^",
     "@mint/types": "workspace:^",
     "@nestjs/axios": "^4.0.1",
@@ -42,7 +50,8 @@
     "reflect-metadata": "^0.2.2",
     "rxjs": "^7.8.1",
     "telegram": "^2.26.22",
-    "tweetnacl": "^1.0.3"
+    "tweetnacl": "^1.0.3",
+    "@mint/game-internal": "workspace:^"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3.2.0",

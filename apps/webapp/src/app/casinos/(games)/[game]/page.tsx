@@ -31,7 +31,7 @@ export default async function Page({ params }: NextPageProps) {
   // 3. If this is a Mint game, also fetch init spin & config
   if (game.provider === 'mint') {
     try {
-      initial = await apiFetch(`/games/${gameParam}/init`);
+      initial = await apiFetch(`/games/mint/${gameParam}/init`);
     } catch (e: any) {
       // Could show an error page or fallback
       // redirect('/error');

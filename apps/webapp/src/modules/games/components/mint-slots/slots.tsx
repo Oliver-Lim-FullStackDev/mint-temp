@@ -56,8 +56,8 @@ export default function Slots({ initial, onSpinStart, onSpinEnd, onWin, result, 
 
     // init balances only
     slotInstanceRef.current.init({
-      spinsRemaining: initial.balances.SPN,
-      credits: initial.balances.SPN,
+      spinsRemaining: initial.balances.SPN ?? 0,
+      credits: initial.balances.SPN ?? 0,
     });
   }, []);
 

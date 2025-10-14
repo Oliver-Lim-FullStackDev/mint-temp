@@ -69,7 +69,8 @@
     "ton": "^13.9.0",
     "use-debounce": "^10.0.5",
     "uuid": "^11.1.0",
-    "zustand": "^5.0.7"
+    "zustand": "^5.0.7",
+    "@mint/game-internal": "workspace:^"
   },
   "devDependencies": {
     "@mint/infra": "workspace:*",

@@ -12,17 +12,7 @@ import { SharedModule } from '../../shared/shared.module';
 @Module({
   imports: [WalletAddressesModule, SessionModule, SharedModule],
   controllers: [TransactionController, ReceiptsController],
-  providers: [
-    TransactionService,
-    TonPurchaseService,
-    StarsPurchaseService,
-    ReceiptsService,
-  ],
-  exports: [
-    TransactionService,
-    TonPurchaseService,
-    StarsPurchaseService,
-    ReceiptsService,
-  ],
+  providers: [TransactionService, TonPurchaseService, StarsPurchaseService, ReceiptsService],
+  exports: [TransactionService, TonPurchaseService, StarsPurchaseService, ReceiptsService],
 })
 export class TransactionModule {}

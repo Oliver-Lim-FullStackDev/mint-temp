@@ -177,18 +177,44 @@ export const ProfileSummary: React.FC<ProfileSummaryProps> = ({ apiConfig }) => 
         {user?.displayName || user?.player?.username || 'MINT User'}
       </Typography>
 
-      <Box
-        sx={{
-          display: 'flex',
-          justifyContent: 'center',
-          width: '100%',
-          position: 'relative',
-          zIndex: 2
-        }}
-        onClick={!isTonConnected ? handleTonConnectClick : undefined}
-      >
-        <TonConnectButton />
-      </Box>
+      {isTonConnected && (
+        <Box
+          sx={{
+            display: 'flex',
+            justifyContent: 'center',
+            width: '100%',
+            position: 'relative',
+            zIndex: 2
+          }}
+        >
+          <Button
+            variant="outlined"
+            size="medium"
+            onClick={handleDisconnectWallet}
+            startIcon={<Iconify icon="material-symbols:logout" />}
+            sx={{
+              borderRadius: '20px',
+              px: 3,
+              py: 1,
+              borderColor: 'rgba(255, 255, 255, 0.2)',
+              color: '#FFFFFF',
+              backgroundColor: 'rgba(255, 255, 255, 0.05)',
+              backdropFilter: 'blur(4px)',
+              '&:hover': {
+                backgroundColor: 'rgba(255, 255, 255, 0.1)',
+                borderColor: 'rgba(255, 255, 255, 0.3)',
+              },
+              fontFamily: 'Red Hat Text',
+              fontWeight: 600,
+              fontSize: '14px',
+              textTransform: 'none',
+              minWidth: 'auto',
+            }}
+          >
+            Disconnect Wallet
+          </Button>
+        </Box>
+      )}
 
       {/* Referral Section */}
       {/* <ReferralSection referralCount={referralCount} referralLink={referralLink} shouldHighlight={state.openedFromInvite} /> */}

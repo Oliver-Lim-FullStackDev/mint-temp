@@ -28,7 +28,7 @@ export function formatMBX(value: number, locale: string = 'en-US'): string {
   if (value < 10000) {
     // 0 – 9,999.99 → full number with 2 decimals
     return new Intl.NumberFormat(numberFormatLocale, {
-      minimumFractionDigits: 0,
+      minimumFractionDigits: 2,
       maximumFractionDigits: 2,
     }).format(Math.floor(value * 100) / 100);
   } else {

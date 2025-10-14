@@ -11,7 +11,7 @@ type RewardMap = Record<string, number>;
 type MultiplierRow = {
   key: string;
   label: string;
-  multiplier: number;
+  multiplier?: number;
   imageUrl: string;
 };
 
@@ -19,7 +19,7 @@ type WinComboRow = {
   key: string;
   label: string;
   imageUrl: string;
-  rewards: RewardMap;
+  rewards?: RewardMap;
   special?: boolean;
 };
 
@@ -91,7 +91,7 @@ export function MintGameSlotsWinsTable(props: Props) {
           sx={{ pb: 0.5 }}
         >
           {visuals.multipliers.map((m) => {
-            const mult = trimTrailingZeroDecimal(m.multiplier);
+            const mult = trimTrailingZeroDecimal(m.multiplier ?? 0);
             return (
               <GlassBox
                 key={m.key}

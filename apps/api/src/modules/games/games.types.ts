@@ -7,7 +7,6 @@ export interface Game {
   imageUrl: string;
   titleUrl: string;
 
-
   // rtp: string;
   // hideRtp: boolean;
   // volatility: string;

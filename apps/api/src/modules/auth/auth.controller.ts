@@ -82,7 +82,10 @@ export class AuthController {
    * @returns User data after successful authentication
    */
   @Post('telegram')
-  async authenticateTelegram(@Body() dto: TelegramAuthDto, @Res({ passthrough: true }) res: ExpressResponse): Promise<User> {
+  async authenticateTelegram(
+    @Body() dto: TelegramAuthDto,
+    @Res({ passthrough: true }) res: ExpressResponse,
+  ): Promise<User> {
     const user = await this.auth.authenticateTelegram(dto);
 
     if (!user) {

@@ -1,16 +1,15 @@
 'use client';
 
-import { InfoDialog } from '@/components/core';
-import { PageHeader } from '@/components/headers/page-header';
-import { useInfoDialog } from '@/hooks/useInfoDialog';
+import type { StoreItem } from './types';
 import { Box, Container } from '@mint/ui/components';
 import Loader from '@mint/ui/components/loading-screen/loader';
-import { RankingShareButton } from '../account/components/ranking-share-button';
+import { useInfoDialog } from '@/hooks/useInfoDialog';
+import { InfoDialog } from '@/components/core';
+import { PageHeader } from '@/components/headers/page-header';
 import ErrorState from './components/error-state';
 import ItemsList from './components/items-list';
 import PurchaseSuccessModal from './components/purchase-success-modal';
 import { useStore } from './store.service';
-import type { StoreItem } from './types';
 
 type StoreProps = {
   initialItems?: StoreItem[];
@@ -85,9 +84,6 @@ export default function Store({ initialItems }: StoreProps = {}) {
         title={title}
         content={content}
       />
-      <Box sx={{ mt: 2 }}>
-        <RankingShareButton />
-      </Box>
     </Container>
   );
 }

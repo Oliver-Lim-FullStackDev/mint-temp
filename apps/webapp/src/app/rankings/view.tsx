@@ -7,7 +7,6 @@ import RankingInfoHeader from '@/modules/account/components/ranking-info-header'
 import RankingTabSelector from '@/modules/account/components/ranking-tab-selector';
 import { RankedListContent } from '@/components/list/rankings/ranked-list';
 import TopRankedList from '@/components/list/rankings/top-ranked-list';
-import { RankingShareButton } from '@/modules/account/components/ranking-share-button';
 
 export interface LeaderBoardListItem {
   id: string;
@@ -52,8 +51,8 @@ function LeaderboardsView({ list = [], loading = false }: LeaderboardsViewProps)
         <RankedListContent list={list} loading={loading} />
       </Stack>
 
-      {/* Share Button */}
-      <RankingShareButton />
+      {/* Share Button  - Disabled until v1.4 release
+      <RankingShareButton />*/}
     </Box>
   );
 }

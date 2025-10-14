@@ -9,7 +9,10 @@ export interface MintGameResult {
   data: unknown;
 }
 
-export abstract class MintGameEngine<TConfig = unknown, TResult extends MintGameResult = MintGameResult> {
+export abstract class MintGameEngine<
+  TConfig = unknown,
+  TResult extends MintGameResult = MintGameResult,
+> {
   protected config: TConfig;
   protected rng: () => number;
 
