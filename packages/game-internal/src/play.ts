@@ -1,4 +1,4 @@
-import type { PlayerQuery } from '@mint/gamestudio-api';
+import type { PlayerQuery } from './bridge';
 import type { RandomnessType } from './randomness';
 
 export interface GamePlayRequest<RequestContext = unknown> extends PlayerQuery<RequestContext> {

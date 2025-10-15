@@ -1,4 +1,4 @@
-import type { PlayerContext } from '@mint/gamestudio-api';
+import type { PlayerContext } from './bridge';
 
 export type RandomnessType = 'VRF' | 'PF' | 'ON_CHAIN';
 

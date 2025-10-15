@@ -9,7 +9,10 @@
     "dist"
   ],
   "scripts": {
+    "prebuild": "pnpm --filter @mint/game-internal build",
     "build": "tsc -p tsconfig.json"
   },
-  "dependencies": {}
+  "dependencies": {
+    "@mint/game-internal": "workspace:*"
+  }
 }

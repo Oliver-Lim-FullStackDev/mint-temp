@@ -11,11 +11,7 @@
     "resolveJsonModule": true,
     "skipLibCheck": true,
     "strict": true,
-    "baseUrl": ".",
-    "paths": {
-      "@mint/gamestudio-api": ["../gamestudio-api/dist/index.d.ts"],
-      "@mint/gamestudio-api/*": ["../gamestudio-api/dist/*"]
-    }
+    "baseUrl": "."
   },
   "include": ["src/**/*"],
   "exclude": ["dist"]

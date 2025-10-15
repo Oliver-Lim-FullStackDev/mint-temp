@@ -10,7 +10,12 @@
     "rootDir": "src",
     "resolveJsonModule": true,
     "skipLibCheck": true,
-    "strict": true
+    "strict": true,
+    "baseUrl": ".",
+    "paths": {
+      "@mint/game-internal": ["../game-internal/dist/index.d.ts"],
+      "@mint/game-internal/*": ["../game-internal/dist/*"]
+    }
   },
   "include": ["src/**/*"],
   "exclude": ["dist"]
