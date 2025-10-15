@@ -9,10 +9,6 @@
     "dist"
   ],
   "scripts": {
-    "prebuild": "pnpm --filter @mint/gamestudio-api build",
     "build": "tsc -p tsconfig.json"
-  },
-  "dependencies": {
-    "@mint/gamestudio-api": "workspace:*"
   }
 }

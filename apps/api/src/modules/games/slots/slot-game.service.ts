@@ -1,18 +1,16 @@
 import type { Request } from 'express';
 
 import {
-  GameStudioApi,
+  GameBridge,
+  GameDefinition,
   GameStudioError,
   InsufficientBalanceError,
-  PlayerProvider,
-  PlayerUnauthorizedError,
-  PaymentsAdapter,
-  GameDefinition,
-} from '@mint/gamestudio-api';
-import {
+  MintSlotsRuntime,
   GameInitResponse,
   GamePlayResponse,
-  MintSlotsRuntime,
+  PaymentsAdapter,
+  PlayerProvider,
+  PlayerUnauthorizedError,
   RandomnessStrategy,
   mintySpinsConfig,
   SlotGameConfig,
@@ -29,7 +27,7 @@ import type { Currency } from '../../wallet/dto/currency.dto';
 
 @Injectable({ scope: Scope.REQUEST })
 export class SlotGameService {
-  private readonly bridge: GameStudioApi<Request, SlotGameConfig>;
+  private readonly bridge: GameBridge<Request, SlotGameConfig>;
   private readonly runtime: MintSlotsRuntime<Request>;
   private readonly definition: GameDefinition<SlotGameConfig> = {
     studioId: 'mint',
@@ -84,7 +82,7 @@ export class SlotGameService {
 
     const randomness: RandomnessStrategy<Request> = new ProvablyFairRandomnessStrategy(this.pfService);
 
-    this.bridge = new GameStudioApi<Request, SlotGameConfig>({
+    this.bridge = new GameBridge<Request, SlotGameConfig>({
       definition: this.definition,
       playerProvider,
       payments,
