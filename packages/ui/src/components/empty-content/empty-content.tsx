@@ -1,17 +1,9 @@
-// @ts-nocheck
-import type { BoxProps } from '@mui/material/Box';
-import type { Theme, SxProps } from '@mui/material/styles';
-import type { TypographyProps } from '@mui/material/Typography';
-
+import React from 'react';
 import { varAlpha } from 'minimal-shared/utils';
 
-import Box from '@mui/material/Box';
-import { styled } from '@mui/material/styles';
-import Typography from '@mui/material/Typography';
+import { Box, Typography } from '../core';
 
-import { CONFIG } from 'src/global-config';
-
-// ----------------------------------------------------------------------
+import type { Theme, SxProps, BoxProps, TypographyProps } from '../core';
 
 export type EmptyContentProps = React.ComponentProps<'div'> & {
   title?: string;
@@ -31,28 +23,68 @@ export function EmptyContent({
   sx,
   imgUrl,
   action,
-  filled,
+  filled = false,
   slotProps,
   description,
   title = 'No data',
   ...other
 }: EmptyContentProps) {
+  const baseSx: SxProps<Theme> = {
+    flexGrow: 1,
+    height: '100%',
+    display: 'flex',
+    alignItems: 'center',
+    flexDirection: 'column',
+    justifyContent: 'center',
+    px: 3,
+  };
+
+  const filledSx: SxProps<Theme> = filled
+    ? {
+      borderRadius: (theme: Theme) => {
+        const br = theme.shape.borderRadius;
+        const num = typeof br === 'number' ? br : parseFloat(br as string);
+        return num * 2;
+      },
+      backgroundColor: (theme: Theme) =>
+        // @ts-ignore
+        varAlpha(theme.vars.palette.grey['500Channel'], 0.04),
+      border: (theme: Theme) =>
+        `dashed 1px ${varAlpha(
+          // @ts-ignore
+          theme.vars.palette.grey['500Channel'],
+          0.08
+        )}`,
+    }
+    : {};
+
+  const mergeSx = (propSx?: SxProps<Theme>) =>
+    propSx
+      ? Array.isArray(propSx)
+        ? propSx
+        : [propSx]
+      : [];
+
+  const imgSx = mergeSx(slotProps?.img?.sx);
+  const titleSx = mergeSx(slotProps?.title?.sx);
+  const descSx = mergeSx(slotProps?.description?.sx);
+
   return (
-    <ContentRoot filled={filled} sx={sx} {...other}>
+    <Box
+      component="div"
+      {...other}
+      sx={[baseSx, filledSx, ...(Array.isArray(sx) ? sx : sx ? [sx] : [])]}
+    >
       <Box
         component="img"
         alt="Empty content"
-        src={imgUrl ?? `${CONFIG.assetsDir}/assets/icons/empty/ic-content.svg`}
+        src={
+          imgUrl ||
+          // `${CONFIG.assetsDir}/assets/icons/empty/ic-content.svg`
+          `${process.env.NEXT_PUBLIC_ASSETS_DIR}/assets/icons/empty/ic-content.svg`
+        }
         {...slotProps?.img}
-        sx={[
-          {
-            width: 1,
-            maxWidth: 160,
-          },
-          ...(Array.isArray(slotProps?.img?.sx)
-            ? (slotProps?.img?.sx ?? [])
-            : [slotProps?.img?.sx]),
-        ]}
+        sx={[{ width: 1, maxWidth: 160 }, ...imgSx]}
       />
 
       {title && (
@@ -60,14 +92,8 @@ export function EmptyContent({
           variant="h6"
           {...slotProps?.title}
           sx={[
-            {
-              mt: 1,
-              textAlign: 'center',
-              color: 'text.disabled',
-            },
-            ...(Array.isArray(slotProps?.title?.sx)
-              ? (slotProps?.title?.sx ?? [])
-              : [slotProps?.title?.sx]),
+            { mt: 1, textAlign: 'center', color: 'text.disabled' },
+            ...titleSx,
           ]}
         >
           {title}
@@ -79,40 +105,15 @@ export function EmptyContent({
           variant="body2"
           {...slotProps?.description}
           sx={[
-            {
-              mt: 1,
-              textAlign: 'center',
-              color: 'text.disabled',
-            },
-            ...(Array.isArray(slotProps?.description?.sx)
-              ? (slotProps?.description?.sx ?? [])
-              : [slotProps?.description?.sx]),
+            { mt: 1, textAlign: 'center', color: 'text.disabled' },
+            ...descSx,
           ]}
         >
           {description}
         </Typography>
       )}
 
-      {action && action}
-    </ContentRoot>
+      {action}
+    </Box>
   );
 }
-
-// ----------------------------------------------------------------------
-
-const ContentRoot = styled('div', {
-  shouldForwardProp: (prop: string) => !['filled', 'sx'].includes(prop),
-})<Pick<EmptyContentProps, 'filled'>>(({ filled, theme }) => ({
-  flexGrow: 1,
-  height: '100%',
-  display: 'flex',
-  alignItems: 'center',
-  flexDirection: 'column',
-  justifyContent: 'center',
-  padding: theme.spacing(0, 3),
-  ...(filled && {
-    borderRadius: theme.shape.borderRadius * 2,
-    backgroundColor: varAlpha(theme.vars.palette.grey['500Channel'], 0.04),
-    border: `dashed 1px ${varAlpha(theme.vars.palette.grey['500Channel'], 0.08)}`,
-  }),
-}));

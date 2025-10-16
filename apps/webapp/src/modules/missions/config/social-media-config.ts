@@ -5,7 +5,6 @@ export enum SocialNetwork {
   X = 'x',
   INSTAGRAM = 'instagram',
   TIKTOK = 'tiktok',
-  TELEGRAM = 'telegram',
 }
 
 export interface SocialPlatformConfig {
@@ -40,7 +39,6 @@ export interface SocialMediaMissionConfig {
 export const SOCIAL_MEDIA_CONFIG: SocialMediaMissionConfig = {
   campaignPatterns: [
     'follow-mintdotio-social-',
-    'join-announcement-social-channel',
   ],
 
   platforms: {
@@ -58,11 +56,6 @@ export const SOCIAL_MEDIA_CONFIG: SocialMediaMissionConfig = {
       url: 'https://www.tiktok.com/@mintdotio',
       accountName: '@mintdotio',
       icon: 'socials:tiktok',
-    },
-    [SocialNetwork.TELEGRAM]: {
-      url: 'https://t.me/MintDOTio',
-      accountName: '@MintDOTio',
-      icon: 'eva:message-circle-fill',
     },
   },
 
@@ -89,11 +82,6 @@ export function shouldUseSocialMediaWorkflow(campaignKey: string): boolean {
 // Helper function to get platform from campaign key
 export function getPlatformFromCampaignKey(campaignKey: string): SocialNetwork {
   const key = campaignKey.toLowerCase();
-
-  // Special case for Telegram announcement channel
-  if (key === 'join-announcement-social-channel') {
-    return SocialNetwork.TELEGRAM;
-  }
 
   // Check for new format: "follow-mintdotio-social-<platform>"
   if (key.includes('follow-mintdotio-social-')) {

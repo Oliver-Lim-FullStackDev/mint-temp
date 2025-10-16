@@ -9,14 +9,6 @@ export interface TonPurchaseRequest {
   username: string;
 }
 
-export interface StarsPurchaseRequest {
-  itemId: string;
-  amount: number;
-  transactionId: string;
-  username: string;
-  playerId?: string;
-}
-
 export interface PurchaseResponse {
   success: boolean;
   purchaseId?: string;
@@ -34,24 +26,6 @@ export function useTonPurchase() {
 
       if (!response.ok) {
         throw new Error('Failed to store TON purchase');
-      }
-
-      return response.json();
-    },
-  });
-}
-
-export function useStarsPurchase() {
-  return useMutation({
-    mutationFn: async (data: StarsPurchaseRequest): Promise<PurchaseResponse> => {
-      const response = await fetch('/api/store/purchase/stars', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(data),
-      });
-
-      if (!response.ok) {
-        throw new Error('Failed to store Stars purchase');
       }
 
       return response.json();

@@ -6,10 +6,10 @@ import {
   PaymentAuthorizeRequest,
   PaymentAuthorizeResponse,
   PaymentTransferRequest,
-  PaymentTransferResponse,
+  PaymentTransferResponse
 } from '../../shared/hero-gaming.types';
 import { extractSpinsFromItemId } from './utils';
-import { SubProvider } from './types';
+import { SubProvider } from 'src/modules/payments/shared/payment.types';
 
 export interface TransactionData {
   amount_cents: string;
@@ -95,9 +95,7 @@ export class TransactionService {
    */
   async transferTransaction(data: PaymentTransferRequest): Promise<TransactionResult> {
     try {
-      this.logger.log(
-        `Transferring transaction ${data.transaction_id} for user ${data.username} with auth_code: ${data.auth_code}`,
-      );
+      this.logger.log(`Transferring transaction ${data.transaction_id} for user ${data.username} with auth_code: ${data.auth_code}`);
 
       const response = await fetch(`${this.baseUrl}${HeroGamingApiRoutes.paymentsTransfer}`, {
         method: 'POST',
@@ -332,9 +330,104 @@ export class TransactionService {
   }
 
   /**
+   * Process Crypto purchase (deposits via txn.pro)
+   */
+  async processCryptoPurchase(
+    amount: number,
+    currency: string,
+    transactionId: string,
+    username: string,
+    txHash: string,
+    provider: string, // Provider name (txn.pro, ston.fi, epocket, etc.)
+  ): Promise<TransactionResult> {
+    let authCode: string | undefined;
+
+    try {
+      this.logger.log(`Processing on-ramp: ${amount} ${currency} for user ${username} via ${provider}`);
+
+      // Determine sub_provider based on provider and currency
+      const subProvider = this.getSubProviderFromProvider(provider, currency);
+
+      // Convert amount to cents
+      const amountCents = Math.floor(amount * 100).toString();
+
+      // Step 1: Authorize the transaction
+      const authorizeData: PaymentAuthorizeRequest = {
+        amount_cents: amountCents,
+        currency: currency.toUpperCase(),
+        transaction_id: transactionId,
+        username: username,
+        sub_provider: subProvider,
+        external_data: {
+          amount: amount.toString(),
+          original_currency: currency,
+          tx_hash: txHash,
+          provider: provider,
+        },
+      };
+
+      this.logger.log(`Authorizing: ${amountCents} cents in ${currency} (sub_provider: ${subProvider})`);
+
+      const authorizeResult = await this.authorizeTransaction(authorizeData);
+      if (!authorizeResult.success) {
+        return {
+          success: false,
+          error: authorizeResult.error || 'Failed to authorize transaction',
+        };
+      }
+
+      authCode = authorizeResult.authCode;
+
+      // Step 2: Transfer the transaction
+      const transferData: PaymentTransferRequest = {
+        username: username,
+        currency: currency.toUpperCase(),
+        transaction_id: transactionId,
+        sub_provider: subProvider,
+        status: 'accepted',
+        auth_code: authCode!,
+      };
+
+      const transferResult = await this.transferTransaction(transferData);
+
+      if (!transferResult.success) {
+        // If transfer fails, cancel the transaction
+        this.logger.warn(`Transfer failed for transaction ${transactionId}, canceling...`);
+        await this.cancelTransaction(username, transactionId, authCode!);
+        return transferResult;
+      }
+
+      this.logger.log(`✅ On-ramp transaction completed: ${amount} ${currency} for ${username}`);
+
+      return transferResult;
+    } catch (error) {
+      this.logger.error('Error processing Crypto purchase:', error);
+
+      // If we have an auth code, cancel the transaction
+      if (authCode) {
+        this.logger.warn(`Canceling transaction ${transactionId} due to error`);
+        try {
+          await this.cancelTransaction(username, transactionId, authCode);
+        } catch (cancelError) {
+          this.logger.error('Failed to cancel transaction:', cancelError);
+        }
+      }
+
+      return {
+        success: false,
+        error: `Failed to process Crypto purchase: ${error instanceof Error ? error.message : 'Unknown error'}`,
+      };
+    }
+  }
+
+  /**
    * Cancel a transaction by sending cancel status
    */
-  private async cancelTransaction(username: string, transactionId: string, authCode: string): Promise<void> {
+  private async cancelTransaction(
+    username: string,
+    transactionId: string,
+    authCode: string,
+  ): Promise<void> {
     try {
       this.logger.log(`Canceling transaction ${transactionId} for user ${username}`);
 
@@ -365,6 +458,35 @@ export class TransactionService {
     } catch (error) {
       this.logger.error('Error canceling transaction:', error);
       throw error; // Re-throw to let caller handle it
+    }
+  }
+
+  /**
+   * Determine SubProvider from payment provider and currency
+   */
+  private getSubProviderFromProvider(provider: string, currency: string): string {
+    // Map provider to SubProvider
+    const currencyUpper = currency.toUpperCase();
+
+    if (currencyUpper === 'TON') {
+      return SubProvider.TON;
+    } else if (currencyUpper === 'STARS') {
+      return SubProvider.STARS;
+    } else {
+      // For all other currencies (USDT, BTC, ETH, USD, EUR, TRY, etc.)
+      // Use a generic identifier based on the provider
+      switch (provider) {
+        case 'txn.pro':
+          return 'TXN';
+        case 'ston.fi':
+          return 'STON';
+        case 'epocket':
+          return 'ePocket';
+        case 'rhino.fi':
+          return 'Rhino';
+        default:
+          return SubProvider.CRYPTO; // Fallback
+      }
     }
   }
 }

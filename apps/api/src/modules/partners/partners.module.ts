@@ -4,9 +4,9 @@ import { PartnersService, PartnerAuthService } from './services';
 import { SharedModule } from 'src/shared/shared.module';
 
 @Module({
-  imports: [SharedModule],
-  controllers: [PartnersController],
-  providers: [PartnersService, PartnerAuthService],
-  exports: [PartnersService, PartnerAuthService],
+    imports: [SharedModule],
+    controllers: [PartnersController],
+    providers: [PartnersService, PartnerAuthService],
+    exports: [PartnersService, PartnerAuthService],
 })
 export class PartnersModule {}

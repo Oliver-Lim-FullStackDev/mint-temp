@@ -1,5 +1,3 @@
-export const dynamic = "force-dynamic";
-
 import type { Metadata } from 'next';
 import { CasinoView } from '@/app/casinos/(main)/view';
 import type { Game } from '@/modules/games/games.types';

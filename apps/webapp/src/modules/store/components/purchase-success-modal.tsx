@@ -6,7 +6,7 @@ import {
   Dialog,
   DialogContent,
   Typography
-} from '@mint/ui';
+} from '@mint/ui/components/core';
 import { useRouter } from 'next/navigation';
 import { CurrentPurchaseWithSecret } from '../types';
 import { paths } from '@/routes/paths';
@@ -20,9 +20,6 @@ export default function PurchaseSuccessModal({ currentPurchase, onClose }: Purch
   const router = useRouter();
 
   if (!currentPurchase.item) return null;
-
-  // Check if this is a free purchase
-  const isFreePurchase = currentPurchase.item.price.usd === 0 && currentPurchase.item.price.stars === 0;
 
   // Extract spins from item ID for the message
   const getSpinsFromItem = (itemId: string) => {

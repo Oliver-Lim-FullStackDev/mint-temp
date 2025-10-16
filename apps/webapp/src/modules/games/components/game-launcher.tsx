@@ -6,10 +6,9 @@ import { useEffect, useMemo, useRef } from 'react';
 import IframeResizer from '@iframe-resizer/react';
 import { useRouter } from "next/navigation";
 import { getServerSession } from '@mint/client';
-import { Box } from '@mint/ui';
+import { Box } from '@mint/ui/components/core';
 import { paths } from '@/routes/paths';
 import { useSession, useSetSession } from '@/modules/account/session-store';
-import { useTelegramBackButton } from '@/hooks/useTelegramBackButton';
 
 function buildGameUrl(args: {
   gameId: string; serverUrl: string; brand: string; clientType: string;
@@ -51,9 +50,6 @@ export function GameLauncher({ game, mode }: { game: Game; mode: string }) {
     });
   }, [game?.id, token, mode]);
 
-  const goBack = () => router.push(paths.casinos.root);
-  useTelegramBackButton(true, goBack);
-
   useEffect(() => {
     if (!gameUrl) {
       return;
@@ -79,7 +75,7 @@ export function GameLauncher({ game, mode }: { game: Game; mode: string }) {
 
   return (
     <Box display="flex" flexDirection="column" flex={1} minHeight={0} sx={{ bgcolor: '#000', mx: -2 }}>
-      <Box sx={{ position: 'relative', flex: 1, display: 'flex', marginBottom: 'var(--tg-safe-area-inset-bottom)' }}>
+      <Box sx={{ position: 'relative', flex: 1, display: 'flex', marginBottom: 'env(safe-area-inset-bottom, 0px)' }}>
         <IframeResizer
           src={gameUrl}
           sandbox="allow-scripts allow-same-origin allow-modals allow-popups allow-presentation allow-forms"

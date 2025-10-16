@@ -14,7 +14,6 @@ export const paths = {
   rankings: '/rankings',
   earn: '/earn',
   store: '/store',
-  onboarding: '/onboarding',
 
   support: '/support',
   about: '/about-us',

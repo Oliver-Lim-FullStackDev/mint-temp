@@ -1,7 +1,7 @@
 import { Injectable, Logger, OnModuleDestroy } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
-import { TelegramClient } from 'telegram';
-import { StringSession } from 'telegram/sessions';
+import { TelegramClient } from "telegram";
+import { StringSession } from "telegram/sessions";
 import { Api } from 'telegram/tl';
 
 @Injectable()
@@ -62,7 +62,7 @@ export class StarsConversionService implements OnModuleDestroy {
       // Cache the result
       this.starsRateCache = {
         rate,
-        timestamp: Date.now(),
+        timestamp: Date.now()
       };
 
       this.logger.log(`Stars rate updated: ${rate} cents per 1000 stars`);
@@ -207,7 +207,7 @@ export class StarsConversionService implements OnModuleDestroy {
 
     return {
       hasCache: true,
-      age: Date.now() - this.starsRateCache.timestamp,
+      age: Date.now() - this.starsRateCache.timestamp
     };
   }
 

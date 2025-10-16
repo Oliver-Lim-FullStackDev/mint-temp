@@ -1,8 +1,8 @@
+import { Text } from '@mint/ui/components';
+import { Box, Card, CardProps, Link } from '@mint/ui/components/core';
+import { useTheme } from '@mint/ui/components/core/styles';
+import { RouterLink } from '@mint/ui/minimals/routes/components';
 import BadgeBox from '@/components/button/badge-box';
-import { Text } from '@/components/core';
-import { Box, Card, CardProps, Link } from '@mint/ui';
-import { RouterLink } from '@mint/ui/routes/components';
-import { useTheme } from '@mui/material';
 import type { Game } from "../games.types";
 
 type GamesListItemProps = CardProps & {
@@ -56,15 +56,15 @@ function GameContent({ game }: { game: Game }) {
       >
         <img src="/logo/logo-full.svg" alt="MINT" width="29.47%" />
         {game?.provider === 'coming-soon' && (
-          <BadgeBox 
-            isSmall 
-            borderRadius="999px" 
-            bold 
-            textVariant='body4' 
-            sx={{ position: 'absolute', bottom: '35px' }} 
-            badgeText={'Coming Soon'} 
-            color="#000000" 
-            bgColor="#00FCF7" 
+          <BadgeBox
+            isSmall
+            borderRadius="999px"
+            bold
+            textVariant='body4'
+            sx={{ position: 'absolute', bottom: '35px' }}
+            badgeText={'Coming Soon'}
+            color="#000000"
+            bgColor="#00FCF7"
           />
         )}
         <Box>
@@ -92,7 +92,7 @@ export function GamesListItem({ game, detailsHref, sx, ...other }: GamesListItem
       ...sx, position: 'relative',
       border: '0.5px solid color(display-p3 1 1 1 / 0.10)',
       borderRadius: 1,
-      boxShadow: theme.vars.customShadows.z16,
+      boxShadow: theme.shadows[16],
 
       aspectRatio: '658 / 1000',
       overflow: 'hidden',

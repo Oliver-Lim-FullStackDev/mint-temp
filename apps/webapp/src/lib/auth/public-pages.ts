@@ -24,7 +24,6 @@ const publicPrefixes = [
   paths.casinos.root,
   `${paths.casinos.root}/*`,
   paths.earn,
-  paths.onboarding,
   paths.store,
   paths.rankings,
 ];

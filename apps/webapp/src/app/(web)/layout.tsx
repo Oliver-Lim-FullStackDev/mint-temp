@@ -1,9 +1,8 @@
-import { MainLayout } from '@/layouts/web/main/layout';
+import React from 'react';
+import { ServerMainLayout } from '@/layouts/web/main/layout.server';
 
-type Props = {
-  children: React.ReactNode
-};
+type NextLayoutProps = import('.next/types/app/(web)/layout').LayoutProps;
 
-export default function Layout({ children }: Props) {
-  return <MainLayout>{children}</MainLayout>;
+export default async function Layout({ children }: NextLayoutProps) {
+  return <ServerMainLayout>{children}</ServerMainLayout>;
 }

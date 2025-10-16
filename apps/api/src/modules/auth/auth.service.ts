@@ -2,6 +2,7 @@
 import { TonProofPayload } from '@mint/types';
 import { Inject, Injectable, UnauthorizedException } from '@nestjs/common';
 import { REQUEST } from '@nestjs/core';
+import { PrivyClient } from '@privy-io/server-auth';
 import { Request } from 'express';
 import { HeroGamingApiRoutes } from 'src/shared/hero-gaming-api-routes';
 import { HeroGamingClient } from 'src/shared/hero-gaming.client';
@@ -18,6 +19,7 @@ const nonceStorage: Map<string, string> = new Map();
 @Injectable()
 export class AuthService {
   private readonly telegramBotToken: string;
+  private readonly privyClient: PrivyClient | null = null;
 
   constructor(
     private readonly hg: HeroGamingClient,
@@ -28,6 +30,14 @@ export class AuthService {
     this.telegramBotToken = process.env.TELEGRAM_BOT_TOKEN || '';
     if (!this.telegramBotToken) {
       console.warn('TELEGRAM_BOT_TOKEN is not set. Telegram authentication will not work.');
+    }
+
+    const appId = process.env.PRIVY_APP_ID;
+    const appSecret = process.env.PRIVY_APP_SECRET;
+    if (appId && appSecret) {
+      this.privyClient = new PrivyClient(appId, appSecret);
+    } else {
+      console.warn('PRIVY_APP_ID or PRIVY_APP_SECRET is not set. Privy verification will not work.');
     }
   }
 
@@ -121,6 +131,7 @@ export class AuthService {
     const clientType = extractClientType(this.request);
     const tgUserPic = await getTgUserPic(isValidTGUser.id!);
 
+
     const telegramRegisterPayload: Record<string, any> = {
       username: username,
       country_code: process.env.HEROGAMING_FRONTEND_COUNTRY_CODE || 'GB',
@@ -207,5 +218,23 @@ export class AuthService {
     // Remove the used nonce after successful verification
     nonceStorage.delete(wallet?.address);
     return await Promise.resolve();
+  }
+
+  /**
+   * Verify Privy identity token server-side and return the Privy user
+   * @param idToken - Privy identity token
+   */
+  async verifyPrivyToken(idToken: string): Promise<any> {
+    if (!this.privyClient) {
+      throw new UnauthorizedException('Privy client not configured on server');
+    }
+
+    try {
+      const user = await this.privyClient.verifyAuthToken(idToken);
+      return user;
+    } catch (error) {
+      console.error('Invalid Privy identity token:', error);
+      throw new UnauthorizedException('Authentication failed');
+    }
   }
 }

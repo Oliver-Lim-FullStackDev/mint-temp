@@ -1,5 +1,3 @@
-export const dynamic = "force-dynamic";
-
 import { Store } from '@/modules/store';
 import { getStoreItems } from '@/modules/store/server';
 

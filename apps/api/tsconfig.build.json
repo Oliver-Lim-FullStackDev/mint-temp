@@ -1,20 +1,4 @@
 {
   "extends": "./tsconfig.json",
-  "compilerOptions": {
-    "paths": {
-      "@mint/gamestudio-api": [
-        "../../packages/gamestudio-api/dist/index"
-      ],
-      "@mint/gamestudio-api/*": [
-        "../../packages/gamestudio-api/dist/*"
-      ],
-      "@mint/game-internal": [
-        "../../packages/game-internal/dist/index"
-      ],
-      "@mint/game-internal/*": [
-        "../../packages/game-internal/dist/*"
-      ]
-    }
-  },
   "exclude": ["node_modules", "test", "dist", "**/*spec.ts"]
 }

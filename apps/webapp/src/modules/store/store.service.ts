@@ -1,13 +1,10 @@
 'use client';
 
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useCallback } from 'react';
 import { useTonAddress, useTonConnectUI } from '@tonconnect/ui-react';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
-import { useTelegram } from '@/hooks/useTelegram';
-import { useSession } from '@/modules/account/session-store';
-import { useUserAuth } from '@/modules/telegram/context/user-auth-telegram-provider';
 import { useInventory } from '@/hooks/useInventory';
-import { useTonWalletPayment, useTelegramStarsPayment } from '../payment-methods';
+import { useTonWalletPayment } from '../payment-methods';
 import type { StoreItem, Purchase, CurrentPurchaseWithSecret, PaymentMethod } from './types';
 import { SubProvider } from './types/sub-provider.enum';
 
@@ -17,16 +14,8 @@ export function useStore(shouldLoadItems: boolean = false, initialItems?: StoreI
   const connected = !!address;
   const queryClient = useQueryClient();
 
-  // Session hook
-  const { session } = useSession();
-  const { user } = useUserAuth();
-
-  // Telegram integration
-  const { initialized: telegramInitialized, userId: telegramUserId, error: telegramError, WebApp } = useTelegram();
-
   // Payment method services
   const tonWalletPayment = useTonWalletPayment();
-  const telegramStarsPayment = useTelegramStarsPayment();
 
   // Inventory hook
   const inventory = useInventory();
@@ -46,23 +35,7 @@ export function useStore(shouldLoadItems: boolean = false, initialItems?: StoreI
       icon: tonWalletPayment.config.icon,
       available: tonWalletPayment.isAvailable(),
     },
-    {
-      id: 'telegram-stars',
-      name: telegramStarsPayment.config.displayName,
-      description: 'Pay with Telegram Stars',
-      icon: telegramStarsPayment.config.icon,
-      available: telegramStarsPayment.isAvailable(),
-    },
   ];
-
-
-
-  // Handle Telegram errors
-  useEffect(() => {
-    if (telegramError && telegramInitialized) {
-      setError(telegramError);
-    }
-  }, [telegramError, telegramInitialized]);
 
   // Fetch function for store items (static USD prices only)
   const fetchStoreItems = async (): Promise<StoreItem[]> => {
@@ -75,11 +48,7 @@ export function useStore(shouldLoadItems: boolean = false, initialItems?: StoreI
 
   // Use React Query for fetching items
   const hasPrefetchedItems = Array.isArray(initialItems) && initialItems.length > 0;
-  const shouldFetchItems =
-    Boolean(
-      shouldLoadItems &&
-        ((connected && address) || (telegramInitialized && telegramUserId))
-    ) || hasPrefetchedItems;
+  const shouldFetchItems = Boolean(shouldLoadItems) || hasPrefetchedItems;
 
   const {
     data: items = hasPrefetchedItems ? initialItems : [],
@@ -104,8 +73,6 @@ export function useStore(shouldLoadItems: boolean = false, initialItems?: StoreI
       let result;
       if (paymentMethod === SubProvider.TON) {
         result = await tonWalletPayment.processPurchase(item);
-      } else if (paymentMethod === SubProvider.STARS) {
-        result = await telegramStarsPayment.processPurchase(item);
       } else {
         throw new Error('Invalid payment method');
       }
@@ -118,7 +85,7 @@ export function useStore(shouldLoadItems: boolean = false, initialItems?: StoreI
           type: 'purchase',
           purchase: {
             ...result.purchase,
-            paymentMethod: result.purchase.paymentMethod as 'ton' | 'telegram-stars'
+            paymentMethod: 'ton'
           }
         });
       } else {
@@ -171,11 +138,10 @@ export function useStore(shouldLoadItems: boolean = false, initialItems?: StoreI
   };
 
   const loadItems = useCallback(async () => {
-    // Only fetch items if wallet is connected or Telegram is initialized
-    if ((connected && address) || (telegramInitialized && telegramUserId)) {
+    if (shouldFetchItems) {
       await refetchItems();
     }
-  }, [connected, address, telegramInitialized, telegramUserId, refetchItems]);
+  }, [shouldFetchItems, refetchItems]);
 
   return {
     // State
@@ -186,11 +152,6 @@ export function useStore(shouldLoadItems: boolean = false, initialItems?: StoreI
     modalState,
     connected,
     paymentMethods,
-
-    // Telegram state
-    telegramInitialized,
-    telegramUserId,
-    telegramError,
 
     // Inventory data
     inventory: inventory.inventory,

@@ -2,7 +2,7 @@
 
 import { useUserAuth } from '@/modules/ton/auth/context/user-auth-ton-provider';
 import { useTonAuth } from '@/modules/ton/auth/hooks/useTonAuth';
-import { Box, Typography } from '@mint/ui';
+import { Box, Typography } from '@mint/ui/components/core';
 import { TonConnectButton } from '@tonconnect/ui-react';
 
 
@@ -13,7 +13,7 @@ import { TonConnectButton } from '@tonconnect/ui-react';
  * If authentication is in progress, displays loading message.
  */
 export function TonAuthInfo() {
-  const { user, error, loading, webAppUser, isAuthenticated } = useUserAuth();
+  const { user, error, loading, isAuthenticated } = useUserAuth();
   const { address } = useTonAuth()
 
 
@@ -36,14 +36,6 @@ export function TonAuthInfo() {
           ? <span>Signed in as: <strong>{user.displayName}</strong></span>
           : 'User not verified, please sign again'}
       </Typography>}
-
-      {!!webAppUser?.initData?.length &&
-        <div style={{maxWidth: '700px', overflow: 'scroll'}}>
-          <h1>initData</h1><br/>
-          {JSON.stringify(webAppUser?.initData)}<br/>
-            <h1>initDataUnsafe</h1>
-          {JSON.stringify(webAppUser?.initDataUnsafe)}<br/>
-        </div>}
 
     </Box>
   );

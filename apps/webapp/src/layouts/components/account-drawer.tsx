@@ -1,17 +1,15 @@
 'use client';
 
 import { memo, useEffect, useRef, useState } from 'react';
-import type { IconButtonProps } from '@mint/ui';
-import { Box, Stack, Link, Portal } from '@mint/ui/components';
+import type { IconButtonProps } from '@mint/ui/components/core';
+import { Box, Stack, Link, Portal } from '@mint/ui/components/core';
+import { Text } from '@mint/ui/components';
 import { Scrollbar } from '@mint/ui/components/scrollbar';
-import { RouterLink } from '@mint/ui/routes/components';
-import { HistoryTransactions, LeadershipRanking, ProfileSummary, StreakInfo, SupportSection, TermsPrivacySection } from '@/modules/account/components';
-import RankingProfileSection from '@/modules/account/components/ranking-profile-section';
-import { useUserAuth } from '@/modules/telegram/context/user-auth-telegram-provider';
+import { RouterLink } from '@mint/ui/minimals/routes/components';
+import { HistoryTransactions, ProfileSummary, StreakInfo, SupportSection, TermsPrivacySection } from '@/modules/account/components';
+import { useClearSession, useSession } from '@/modules/account/session-store';
 import { useUI } from '@/modules/ui/use-ui';
-import { useTelegramBackButton } from '@/hooks/useTelegramBackButton';
 import { paths } from '@/routes/paths';
-import { Text } from '@/components/core';
 import { AccountButton } from './account-button';
 
 
@@ -25,8 +23,10 @@ export type AccountDrawerProps = IconButtonProps & {
 function AccountDrawerComp({ onLogout, portalContainer, portalContainerId }: AccountDrawerProps) {
   const { accountDrawerOpen, closeAccountDrawer, openAccountDrawer } = useUI();
   const drawerRef = useRef<HTMLDivElement>(null);
-  const { user, clearUser } = useUserAuth();
+  const { session } = useSession();
+  const clearSession = useClearSession();
   const [resolvedPortalContainer, setResolvedPortalContainer] = useState<Element | null>(null);
+  const player = session?.player;
 
   useEffect(() => {
     if (!portalContainerId) {
@@ -39,11 +39,9 @@ function AccountDrawerComp({ onLogout, portalContainer, portalContainerId }: Acc
   }, [portalContainerId]);
 
   const handleLogout = () => {
-    clearUser();
+    clearSession();
     onLogout?.();
   }
-
-  useTelegramBackButton(accountDrawerOpen, closeAccountDrawer);
 
   // Close drawer when clicking outside
   useEffect(() => {
@@ -59,7 +57,7 @@ function AccountDrawerComp({ onLogout, portalContainer, portalContainerId }: Acc
     }
   }, [accountDrawerOpen, closeAccountDrawer]);
 
-  // Lock body scroll when the drawer is open (iOS/Telegram safe)
+  // Lock body scroll when the drawer is open (iOS safe)
   useEffect(() => {
     if (!accountDrawerOpen) return;
 
@@ -95,8 +93,8 @@ function AccountDrawerComp({ onLogout, portalContainer, portalContainerId }: Acc
     <>
       <AccountButton
         openAccountDrawer={openAccountDrawer}
-        photoURL={user?.profileImageUrl || user?.player?.profileImageUrl || '/mint/account-avatar-placeholder.png'}
-        displayName={user?.displayName || user?.player?.username || 'Minter'}
+        photoURL={player?.profileImageUrl || '/mint/account-avatar-placeholder.png'}
+        displayName={player?.displayName || player?.username || 'Minter'}
       />
 
       {/* Custom drawer container */}
@@ -105,7 +103,7 @@ function AccountDrawerComp({ onLogout, portalContainer, portalContainerId }: Acc
           <Box
             sx={{
               position: 'fixed',
-              top: 'var(--tg-safe-top, 0px)',
+              top: 'env(safe-area-inset-top, 0px)',
               left: 0,
               right: 0,
               bottom: 0,
@@ -173,17 +171,6 @@ function AccountDrawerComp({ onLogout, portalContainer, portalContainerId }: Acc
                   {/* Streak Info Section */}
                   {false && <StreakInfo />}
 
-                  {/* Leadership Ranking */}
-                 {false && <LeadershipRanking currentUser={{  // Hide temporarly
-                    id: user?.id || 'current',
-                    username: 'You',
-                    countFriends: 120345,
-                    xpRank: 42,
-                    profilePicture: user?.profileImageUrl || '/mint/account-avatar-placeholder.png',
-                    rank: 42
-                  }}
-                  />}
-
                   {/* Top up balances text */}
                   <Box sx={{ textAlign: 'center', py: 1 }}>
                     <Text variant="body3" color="text-primary">
@@ -206,14 +193,11 @@ function AccountDrawerComp({ onLogout, portalContainer, portalContainerId }: Acc
                     </Text>
                   </Box>
 
-                  {/* Profile Ranking List Section */}
-                  <RankingProfileSection />
-
                   {/* History Transactions Section */}
                   <HistoryTransactions maxRows={5} />
 
                   {/* Support Section */}
-                  <SupportSection username={user?.player?.username!} />
+                  <SupportSection username={session?.player?.username!} />
                 </Stack>
               </Scrollbar>
 

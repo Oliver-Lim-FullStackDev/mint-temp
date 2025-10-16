@@ -1,17 +1,8 @@
 'use client';
 
 import React, { useState } from 'react';
-import { Text } from '@/components/core';
-import { useReceiptsList } from '@/modules/store/hooks/useReceipts';
-import type { Receipt } from '@/modules/store/types';
-import { SubProvider } from '@/modules/store/types/sub-provider.enum';
-import { useUI } from '@/modules/ui/use-ui';
-import { paths } from '@/routes/paths';
+import { GlassBox, Text } from '@mint/ui/components';
 import {
-  GlassBox,
-  Link,
-  Skeleton,
-  Stack,
   StyledTableContainer,
   TabButton,
   Table,
@@ -20,8 +11,18 @@ import {
   TableHead,
   TableRow,
   TabType
-} from '@mint/ui';
-import { RouterLink } from 'src/routes/components';
+} from '@mint/ui/components/table';
+import {
+  Link,
+  Skeleton,
+  Stack,
+} from '@mint/ui/components/core';
+import { RouterLink } from '@mint/ui/minimals/routes/components';
+import { useReceiptsList } from '@/modules/store/hooks/useReceipts';
+import type { Receipt } from '@/modules/store/types';
+import { SubProvider } from '@/modules/store/types/sub-provider.enum';
+import { useUI } from '@/modules/ui/use-ui';
+import { paths } from '@/routes/paths';
 import type { HistoryTransaction } from '../hooks/useAccountData';
 import { useAccountHistory } from '../hooks/useAccountData';
 
@@ -163,7 +164,7 @@ export const HistoryTransactions: React.FC<HistoryTransactionsProps> = ({
                       </TableCell>
                       <TableCell sx={{ width: 'max-content', whiteSpace: 'nowrap', padding: '6px 4px' }}>
                         <Text variant="body2" fontSize="0.65rem" fontWeight="bold">
-                          {(item as Receipt).subProvider === SubProvider.TON ? 'TON' : (item as Receipt).subProvider === SubProvider.STARS ? 'Stars' : (item as Receipt).subProvider || '-'}
+                          {(item as Receipt).subProvider === SubProvider.TON ? 'TON' : (item as Receipt).subProvider || '-'}
                         </Text>
                       </TableCell>
                     </TableRow>

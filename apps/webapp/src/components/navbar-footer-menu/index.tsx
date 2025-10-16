@@ -1,12 +1,12 @@
 'use client';
 
-import { paths } from '@/routes/paths';
-import { Box, GlassBox, Stack } from '@mint/ui';
-import { Iconify } from '@mint/ui/components/iconify';
-import Link from 'next/link';
-import { usePathname } from 'next/navigation';
 import { useState } from 'react';
-import { Text } from '../core';
+import Link from 'next/link';
+import { paths } from '@/routes/paths';
+import { Box, Stack } from '@mint/ui/components/core';
+import { GlassBox, Text } from '@mint/ui/components';
+import { Iconify } from '@mint/ui/components/iconify';
+import { usePathname } from 'next/navigation';
 
 interface MenuItem {
   id: string;

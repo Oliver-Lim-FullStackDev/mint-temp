@@ -1,0 +1,1221 @@
+{
+	"info": {
+		"_postman_id": "f7e8fd33-702a-4ac9-a60a-0004e03309b7",
+		"name": "Txn API",
+		"description": "[https://docs.txn.pro](https://docs.txn.pro/)",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "33880357"
+	},
+	"item": [
+		{
+			"name": "Accounts",
+			"item": [
+				{
+					"name": "List accounts",
+					"protocolProfileBehavior": {
+						"followRedirects": false,
+						"followOriginalHttpMethod": false,
+						"followAuthorizationHeader": false
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/vnd.api+json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{txn api key}}"
+							}
+						],
+						"url": {
+							"raw": "{{txn url}}/api/public/v1/accounts",
+							"host": [
+								"{{txn url}}"
+							],
+							"path": [
+								"api",
+								"public",
+								"v1",
+								"accounts"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Read account",
+					"protocolProfileBehavior": {
+						"followRedirects": false,
+						"followOriginalHttpMethod": false,
+						"followAuthorizationHeader": false
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/vnd.api+json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{txn api key}}"
+							}
+						],
+						"url": {
+							"raw": "{{txn url}}/api/public/v1/accounts/:your_account_id",
+							"host": [
+								"{{txn url}}"
+							],
+							"path": [
+								"api",
+								"public",
+								"v1",
+								"accounts",
+								":your_account_id"
+							],
+							"variable": [
+								{
+									"key": "your_account_id",
+									"value": ""
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "List account addresses",
+					"protocolProfileBehavior": {
+						"followRedirects": false,
+						"followOriginalHttpMethod": false,
+						"followAuthorizationHeader": false
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/vnd.api+json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{txn api key}}"
+							}
+						],
+						"url": {
+							"raw": "{{txn url}}/api/public/v1/accounts/:id/addresses",
+							"host": [
+								"{{txn url}}"
+							],
+							"path": [
+								"api",
+								"public",
+								"v1",
+								"accounts",
+								":id",
+								"addresses"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": ""
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create account address",
+					"protocolProfileBehavior": {
+						"followRedirects": false,
+						"followOriginalHttpMethod": false,
+						"followAuthorizationHeader": false
+					},
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/vnd.api+json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{txn api key}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"data\":{\"type\":\"addresses\",\"attributes\":{\"network_id\":\"c0369c57-da08-4c60-b5ee-63e1e43d5ae4\",\"label\":\"test labe 2l\"}}}"
+						},
+						"url": {
+							"raw": "{{txn url}}/api/public/v1/accounts/:id/addresses",
+							"host": [
+								"{{txn url}}"
+							],
+							"path": [
+								"api",
+								"public",
+								"v1",
+								"accounts",
+								":id",
+								"addresses"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": ""
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "List account transactions",
+					"protocolProfileBehavior": {
+						"followRedirects": false,
+						"followOriginalHttpMethod": false,
+						"followAuthorizationHeader": false
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/vnd.api+json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{txn api key}}"
+							}
+						],
+						"url": {
+							"raw": "{{txn url}}/api/public/v1/accounts/:your_account_id/transactions?per=1&per_page=1&order=created_at&order_type=desc",
+							"host": [
+								"{{txn url}}"
+							],
+							"path": [
+								"api",
+								"public",
+								"v1",
+								"accounts",
+								":your_account_id",
+								"transactions"
+							],
+							"query": [
+								{
+									"key": "per",
+									"value": "1"
+								},
+								{
+									"key": "per_page",
+									"value": "1"
+								},
+								{
+									"key": "order",
+									"value": "created_at"
+								},
+								{
+									"key": "order_type",
+									"value": "desc"
+								}
+							],
+							"variable": [
+								{
+									"key": "your_account_id",
+									"value": ""
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Read account transaction",
+					"protocolProfileBehavior": {
+						"followRedirects": false,
+						"followOriginalHttpMethod": false,
+						"followAuthorizationHeader": false
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/vnd.api+json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{txn api key}} "
+							}
+						],
+						"url": {
+							"raw": "{{txn url}}/api/public/v1/accounts/:your_account_id/transactions/:your_transaction_id/details",
+							"host": [
+								"{{txn url}}"
+							],
+							"path": [
+								"api",
+								"public",
+								"v1",
+								"accounts",
+								":your_account_id",
+								"transactions",
+								":your_transaction_id",
+								"details"
+							],
+							"variable": [
+								{
+									"key": "your_account_id",
+									"value": ""
+								},
+								{
+									"key": "your_transaction_id",
+									"value": ""
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Exchange",
+			"item": [
+				{
+					"name": "Read exchange rate",
+					"protocolProfileBehavior": {
+						"followRedirects": false,
+						"followOriginalHttpMethod": false,
+						"followAuthorizationHeader": false
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/vnd.api+json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{txn api key}}"
+							}
+						],
+						"url": {
+							"raw": "{{txn url}}/api/public/v1/exchange/rate?sell_currency_code=EUR&buy_currency_code=USDT",
+							"host": [
+								"{{txn url}}"
+							],
+							"path": [
+								"api",
+								"public",
+								"v1",
+								"exchange",
+								"rate"
+							],
+							"query": [
+								{
+									"key": "sell_currency_code",
+									"value": "EUR"
+								},
+								{
+									"key": "buy_currency_code",
+									"value": "USDT"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create quote",
+					"protocolProfileBehavior": {
+						"followRedirects": false,
+						"followOriginalHttpMethod": false,
+						"followAuthorizationHeader": false
+					},
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/vnd.api+json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{txn api key}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"data\": {\n        \"type\": \"quotes\",\n        \"attributes\": {\n            \"accountChargedId\": \"\",\n            \"accountReceivedId\": \"\",\n            \"amount\": 50,\n            \"amountCurrency\": \"EUR\"\n        }\n    }\n}"
+						},
+						"url": {
+							"raw": "{{txn url}}/api/public/v1/exchange/quotes",
+							"host": [
+								"{{txn url}}"
+							],
+							"path": [
+								"api",
+								"public",
+								"v1",
+								"exchange",
+								"quotes"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Accept quote",
+					"protocolProfileBehavior": {
+						"followRedirects": false,
+						"followOriginalHttpMethod": false,
+						"followAuthorizationHeader": false
+					},
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/vnd.api+json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{txn api key}}"
+							}
+						],
+						"url": {
+							"raw": "{{txn url}}/api/public/v1/exchange/quotes/:your_quote_id",
+							"host": [
+								"{{txn url}}"
+							],
+							"path": [
+								"api",
+								"public",
+								"v1",
+								"exchange",
+								"quotes",
+								":your_quote_id"
+							],
+							"variable": [
+								{
+									"key": "your_quote_id",
+									"value": ""
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Invoices",
+			"item": [
+				{
+					"name": "Create invoice",
+					"protocolProfileBehavior": {
+						"followRedirects": false,
+						"followOriginalHttpMethod": false,
+						"followAuthorizationHeader": false
+					},
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/vnd.api+json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{txn api key}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"data\": {\n        \"type\": \"invoices\",\n        \"attributes\": {\n            \"reference\": \"b21aeac1-63ef-4d46-b386-1b86f8b9966e\",\n            \"amountBilled\": \"100\",\n            \"billedCurrency\": \"USD\",\n            \"chargedCurrency\": \"USDT\",\n            \"network\": \"TTRX:USDT\"\n        }\n    }\n}"
+						},
+						"url": {
+							"raw": "{{txn url}}/api/public/v1/invoices",
+							"host": [
+								"{{txn url}}"
+							],
+							"path": [
+								"api",
+								"public",
+								"v1",
+								"invoices"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Read invoice",
+					"protocolProfileBehavior": {
+						"followRedirects": false,
+						"followOriginalHttpMethod": false,
+						"followAuthorizationHeader": false
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/vnd.api+json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{txn api key}}"
+							}
+						],
+						"url": {
+							"raw": "{{txn url}}/api/public/v1/invoices/:your_invoice_id",
+							"host": [
+								"{{txn url}}"
+							],
+							"path": [
+								"api",
+								"public",
+								"v1",
+								"invoices",
+								":your_invoice_id"
+							],
+							"variable": [
+								{
+									"key": "your_invoice_id",
+									"value": ""
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "List invoices",
+					"protocolProfileBehavior": {
+						"followRedirects": false,
+						"followOriginalHttpMethod": false,
+						"followAuthorizationHeader": false,
+						"disabledSystemHeaders": {}
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/vnd.api+json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{txn api key}}"
+							}
+						],
+						"url": {
+							"raw": "{{txn url}}/api/public/v1/invoices?order=created_at&order_type=asc&page=1&per_page=1",
+							"host": [
+								"{{txn url}}"
+							],
+							"path": [
+								"api",
+								"public",
+								"v1",
+								"invoices"
+							],
+							"query": [
+								{
+									"key": "reference",
+									"value": "",
+									"disabled": true
+								},
+								{
+									"key": "order",
+									"value": "created_at"
+								},
+								{
+									"key": "order_type",
+									"value": "asc"
+								},
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "per_page",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Payouts",
+			"item": [
+				{
+					"name": "Create payout",
+					"protocolProfileBehavior": {
+						"followRedirects": false,
+						"followOriginalHttpMethod": false,
+						"followAuthorizationHeader": false,
+						"disabledSystemHeaders": {
+							"content-type": true
+						}
+					},
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/vnd.api+json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{txn api key}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"data\": {\n        \"type\": \"payouts\",\n        \"attributes\": {\n            \"reference\": \"36c8a61b-0c3b-4295-a8f4-132b67b70ad3\",\n            \"amount\": \"50\",\n            \"currency\": \"USD\",\n            \"payNetwork\": \"ttrx:usdt\",\n            \"address\": \"TTbGTMwUwA3mncLP7xqCZei1ekaNSgeAJe\"\n        }\n    }\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{txn url}}/api/public/v1/payouts",
+							"host": [
+								"{{txn url}}"
+							],
+							"path": [
+								"api",
+								"public",
+								"v1",
+								"payouts"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Read payout",
+					"protocolProfileBehavior": {
+						"followRedirects": false,
+						"followOriginalHttpMethod": false,
+						"followAuthorizationHeader": false
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/vnd.api+json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{txn api key}}"
+							}
+						],
+						"url": {
+							"raw": "{{txn url}}/api/public/v1/payouts/:id",
+							"host": [
+								"{{txn url}}"
+							],
+							"path": [
+								"api",
+								"public",
+								"v1",
+								"payouts",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": ""
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "List payouts",
+					"protocolProfileBehavior": {
+						"followRedirects": false,
+						"followOriginalHttpMethod": false,
+						"followAuthorizationHeader": false
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/vnd.api+json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{txn api key}}"
+							}
+						],
+						"url": {
+							"raw": "{{txn url}}/api/public/v1/payouts?reference=&order=created_at&order_type=desc&per_page=2&page=1",
+							"host": [
+								"{{txn url}}"
+							],
+							"path": [
+								"api",
+								"public",
+								"v1",
+								"payouts"
+							],
+							"query": [
+								{
+									"key": "reference",
+									"value": ""
+								},
+								{
+									"key": "order",
+									"value": "created_at"
+								},
+								{
+									"key": "order_type",
+									"value": "desc"
+								},
+								{
+									"key": "per_page",
+									"value": "2"
+								},
+								{
+									"key": "page",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Validate address",
+					"protocolProfileBehavior": {
+						"followRedirects": false,
+						"followOriginalHttpMethod": false,
+						"followAuthorizationHeader": false
+					},
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{txn api key}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"address\": \"TTbGTMwUwA3mncLP7xqCZei1ekaNSgeAJe\",\n    \"network\": \"ttrx:usdt\"\n}"
+						},
+						"url": {
+							"raw": "{{txn url}}/api/public/v1/addresses/validate",
+							"host": [
+								"{{txn url}}"
+							],
+							"path": [
+								"api",
+								"public",
+								"v1",
+								"addresses",
+								"validate"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Channels",
+			"item": [
+				{
+					"name": "Create channel",
+					"protocolProfileBehavior": {
+						"followRedirects": false,
+						"followOriginalHttpMethod": false,
+						"followAuthorizationHeader": false
+					},
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/vnd.api+json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{txn api key}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"data\":{\"type\":\"channels\",\"attributes\":{\"reference\":\"b1b6c514-fdca-43e6-bf79-0b299f7796a4\",\"status\":\"enabled\",\"targetCurrency\":\"EUR\",\"payNetwork\":\"ttrx:usdt\"}}}"
+						},
+						"url": {
+							"raw": "{{txn url}}/api/public/v1/channels",
+							"host": [
+								"{{txn url}}"
+							],
+							"path": [
+								"api",
+								"public",
+								"v1",
+								"channels"
+							],
+							"query": [
+								{
+									"key": "reference",
+									"value": "",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Read channel",
+					"protocolProfileBehavior": {
+						"followRedirects": false,
+						"followOriginalHttpMethod": false,
+						"followAuthorizationHeader": false
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/vnd.api+json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{txn api key}}"
+							}
+						],
+						"url": {
+							"raw": "{{txn url}}/api/public/v1/channels/:id",
+							"host": [
+								"{{txn url}}"
+							],
+							"path": [
+								"api",
+								"public",
+								"v1",
+								"channels",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": ""
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update channel",
+					"protocolProfileBehavior": {
+						"followRedirects": false,
+						"followOriginalHttpMethod": false,
+						"followAuthorizationHeader": false
+					},
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/vnd.api+json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{txn api key}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"data\": {\n    \"type\": \"channels\",\n    \"attributes\": {\n      \"status\": \"enabled\"\n    }\n  }\n}"
+						},
+						"url": {
+							"raw": "{{txn url}}/api/public/v1/channels/:id",
+							"host": [
+								"{{txn url}}"
+							],
+							"path": [
+								"api",
+								"public",
+								"v1",
+								"channels",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": ""
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "List channels",
+					"protocolProfileBehavior": {
+						"followRedirects": false,
+						"followOriginalHttpMethod": false,
+						"followAuthorizationHeader": false
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/vnd.api+json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{txn api key}}"
+							}
+						],
+						"url": {
+							"raw": "{{txn url}}/api/public/v1/channels?page=1&per_page=2&order=created_at&order_type=desc",
+							"host": [
+								"{{txn url}}"
+							],
+							"path": [
+								"api",
+								"public",
+								"v1",
+								"channels"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "per_page",
+									"value": "2"
+								},
+								{
+									"key": "order",
+									"value": "created_at"
+								},
+								{
+									"key": "order_type",
+									"value": "desc"
+								},
+								{
+									"key": "reference",
+									"value": "",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "List channel deposits",
+					"protocolProfileBehavior": {
+						"followRedirects": false,
+						"followOriginalHttpMethod": false,
+						"followAuthorizationHeader": false
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/vnd.api+json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{txn api key}}"
+							}
+						],
+						"url": {
+							"raw": "{{txn url}}/api/public/v1/channels/:channel_id/transactions?page=1&per_page=1&order_type=desc&order=created_at",
+							"host": [
+								"{{txn url}}"
+							],
+							"path": [
+								"api",
+								"public",
+								"v1",
+								"channels",
+								":channel_id",
+								"transactions"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "per_page",
+									"value": "1"
+								},
+								{
+									"key": "order_type",
+									"value": "desc"
+								},
+								{
+									"key": "order",
+									"value": "created_at"
+								}
+							],
+							"variable": [
+								{
+									"key": "channel_id",
+									"value": ""
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Read channel deposits",
+					"protocolProfileBehavior": {
+						"followRedirects": false,
+						"followOriginalHttpMethod": false,
+						"followAuthorizationHeader": false
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/vnd.api+json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{txn api key}}"
+							}
+						],
+						"url": {
+							"raw": "{{txn url}}/api/public/v1/channels/:channel_id/transactions/:deposit_id",
+							"host": [
+								"{{txn url}}"
+							],
+							"path": [
+								"api",
+								"public",
+								"v1",
+								"channels",
+								":channel_id",
+								"transactions",
+								":deposit_id"
+							],
+							"variable": [
+								{
+									"key": "channel_id",
+									"value": ""
+								},
+								{
+									"key": "deposit_id",
+									"value": ""
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Payment links",
+			"item": [
+				{
+					"name": "Create payment link",
+					"protocolProfileBehavior": {
+						"followRedirects": false,
+						"followOriginalHttpMethod": false,
+						"followAuthorizationHeader": false
+					},
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/vnd.api+json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{txn api key}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"data\":{\"type\":\"payment_links\",\"attributes\":{\"reference\":\"0c72906e-1606-425c-83ad-91fb5b8904e1\",\"amount\":\"100\",\"currency\":\"EUR\",\"expires_at\":\"2024-10-09T23:00:00.000Z\",\"paymentType\":\"Invoice\"}}}"
+						},
+						"url": {
+							"raw": "{{txn url}}/api/public/v1/payment_links",
+							"host": [
+								"{{txn url}}"
+							],
+							"path": [
+								"api",
+								"public",
+								"v1",
+								"payment_links"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Read payment link",
+					"protocolProfileBehavior": {
+						"followRedirects": false,
+						"followOriginalHttpMethod": false,
+						"followAuthorizationHeader": false
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/vnd.api+json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{txn api key}}",
+								"disabled": true
+							}
+						],
+						"url": {
+							"raw": "{{txn url}}/api/public/v1/payment_links/:id",
+							"host": [
+								"{{txn url}}"
+							],
+							"path": [
+								"api",
+								"public",
+								"v1",
+								"payment_links",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": ""
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "List payment links",
+					"protocolProfileBehavior": {
+						"followRedirects": false,
+						"followOriginalHttpMethod": false,
+						"followAuthorizationHeader": false
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/vnd.api+json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{txn api key}}",
+								"disabled": true
+							}
+						],
+						"url": {
+							"raw": "{{txn url}}/api/public/v1/payment_links/:id",
+							"host": [
+								"{{txn url}}"
+							],
+							"path": [
+								"api",
+								"public",
+								"v1",
+								"payment_links",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": ""
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update payment link",
+					"protocolProfileBehavior": {
+						"followRedirects": false,
+						"followOriginalHttpMethod": false,
+						"followAuthorizationHeader": false
+					},
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/vnd.api+json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{txn api key}}",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"data\":{\"type\":\"payment_links\",\"attributes\":{\"chargedCurrency\":\"USDT\",\"network\":\"ttrx:usdt\"}}}"
+						},
+						"url": {
+							"raw": "{{txn url}}/api/public/v1/payment_links/:id/payment",
+							"host": [
+								"{{txn url}}"
+							],
+							"path": [
+								"api",
+								"public",
+								"v1",
+								"payment_links",
+								":id",
+								"payment"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": ""
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}

@@ -1,5 +1,5 @@
-import { Box } from '@mui/material';
-import { Text } from '../core';
+import { Box } from '@mint/ui/components/core';
+import { Text } from '@mint/ui/components'
 import MaybeLink from './maybe-link-button';
 
 interface Props {

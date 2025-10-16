@@ -18,12 +18,12 @@ export class InventoryService {
    * @param sessionToken - User's session token for authentication
    * @returns Promise with inventory items
    */
-  async getUserInventory(sessionToken?: string): Promise<InventoryItem[]> {
+    async getUserInventory(sessionToken?: string): Promise<InventoryItem[]> {
     if (!sessionToken) {
       throw new HttpException('Session token is required', HttpStatus.UNAUTHORIZED);
     }
 
-    try {
+        try {
       this.logger.log('Fetching user inventory');
 
       const url = `${this.baseUrl}${HeroGamingApiRoutes.inventory}`;
@@ -47,7 +47,7 @@ export class InventoryService {
 
       this.logger.log(`Successfully fetched ${data.length} inventory items`);
       return data;
-    } catch (error) {
+        } catch (error) {
       this.logger.error('Error fetching inventory:', error);
       if (error instanceof HttpException) {
         throw error;
@@ -64,7 +64,11 @@ export class InventoryService {
   async getDailyRewards(sessionToken?: string): Promise<InventoryItem[]> {
     const inventory = await this.getUserInventory(sessionToken);
 
-    return inventory.filter((item) => DAILY_REWARDS_REASON_KEY.includes(item.reason) && item.active && !item.used);
+    return inventory.filter(item =>
+      DAILY_REWARDS_REASON_KEY.includes(item.reason) &&
+      item.active &&
+      !item.used
+    );
   }
 
   /**

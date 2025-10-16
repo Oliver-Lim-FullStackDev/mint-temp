@@ -16,7 +16,7 @@ export interface Purchase {
   itemId: string;
   timestamp: number;
   transactionId: string;
-  paymentMethod: 'ton' | 'telegram-stars';
+  paymentMethod: 'ton';
 }
 
 export interface CurrentPurchaseWithSecret {
@@ -24,11 +24,11 @@ export interface CurrentPurchaseWithSecret {
   transactionId: string;
   timestamp: number;
   secret: string;
-  paymentMethod: 'ton' | 'telegram-stars';
+  paymentMethod: 'ton';
 }
 
 export interface PaymentMethod {
-  id: 'ton' | 'telegram-stars';
+  id: 'ton';
   name: string;
   description: string;
   icon: string;
@@ -37,7 +37,6 @@ export interface PaymentMethod {
 
 export interface PriceData {
   usd: number;
-  stars: number;
   ton: number;
   tonPriceUsd: number;
 }

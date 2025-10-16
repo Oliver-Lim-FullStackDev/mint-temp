@@ -1,8 +1,8 @@
-import { Box, Stack } from '@mint/ui/components';
-import Image from 'next/image';
 import { ReactNode } from 'react';
+import Image from 'next/image';
+import { Box, Stack } from '@mint/ui/components/core';
+import { Text } from '@mint/ui/components';
 import BadgeBox from '../button/badge-box';
-import { Text } from '../core/text';
 import { PageHeader } from '../headers/page-header';
 
 interface ComingSoonProps {

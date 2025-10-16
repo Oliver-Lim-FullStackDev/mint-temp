@@ -20,7 +20,7 @@ export class TransactionController {
   @Post('purchase/stars')
   async purchaseWithStars(
     @Body() dto: CreateStarsPurchaseDto,
-    @Headers('authorization') authHeader?: string,
+    @Headers('authorization') authHeader?: string
   ): Promise<StarsPurchaseResponseDto> {
     // Verify authentication token
     const expectedToken = process.env.HEROGAMING_MINT_API_TOKEN;

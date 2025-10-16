@@ -19,5 +19,5 @@ export type InventoryResponse = InventoryItem[];
 
 export const DAILY_REWARDS_REASON_KEY = [
   'Giveout for daily-reward-campaign campaign',
-  'Giveout for daily-reward-campaign-registration campaign',
+  'Giveout for daily-reward-campaign-registration campaign'
 ];

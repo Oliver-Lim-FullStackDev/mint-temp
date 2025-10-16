@@ -1,7 +1,7 @@
 'use client';
 
 import { useTranslation } from 'next-i18next';
-import { Typography, TypographyProps } from 'src/index';
+import { Typography, TypographyProps } from '@mint/ui/components';
 import React from 'react';
 
 interface TranslationProps extends TypographyProps {

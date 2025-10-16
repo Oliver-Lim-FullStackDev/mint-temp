@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import React from 'react';
 import { HomeView } from './view';
 
 export const metadata: Metadata = {
@@ -6,6 +7,6 @@ export const metadata: Metadata = {
   description: '...',
 };
 
-export default function Page() {
+export default async function Page() {
   return <HomeView />;
 }

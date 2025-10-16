@@ -1,6 +1,6 @@
 'use client';
 
-import { Box, Typography, Button, Paper, Alert } from '@mint/ui/components';
+import { Box, Typography, Button, Paper, Alert } from '@mint/ui/components/core';
 import { Iconify } from '@mint/ui/components/iconify';
 
 interface ConnectWalletButtonProps {
@@ -35,7 +35,7 @@ export default function ConnectWalletButton({ onConnect }: ConnectWalletButtonPr
       >
         <Box sx={{ display: 'flex', justifyContent: 'center', mb: 3 }}>
           <Iconify
-            icon="logos:telegram"
+            icon="material-symbols:account-balance-wallet"
             width={64}
             height={64}
             sx={{ color: 'info.main' }}
@@ -47,12 +47,12 @@ export default function ConnectWalletButton({ onConnect }: ConnectWalletButtonPr
         </Typography>
 
         <Typography variant="body1" color="text.secondary" sx={{ mb: 3 }}>
-          You&apos;re in Telegram! You can pay with Telegram Stars or connect your TON wallet.
+          Connect your TON wallet to start purchasing packs and keep spinning.
         </Typography>
 
         <Alert severity="info" sx={{ mb: 3, textAlign: 'left' }}>
           <Typography variant="body2">
-            You can use Telegram Stars for instant payments or connect your TON wallet for cryptocurrency payments.
+            Once your wallet is connected you can complete purchases directly with TON.
           </Typography>
         </Alert>
 
@@ -60,7 +60,7 @@ export default function ConnectWalletButton({ onConnect }: ConnectWalletButtonPr
           variant="contained"
           size="large"
           onClick={onConnect}
-          startIcon={<Iconify icon="logos:telegram" />}
+          startIcon={<Iconify icon="material-symbols:account-balance-wallet" />}
           sx={{
             width: '100%',
             py: 1.5,

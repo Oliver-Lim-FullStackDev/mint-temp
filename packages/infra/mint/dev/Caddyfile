@@ -14,7 +14,7 @@
 # Behavior:
 #   - Disables automatic HTTP→HTTPS redirects.
 #   - Defines two local domains:
-#       https://mint.dev → Next.js webapp (localhost:3000)
+#       https://mint.dev → Next.js TGMA app (localhost:3000)
 #       https://api.mint.dev → NestJS API (localhost:3001)
 #   - Certificates are signed by Caddy’s internal CA and trusted locally.
 #

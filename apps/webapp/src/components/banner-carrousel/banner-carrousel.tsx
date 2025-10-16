@@ -1,12 +1,13 @@
+// TODO move to @mint/ui and use from there
 import type { EmblaPluginType } from 'embla-carousel';
 import Autoplay from 'embla-carousel-autoplay';
 import Fade from 'embla-carousel-fade';
+import React from 'react';
 import Link from 'next/link';
 
-import { Text } from '@/components/core';
-import { Box } from '@mint/ui';
+import { Text } from "@mint/ui/components";
+import { Box } from '@mint/ui/components/core';
 import { Carousel, CarouselDotButtons, useCarousel } from '@mint/ui/components/carousel';
-import React from 'react';
 
 export interface CarrouselItem {
   id: string;
@@ -91,10 +92,10 @@ export const BannerCarrousel: React.FC<BannerCarrouselProps> = ({
 }) => {
   // Setup Embla Carousel with fade effect and autoplay
   const plugins: EmblaPluginType[] = [];
-  
+
   // Add fade plugin
   plugins.push(Fade());
-  
+
   // Add autoplay plugin if enabled
   if (autoPlay && carrouselItems.length > 1) {
     plugins.push(Autoplay({ delay: autoPlayInterval, stopOnInteraction: false }));

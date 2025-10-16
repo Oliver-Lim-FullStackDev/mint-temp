@@ -1,6 +1,6 @@
-import { Box } from '@mint/ui/components';
 import Image from 'next/image';
-import { Text } from '../core';
+import { Box } from '@mint/ui/components/core';
+import { Text } from '@mint/ui/components'
 
 interface PageHeaderProps {
   title: string;

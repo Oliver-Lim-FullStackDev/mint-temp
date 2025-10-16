@@ -1,8 +1,7 @@
 'use client';
 
-import { Text } from '@/components/core';
-import Box from '@mui/material/Box';
-import Container from '@mui/material/Container';
+import { Text } from "@mint/ui/components";
+import { Box, Container } from '@mint/ui/components/core';
 
 export default function ColorsDemoPage() {
   const colorCategories = [
@@ -88,7 +87,7 @@ export default function ColorsDemoPage() {
       <Text variant="h1" sx={{ mb: 4, textAlign: 'center' }}>
         Color System Demo
       </Text>
-      
+
       <Text variant="body1" sx={{ mb: 6, textAlign: 'center', color: 'var(--text-secondary)' }}>
         All colors are now available as CSS custom properties (variables) throughout the application
       </Text>
@@ -98,11 +97,11 @@ export default function ColorsDemoPage() {
           <Text variant="h3" sx={{ mb: 3 }}>
             {category.title}
           </Text>
-          
-          <Box sx={{ 
-            display: 'grid', 
-            gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', 
-            gap: 2 
+
+          <Box sx={{
+            display: 'grid',
+            gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))',
+            gap: 2
           }}>
             {category.colors.map((color) => (
               <Box
@@ -157,21 +156,21 @@ export default function ColorsDemoPage() {
         <Text variant="h3" sx={{ mb: 3 }}>
           Usage Examples
         </Text>
-        
-        <Box sx={{ 
-          p: 4, 
-          backgroundColor: 'var(--background-paper)', 
+
+        <Box sx={{
+          p: 4,
+          backgroundColor: 'var(--background-paper)',
           borderRadius: 2,
           border: '1px solid var(--divider)'
         }}>
           <Text variant="h5" sx={{ mb: 3, color: 'var(--p-main)' }}>
             CSS Custom Properties
           </Text>
-          
-          <Box component="pre" sx={{ 
-            backgroundColor: 'var(--grey-900)', 
-            color: 'var(--grey-100)', 
-            p: 2, 
+
+          <Box component="pre" sx={{
+            backgroundColor: 'var(--grey-900)',
+            color: 'var(--grey-100)',
+            p: 2,
             borderRadius: 1,
             overflow: 'auto',
             fontSize: '14px',

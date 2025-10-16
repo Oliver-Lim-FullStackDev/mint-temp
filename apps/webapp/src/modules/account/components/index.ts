@@ -1,5 +1,4 @@
 export { HistoryTransactions } from './history-transactions';
-export { LeadershipRanking } from './leadership-ranking';
 export { ProfileSummary } from './profile-summary';
 export { ReferralSection } from './referral-section';
 export { StreakInfo } from './streak-info';

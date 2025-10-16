@@ -101,7 +101,7 @@ export class TonConversionService {
 
       // Fallback to a reasonable default TON price
       this.logger.warn('Using fallback TON price of $2.50');
-      const fallbackPrice = 2.5;
+      const fallbackPrice = 2.50;
 
       this.cachedPrice = {
         usd: fallbackPrice,
@@ -189,7 +189,7 @@ export class TonConversionService {
           error: (error) => {
             subscription.unsubscribe();
             reject(error);
-          },
+          }
         });
       });
 

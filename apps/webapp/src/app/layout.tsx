@@ -3,21 +3,20 @@ import type { Metadata, Viewport } from 'next';
 import localFont from 'next/font/local';
 import { getServerSession as _getServerSession } from '@mint/client';
 import { AppRouterCacheProvider } from '@mui/material-nextjs/v15-appRouter';
-import InitColorSchemeScript from '@mui/material/InitColorSchemeScript';
-import { LocalizationProvider } from '@mint/ui/locales';
-import { I18nProvider } from '@mint/ui/locales/i18n-provider';
-import { detectLanguage } from '@mint/ui/locales/server';
-import { themeConfig, ThemeProvider } from '@mint/ui/theme';
-import { primary } from '@mint/ui/theme/core/palette';
+import { InitColorSchemeScript } from '@mint/ui/components/core';
+import { LocalizationProvider } from '@mint/ui/minimals/locales';
+import { I18nProvider } from '@mint/ui/minimals/locales/i18n-provider';
+import { detectLanguage } from '@mint/ui/minimals/locales/server';
+import { themeConfig, ThemeProvider } from '@mint/ui/minimals/theme';
+import { primary } from '@mint/ui/minimals/theme/core/palette';
 // TODO Instead of JWT Make this work with TON + Session
-import { AuthProvider } from '@mint/ui/auth/context/jwt';
+import { AuthProvider } from '@mint/ui/minimals/auth/context/jwt';
 import { MotionLazy } from '@mint/ui/components/animate/motion-lazy';
 import { ProgressBar } from '@mint/ui/components/progress-bar';
 import { defaultSettings, SettingsProvider } from '@mint/ui/components/settings';
 import { detectSettings } from '@mint/ui/components/settings/server';
 
 import { CONFIG } from '@/global-config';
-import { TelegramWrapper } from '@/modules/telegram/components';
 import { TonAuthProvider, TonConnectProvider } from '@/modules/ton/providers';
 import { sessionStore } from '@/modules/account/session-store';
 import { QueryProvider } from '@/providers/query-provider';
@@ -27,6 +26,7 @@ import { OmnistonProviderWrapper } from '@/components/providers/omniston-provide
 
 import '@mint/ui/global.css';
 import { SessionHydrator } from '@/components/session-hydrator';
+import PrivyProviders from '@/components/providers/privy-provider';
 
 // Cache so that it triggers only once on app load
 const getServerSession = cache(async () => _getServerSession());
@@ -230,7 +230,8 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
         />
       </head>
       <AppBody>
-        <SessionHydrator session={session} />
+        <PrivyProviders>
+          <SessionHydrator session={session} />
 
         <InitColorSchemeScript
           defaultMode={themeConfig.defaultMode}
@@ -264,16 +265,14 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
                       <MotionLazy>
                         <QueryProvider>
                           <OmnistonProviderWrapper>
-                            <TelegramWrapper>
-                              <TonConnectProvider>
-                                <TonAuthProvider>
-                                  <AuthGuard>
-                                    <ProgressBar />
-                                    {children}
-                                  </AuthGuard>
-                                </TonAuthProvider>
-                              </TonConnectProvider>
-                            </TelegramWrapper>
+                            <TonConnectProvider>
+                              <TonAuthProvider>
+                                <AuthGuard>
+                                  <ProgressBar />
+                                  {children}
+                                </AuthGuard>
+                              </TonAuthProvider>
+                            </TonConnectProvider>
                           </OmnistonProviderWrapper>
                         </QueryProvider>
                       </MotionLazy>
@@ -283,6 +282,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
               </SettingsProvider>
             </AuthProvider>
           </I18nProvider>
+        </PrivyProviders>
       </AppBody>
     </html>
   );

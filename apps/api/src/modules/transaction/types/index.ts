@@ -1,1 +1,1 @@
-export { SubProvider } from './sub-provider.enum';
+export { SubProvider } from 'src/modules/payments/shared/payment.types';

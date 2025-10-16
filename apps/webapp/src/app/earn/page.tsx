@@ -1,5 +1,3 @@
-export const dynamic = "force-dynamic";
-
 import { Earn } from '@/modules/missions';
 import { getMissions } from '@/modules/missions/server';
 

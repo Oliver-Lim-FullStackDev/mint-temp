@@ -1,12 +1,24 @@
 # Changelog
 
-## v1.4 — 2025-10-02
+## v2.0 — 2025-10-16
+
+### Changelog (v2.0)
+- Payload CMS for Banners & Promos [#869anq1b5](https://app.clickup.com/t/869anq1b5) 
+- Setup v2 Web View Main Layout [#869ag1thz](https://app.clickup.com/t/869ag1thz) ![core](https://img.shields.io/badge/core-%20?color=D84208)
+
+## v1.4.1 — 2025-10-04
+
+### Changelog (v1.4.1)
+- Hide Share and Earn campaign from Earn page [#869aq9c2b](https://app.clickup.com/t/869aq9c2b) ![marketing](https://img.shields.io/badge/marketing-%20?color=248F7D)
+
+## v1.4 — 2025-10-03
 
 ### Changelog (v1.4)
 - Ensure TG Back Button Works on TG Desktop/Mobile/Web [#869apu459](https://app.clickup.com/t/869apu459) ![ui](https://img.shields.io/badge/ui-%20?color=c377e0)
 - Fix Multiple Session Issues and Expiration on App Load [#869ape817](https://app.clickup.com/t/869ape817) ![core](https://img.shields.io/badge/core-%20?color=D84208) ![improve speed & performance](https://img.shields.io/badge/improve%20speed%20%26%20performance-%20?color=A875FF)
 - Make TGMA work on Telegram for Web in Browser [#869ape5vh](https://app.clickup.com/t/869ape5vh) ![core](https://img.shields.io/badge/core-%20?color=D84208) ![improve usability](https://img.shields.io/badge/improve%20usability-%20?color=A875FF)
 - 'Unhandled error occurred' appears when opening the /casinos route in the app [#869am9gu5](https://app.clickup.com/t/869am9gu5) ![core](https://img.shields.io/badge/core-%20?color=D84208) ![prod](https://img.shields.io/badge/prod-%20?color=DDBF90)
+- Set Telegram Desktop to open in mobile orientation by default [#869am6ggp](https://app.clickup.com/t/869am6ggp) ![staging](https://img.shields.io/badge/staging-%20?color=A18072) ![ui](https://img.shields.io/badge/ui-%20?color=c377e0)
 - Setup Partner API Documentation [#869akdeav](https://app.clickup.com/t/869akdeav) ![docs](https://img.shields.io/badge/docs-%20?color=AA9C22)
 - Move `MintApiClient` to its own package @mint/client and use in TGMA WebApp [#869ahbvuy](https://app.clickup.com/t/869ahbvuy) ![core](https://img.shields.io/badge/core-%20?color=D84208)
 - Implement Server-side Rendering Add (SSR) to Store, Earn, Drops Pages [#869ahbu7y](https://app.clickup.com/t/869ahbu7y) ![core](https://img.shields.io/badge/core-%20?color=D84208) ![improve speed & performance](https://img.shields.io/badge/improve%20speed%20%26%20performance-%20?color=A875FF)

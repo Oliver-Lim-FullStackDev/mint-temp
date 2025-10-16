@@ -2,16 +2,17 @@
 
 import React, { useMemo } from 'react';
 import Image from 'next/image';
-import { Box, GlassBox, Stack, Table, TableBody, TableCell, TableRow } from '@mint/ui/components';
+import { GlassBox, Text } from '@mint/ui/components';
+import { Box, Stack } from '@mint/ui/components/core';
+import { Table, TableBody, TableCell, TableRow } from '@mint/ui/components/table';
 import { Iconify } from '@mint/ui/components/iconify';
-import { Text } from '@/components/core';
 
 type RewardMap = Record<string, number>;
 
 type MultiplierRow = {
   key: string;
   label: string;
-  multiplier?: number;
+  multiplier: number;
   imageUrl: string;
 };
 
@@ -19,7 +20,7 @@ type WinComboRow = {
   key: string;
   label: string;
   imageUrl: string;
-  rewards?: RewardMap;
+  rewards: RewardMap;
   special?: boolean;
 };
 
@@ -91,7 +92,7 @@ export function MintGameSlotsWinsTable(props: Props) {
           sx={{ pb: 0.5 }}
         >
           {visuals.multipliers.map((m) => {
-            const mult = trimTrailingZeroDecimal(m.multiplier ?? 0);
+            const mult = trimTrailingZeroDecimal(m.multiplier);
             return (
               <GlassBox
                 key={m.key}

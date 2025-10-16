@@ -1,8 +1,8 @@
-import { Text } from '@/components/core';
-import { Box, Button } from '@mint/ui/components';
+import Image from 'next/image';
+import { Box, Button } from '@mint/ui/components/core';
+import { Text } from '@mint/ui/components';
 import { AnimateBorder } from '@mint/ui/components/animate';
 import { Iconify } from '@mint/ui/components/iconify';
-import Image from 'next/image';
 import { useFormatBalance } from '@/hooks/useFormatBalance';
 
 export type NavbarHeaderProps = {};

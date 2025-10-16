@@ -4,7 +4,7 @@ import { useEffect, ReactNode } from 'react';
 import { usePathname, useRouter } from 'next/navigation';
 import { paths } from '@/routes/paths';
 import { isPublicPage } from '@/lib/auth/public-pages';
-import { useUserAuth } from '@/modules/telegram/context/user-auth-telegram-provider';
+import { useSession } from '@/modules/account/session-store';
 
 interface AuthGuardProps {
   children: ReactNode;
@@ -18,7 +18,8 @@ interface AuthGuardProps {
  * Redirects to home page if authenticated and on the sign-in page
  */
 export function AuthGuard({ children }: AuthGuardProps) {
-  const { loading , isAuthenticated } = useUserAuth();
+  const { loading, session } = useSession();
+  const isAuthenticated = Boolean(session?.token || session?.player);
   const router = useRouter();
   const pathname = usePathname();
 

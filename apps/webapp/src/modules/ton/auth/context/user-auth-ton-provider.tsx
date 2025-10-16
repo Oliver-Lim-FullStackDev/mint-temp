@@ -1,8 +1,6 @@
 'use client';
 
 import type { User } from '@/types';
-import type { WebApp } from '@twa-dev/types';
-
 import { createContext, ReactNode, useContext, useEffect, useState } from 'react';
 import { useSearchParams } from 'next/navigation';
 import { getServerSession } from '@mint/client';
@@ -17,8 +15,6 @@ interface UserAuthContextType {
   setLoading: (isLoading: boolean) => void;
   error: string | null;
   setError: (error: string | null) => void;
-  webAppUser: WebApp | null;
-  setWebAppUser: (webApp: WebApp | null) => void;
 }
 
 // Create the context with a default value
@@ -31,8 +27,6 @@ const UserAuthTonProvider = createContext<UserAuthContextType>({
   setLoading: () => { },
   error: null,
   setError: () => { },
-  webAppUser: null,
-  setWebAppUser: () => { },
 });
 
 // Custom hook to use the auth context
@@ -45,7 +39,6 @@ interface UserAuthProviderProps {
 // Provider component that wraps the app and makes auth object available to any child component that calls useUserAuth()
 export function UserAuthProvider({ children }: UserAuthProviderProps) {
   const [user, setUser] = useState<User | null>(null);
-  const [webAppUser, setWebAppUser] = useState<WebApp | null>(null);
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
 
@@ -119,13 +112,7 @@ export function UserAuthProvider({ children }: UserAuthProviderProps) {
     setLoading,
     error,
     setError,
-    webAppUser,
-    setWebAppUser
   };
-
-  if (!user) {
-    return null;
-  }
 
   // Provide the authentication context to children components
   return (

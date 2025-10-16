@@ -15,6 +15,8 @@ import { InventoryModule } from './modules/inventory/inventory.module';
 import { ConversionModule } from './modules/conversion/conversion.module';
 import { TransactionModule } from './modules/transaction/transaction.module';
 import { PartnersModule } from './modules/partners/partners.module';
+import { CmsModule } from './modules/cms/cms.module';
+import { PaymentsModule } from './modules/payments/payments.module';
 
 @Module({
   imports: [
@@ -35,6 +37,8 @@ import { PartnersModule } from './modules/partners/partners.module';
     ConversionModule,
     TransactionModule,
     PartnersModule,
+    CmsModule,
+    PaymentsModule,
   ],
   controllers: [AppController],
   providers: [AppService],

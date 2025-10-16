@@ -39,6 +39,7 @@ export interface PaymentTransferRequest {
   username: string;
   currency: string;
   transaction_id: string;
+  sub_provider?: string; // Optional for backward compatibility
   status: string;
   auth_code: string;
 }

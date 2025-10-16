@@ -1,6 +1,5 @@
-import type { ReactNode } from 'react';
-import { ServerMainLayout } from '@/layouts/tgma/main/layout.server';
-import { MainContentOnlyLayout } from '@/layouts/tgma/main-content-only/layout';
+import { ServerMainLayout } from '@/layouts/web/main/layout.server';
+import { MainContentOnlyLayout } from '@/layouts/web/main-content-only/layout';
 
 type NextLayoutProps = import('.next/types/app/casinos/(games)/[game]/layout').LayoutProps
 

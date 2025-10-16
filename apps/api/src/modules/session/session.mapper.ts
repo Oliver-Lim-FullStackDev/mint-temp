@@ -2,6 +2,7 @@ import { HG_SessionResponse, SessionResponse } from '../../shared/hero-gaming.ty
 
 export const SessionMapper = {
   fromApi(session: HG_SessionResponse): SessionResponse | null {
+
     if (!session.player) {
       return null;
     }
@@ -14,7 +15,9 @@ export const SessionMapper = {
         profileImageUrl: session?.player?.avatarImageUrl,
         // make the array an object so we have player.balances.MBX
         balances: Object.fromEntries(
-          (session.player?.all_accounts ?? []).map((account) => [account.currency, account]),
+          (session.player?.all_accounts ?? []).map(
+            (account) => [account.currency, account]
+          )
         ),
         email: session?.player?.email,
         internalId: session?.player?.internalId,

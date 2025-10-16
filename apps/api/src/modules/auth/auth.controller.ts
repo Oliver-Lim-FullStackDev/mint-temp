@@ -1,5 +1,5 @@
-import { Body, Controller, Get, Param, Post, Res } from '@nestjs/common';
-import type { Response as ExpressResponse } from 'express';
+import { BadRequestException, Body, Controller, Get, Param, Post, Req, Res } from '@nestjs/common';
+import type { Request as ExpressRequest, Response as ExpressResponse } from 'express';
 import { SessionService } from '../session';
 import { TelegramAuthDto, TonLoginDto } from './auth.dto';
 import { AuthMapper } from './auth.mapper';
@@ -82,10 +82,7 @@ export class AuthController {
    * @returns User data after successful authentication
    */
   @Post('telegram')
-  async authenticateTelegram(
-    @Body() dto: TelegramAuthDto,
-    @Res({ passthrough: true }) res: ExpressResponse,
-  ): Promise<User> {
+  async authenticateTelegram(@Body() dto: TelegramAuthDto, @Res({ passthrough: true }) res: ExpressResponse): Promise<User> {
     const user = await this.auth.authenticateTelegram(dto);
 
     if (!user) {
@@ -97,5 +94,22 @@ export class AuthController {
     }
 
     return AuthMapper.fromApi(user);
+  }
+
+  /**
+   * Verify Privy identity token and return Privy user object
+   * Reads the identity token from cookie `privy-id-token` or header `privy-id-token`.
+   */
+  @Get('privy/verify')
+  async verifyPrivy(@Req() req: ExpressRequest): Promise<any> {
+    const idToken = req.cookies?.['privy-id-token'] || (req.headers['privy-id-token'] as string | undefined);
+    
+    if (!idToken) {
+      throw new BadRequestException('Identity token is required');
+    }
+
+    const user = await this.auth.verifyPrivyToken(idToken);
+    // TODO: Authentificate the user with Hero Gaming
+    return user;
   }
 }

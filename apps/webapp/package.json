@@ -31,14 +31,11 @@
     "@mui/x-data-grid": "catalog:mui",
     "@mui/x-date-pickers": "catalog:mui",
     "@mui/x-tree-view": "catalog:mui",
+    "@privy-io/react-auth": "^3.2.0",
     "@ston-fi/omniston-sdk-react": "^0.7.0",
     "@tailwindcss/postcss": "catalog:",
     "@tanstack/react-query": "^5.80.6",
-    "@telegram-apps/bridge": "^2.11.0",
-    "@telegram-apps/init-data-node": "^2.0.10",
-    "@telegram-apps/sdk-react": "catalog:",
     "@tonconnect/ui-react": "catalog:",
-    "@twa-dev/sdk": "^8.0.2",
     "@types/js-cookie": "^3.0.6",
     "@types/uuid": "^10.0.0",
     "canvas-confetti": "catalog:",
@@ -46,7 +43,6 @@
     "embla-carousel-autoplay": "catalog:mui",
     "embla-carousel-fade": "catalog:mui",
     "embla-carousel-react": "catalog:mui",
-    "eruda": "catalog:",
     "framer-motion": "^12.23.12",
     "globals": "catalog:",
     "i18next": "catalog:",
@@ -69,13 +65,11 @@
     "ton": "^13.9.0",
     "use-debounce": "^10.0.5",
     "uuid": "^11.1.0",
-    "zustand": "^5.0.7",
-    "@mint/game-internal": "workspace:^"
+    "zustand": "^5.0.7"
   },
   "devDependencies": {
     "@mint/infra": "workspace:*",
     "@next/eslint-plugin-next": "^15.4.5",
-    "@twa-dev/types": "^8.0.2",
     "@types/node": "catalog:",
     "@types/react": "catalog:",
     "@types/react-dom": "catalog:",
@@ -90,6 +84,5 @@
     "tailwindcss": "catalog:",
     "typescript": "catalog:",
     "typescript-eslint": "catalog:"
-  },
-  "packageManager": "pnpm@10.7.1"
+  }
 }

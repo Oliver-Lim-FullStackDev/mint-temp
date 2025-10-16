@@ -16,7 +16,10 @@ const DAILY_REWARDS_ITEMS = ['5-spins'];
  * Determines the type of store item based on its ID and price
  */
 export function getItemType(item: StoreItem): StoreItemType {
-  if (DAILY_REWARDS_ITEMS.includes(item.id) && item.price.usd === 0 && item.price.stars === 0) {
+  const usdPrice = item.price.usd ?? 0;
+  const tonPrice = item.price.ton ?? 0;
+
+  if (DAILY_REWARDS_ITEMS.includes(item.id) && usdPrice === 0 && tonPrice === 0) {
     return 'daily';
   }
 
@@ -49,8 +52,8 @@ export function getItemButtonText(
       if (item?.price?.usd && item.price.usd > 0) {
         return `$${item.price.usd}`;
       }
-      if (item?.price?.stars && item.price.stars > 0) {
-        return `${item.price.stars} ⭐`;
+      if (item?.price?.ton && item.price.ton > 0) {
+        return `${item.price.ton.toFixed(2)} TON`;
       }
       return 'Free';
 
@@ -63,7 +66,9 @@ export function getItemButtonText(
  * Checks if an item is a free item (no cost)
  */
 export function isFreeItem(item: StoreItem): boolean {
-  return item.price.usd === 0 && item.price.stars === 0;
+  const usdPrice = item.price.usd ?? 0;
+  const tonPrice = item.price.ton ?? 0;
+  return usdPrice === 0 && tonPrice === 0;
 }
 
 /**

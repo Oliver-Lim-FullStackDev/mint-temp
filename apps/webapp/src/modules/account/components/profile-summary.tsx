@@ -1,27 +1,25 @@
 'use client';
 
 import React, { useMemo } from 'react';
-import { useFormatBalance } from '@/hooks/useFormatBalance';
-import { useTelegram } from '@/hooks/useTelegram';
-import { useSession } from '@/modules/account/session-store';
-import { useUserAuth } from '@/modules/telegram/context/user-auth-telegram-provider';
-import { useUI } from '@/modules/ui/use-ui';
+import Image from 'next/image';
 import { TonConnectButton, useTonAddress, useTonConnectUI } from '@tonconnect/ui-react';
+import { useFormatBalance } from '@/hooks/useFormatBalance';
+import { useSession } from '@/modules/account/session-store';
+import { useUI } from '@/modules/ui/use-ui';
 import {
   Avatar,
   Box,
   Button,
   Divider,
-  GlassBox,
   Skeleton,
   Stack,
   Typography
-} from '@mint/ui';
+} from '@mint/ui/components/core';
+import { GlassBox } from '@mint/ui/components/glass-box';
 import { Iconify } from '@mint/ui/components/iconify';
-import Image from 'next/image';
 import { PROFILE_BACKGROUND_TEXTURE } from '../constants/background-images';
 import { useGameResources } from '../hooks/useAccountData';
-import { ReferralSection } from './referral-section';
+// import { ReferralSection } from './referral-section';
 
 interface ProfileSummaryProps {
   apiConfig?: any;
@@ -29,9 +27,9 @@ interface ProfileSummaryProps {
 
 export const ProfileSummary: React.FC<ProfileSummaryProps> = ({ apiConfig }) => {
   const { data: resources } = useGameResources(apiConfig);
-  const { user } = useUserAuth();
   const state = useUI();
   const { session } = useSession();
+  const player = session?.player;
   const { formatBalanceFull } = useFormatBalance();
   const tonAddress = useTonAddress();
   const [tonConnectUI] = useTonConnectUI();
@@ -83,24 +81,21 @@ export const ProfileSummary: React.FC<ProfileSummaryProps> = ({ apiConfig }) => 
 
   // Generate referral link
   const referralLink = useMemo(() => {
-    if (!user?.player?.referralId) {
+    if (!player?.referralId) {
       return;
     }
 
-    const { referralId } = user.player;
-    return `${process.env.NEXT_PUBLIC_TELEGRAM_BOT_URL}/?startapp=ref=${referralId}`;
+    const baseUrl = process.env.NEXT_PUBLIC_MINT_URL || 'https://mint.io';
+    return `${baseUrl}/?ref=${player.referralId}`;
+  }, [player?.referralId]);
 
-    // TODO migrate to webapp
-    // return `${process.env.NEXT_PUBLIC_MINT_URL}/?ref=${referralId}`;
-  }, [user?.player?.referralId]);
-
-  const referralCount = user?.player?.referralCount || 0;
+  const referralCount = player?.referralCount || 0;
 
   const mintBucks = balances?.MBX?.balanceCents / 100 || 0;
   const raffleTickets = balances?.RTP?.balanceCents / 100 || 0;
   const xp = balances?.XPP?.balanceCents / 100 || 0;
 
-  if (!user) {
+  if (!player) {
     return (
       <Stack spacing={3} alignItems="center" sx={{ p: 2 }}>
         <Stack direction="row" alignItems="center" justifyContent="space-between" width="100%" sx={{ px: 2 }}>
@@ -155,8 +150,8 @@ export const ProfileSummary: React.FC<ProfileSummaryProps> = ({ apiConfig }) => 
 
         {/* Profile Avatar */}
         <Avatar
-          src={user?.profileImageUrl || user?.player?.profileImageUrl || '/mint/account-avatar-placeholder.png'}
-          alt={user?.displayName || user?.player?.username}
+          src={player?.profileImageUrl || '/mint/account-avatar-placeholder.png'}
+          alt={player?.displayName || player?.username}
           sx={{
             width: 80,
             height: 80,
@@ -168,53 +163,27 @@ export const ProfileSummary: React.FC<ProfileSummaryProps> = ({ apiConfig }) => 
             zIndex: 1,
           }}
         >
-          {user?.displayName?.charAt(0).toUpperCase() || 'M'}
+          {player?.displayName?.charAt(0).toUpperCase() || 'M'}
         </Avatar>
       </Box>
 
       {/* displayName */}
       <Typography variant="h2" zIndex={1} fontSize="2rem !important" textTransform="uppercase" fontWeight="900" textAlign="center" color="text-primary">
-        {user?.displayName || user?.player?.username || 'MINT User'}
+        {player?.displayName || player?.username || 'MINT User'}
       </Typography>
 
-      {isTonConnected && (
-        <Box
-          sx={{
-            display: 'flex',
-            justifyContent: 'center',
-            width: '100%',
-            position: 'relative',
-            zIndex: 2
-          }}
-        >
-          <Button
-            variant="outlined"
-            size="medium"
-            onClick={handleDisconnectWallet}
-            startIcon={<Iconify icon="material-symbols:logout" />}
-            sx={{
-              borderRadius: '20px',
-              px: 3,
-              py: 1,
-              borderColor: 'rgba(255, 255, 255, 0.2)',
-              color: '#FFFFFF',
-              backgroundColor: 'rgba(255, 255, 255, 0.05)',
-              backdropFilter: 'blur(4px)',
-              '&:hover': {
-                backgroundColor: 'rgba(255, 255, 255, 0.1)',
-                borderColor: 'rgba(255, 255, 255, 0.3)',
-              },
-              fontFamily: 'Red Hat Text',
-              fontWeight: 600,
-              fontSize: '14px',
-              textTransform: 'none',
-              minWidth: 'auto',
-            }}
-          >
-            Disconnect Wallet
-          </Button>
-        </Box>
-      )}
+      <Box
+        sx={{
+          display: 'flex',
+          justifyContent: 'center',
+          width: '100%',
+          position: 'relative',
+          zIndex: 2
+        }}
+        onClick={!isTonConnected ? handleTonConnectClick : undefined}
+      >
+        <TonConnectButton />
+      </Box>
 
       {/* Referral Section */}
       {/* <ReferralSection referralCount={referralCount} referralLink={referralLink} shouldHighlight={state.openedFromInvite} /> */}

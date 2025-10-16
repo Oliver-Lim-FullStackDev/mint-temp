@@ -1,22 +1,21 @@
 'use client';
 
 import { useMemo, useRef, useState } from 'react';
-import { flushSync } from 'react-dom';
 import Image from 'next/image';
-import { useThrottledCallback } from 'use-debounce';
-import Sparkle from 'react-sparkle';
 import ReactConfetti from 'react-canvas-confetti/dist/presets/realistic';
-import { Box, Button, Divider } from '@mint/ui/components';
-import { Iconify } from '@mint/ui/components/iconify';
-import { paths } from '@/routes/paths';
-import { GamesMenu } from '@/modules/games/components/games-menu';
-import { useBalances, useUpdateBalancesFromRewardObject, useUpdateBalanceAmount } from '@/modules/account/session-store';
-import { flyTo } from '@/lib/animations/fly-to';
-import { Text } from '@/components/core';
-import { SlotGameInitDto, SlotGameResultDto } from './mint-game-slots.dto';
-import { MintGameSlotsWinsTable } from './mint-game-slots-wins-table';
-import Slots from './slots';
+import { flushSync } from 'react-dom';
+import { useThrottledCallback } from 'use-debounce';
 import { apiFetch } from '@mint/client';
+import { Text } from '@mint/ui/components';
+import { Box, Button, Divider } from '@mint/ui/components/core';
+import { Iconify } from '@mint/ui/components/iconify';
+import { flyTo } from '@/lib/animations/fly-to';
+import { useBalances, useUpdateBalanceAmount, useUpdateBalancesFromRewardObject } from '@/modules/account/session-store';
+import { GamesMenu } from '@/modules/games/components/games-menu';
+import { paths } from '@/routes/paths';
+import { MintGameSlotsWinsTable } from './mint-game-slots-wins-table';
+import { SlotGameInitDto, SlotGameResultDto } from './mint-game-slots.dto';
+import Slots from './slots';
 
 const CONFETTI_DURATION = 3000;
 
@@ -89,7 +88,7 @@ export function MintGameSlots({
 
       setIsLoading(true);
       try {
-        responseRef.current = await apiFetch(`/games/mint/minty-spins/play`);
+        responseRef.current = await apiFetch(`/games/minty-spins/play`);
       } catch (err) {
         console.error('Spin failed:', err);
       } finally {
@@ -175,7 +174,7 @@ export function MintGameSlots({
       <Slots
         initial={initial}
         result={result ?? undefined}
-        onSpinStart={() => {}}
+        onSpinStart={() => { }}
         onSpinEnd={handleSpinEnd}
         onWin={handleWin}
         seed={spinKey}
@@ -258,7 +257,7 @@ export function MintGameSlots({
           </Text>
         </Box>
 
-        <Box sx={{ width: 'auto'}}>
+        <Box sx={{ width: 'auto' }}>
           <Button
             color="secondary"
             variant="contained"
@@ -311,11 +310,11 @@ type SparklesProps = {
 };
 
 export function Sparkles({
-                              children,
-                              style,
-                              className,
-                              ...props
-                            }: React.PropsWithChildren<SparklesProps>) {
+  children,
+  style,
+  className,
+  ...props
+}: React.PropsWithChildren<SparklesProps>) {
   // Pull default export safely even without esModuleInterop
   const Sparkle = useMemo(
     () => (require('react-sparkle').default as React.ComponentType<SparklesProps>),
