@@ -123,7 +123,7 @@ export class GamesService {
   }
 
   async findProviders(): Promise<GameProvider[]> {
-    const providers = await this.hg.get<RawGameProvider[]>(`/game_providers`);
+    const providers = await this.hg.v1.get<RawGameProvider[]>(`/game_providers`);
 
     const mapped = providers
       .map((provider) => {
