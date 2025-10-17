@@ -146,10 +146,17 @@ function CasinoContent({ hasError }: { hasError?: boolean }) {
   ];
 
   const sortedGames = useMemo(() => {
-    const combined = [...availableGames, ...COMING_SOON_GAMES];
-    return combined.sort(
-      (a, b) => (b.provider === 'mint' ? 1 : 0) - (a.provider === 'mint' ? 1 : 0),
-    );
+    const combined = [...availableGames];
+
+    COMING_SOON_GAMES.forEach((game) => {
+      const alreadyPresent = combined.some((existing) => existing.id === game.id);
+
+      if (!alreadyPresent) {
+        combined.push(game);
+      }
+    });
+
+    return combined;
   }, [availableGames]);
 
   const showErrorState = ((hasError && !data) || isError) && !isFetching;
