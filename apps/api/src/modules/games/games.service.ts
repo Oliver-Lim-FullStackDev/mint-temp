@@ -2,7 +2,14 @@ import { Injectable } from '@nestjs/common';
 import { HeroGamingApiRoutes } from 'src/shared/hero-gaming-api-routes';
 import { HeroGamingClient } from 'src/shared/hero-gaming.client';
 import { GameMapper } from './games.mapper';
-import { Game, GameProvider, RawGame, RawGameProvider } from './games.types';
+import {
+  Game,
+  GameProvider,
+  GameSearchResponse,
+  HeroGameSearchBucket,
+  RawGame,
+  RawGameProvider,
+} from './games.types';
 
 @Injectable()
 export class GamesService {
@@ -12,10 +19,10 @@ export class GamesService {
     return GameMapper.fromApi(game);
   }
 
-  private getMintStaticGames(params: { id?: string; provider?: string }): Game | Game[] | undefined {
+  private getMintStaticGames(params: { id?: string; provider?: string }): RawGame | RawGame[] | undefined {
     if (!params.id && !params.provider) return;
 
-    const mintGames = [
+    const mintGames: RawGame[] = [
       {
         id: 'minty-spins',
         title: 'Minty Spins',
@@ -27,18 +34,18 @@ export class GamesService {
     ];
 
     if (params.id) {
-      const game = mintGames.filter((game: Game) => game.id === params.id)?.[0];
+      const game = mintGames.find((game) => game.id === params.id);
 
-      return game ? this.transform(game) : undefined;
+      return game ?? undefined;
     }
 
-    return mintGames.filter((game) => game.provider === params.provider).map((game: Game) => this.transform(game));
+    return mintGames.filter((game) => game.provider === params.provider);
   }
 
   async findOne(id: string): Promise<Game> {
     // Mint Games (Daily Plays) - Static for now
     if (id?.includes('mint')) {
-      const game = this.getMintStaticGames({ id }) as Game;
+      const game = this.getMintStaticGames({ id }) as RawGame;
       if (game) {
         return this.transform(game);
       }
@@ -49,9 +56,70 @@ export class GamesService {
     return this.transform(game);
   }
 
+  private extractGamesFromBucket(bucket?: HeroGameSearchBucket): RawGame[] {
+    if (!bucket) {
+      return [];
+    }
+
+    if (Array.isArray(bucket)) {
+      return bucket;
+    }
+
+    if ('data' in bucket && Array.isArray(bucket.data)) {
+      return bucket.data;
+    }
+
+    return [];
+  }
+
+  private normaliseHeroOrder(order?: 'ASC' | 'DESC'): string {
+    if (order === 'DESC') {
+      return 'DESC';
+    }
+
+    return 'sort_order';
+  }
+
+  private buildSearchBucket(params: {
+    limit: number;
+    order: string;
+    tags: string[];
+    text?: string;
+  }) {
+    const { limit, order, tags, text } = params;
+
+    const bucket: Record<string, unknown> = {
+      limit,
+      order,
+    };
+
+    if (tags.length) {
+      bucket.tags = tags;
+    }
+
+    if (text) {
+      bucket.text = text;
+    }
+
+    return bucket;
+  }
+
   async findAll(): Promise<Game[]> {
-    const games = await this.hg.get<RawGame[]>(`/games`);
-    return games.map((g) => this.transform(g));
+    const order = this.normaliseHeroOrder('ASC');
+
+    const response = await this.hg.post<GameSearchResponse>(HeroGamingApiRoutes.gamesSearch, {
+      q: {
+        results: this.buildSearchBucket({
+          limit: 999,
+          order,
+          tags: [],
+        }),
+      },
+    });
+
+    const rawGames = this.extractGamesFromBucket(response?.result?.results);
+
+    return rawGames.map((game) => this.transform(game));
   }
 
   async findProviders(): Promise<GameProvider[]> {
@@ -111,47 +179,70 @@ export class GamesService {
       providers = [],
     } = params;
 
-    const effectiveTags = [...tags];
+    const effectiveTags = [...new Set(tags.map((tag) => tag.toLowerCase()))];
 
-    // Mint Games (Daily Plays) - Static for now
-    const mintDailyGames: Game[] = [];
-    if (effectiveTags.includes('mint')) {
-      const games = this.getMintStaticGames({ provider: 'mint' }) as Game[];
-      if (games) {
-        mintDailyGames.push(...games);
-      }
+    const providerFilters = providers.length ? providers : provider ? [provider] : [];
+    const normalizedProviders = providerFilters.map((value) => value.toLowerCase());
 
-      // Remove mint tag before applying Hub88 filters
+    const includeMintDaily =
+      effectiveTags.includes('mint') || normalizedProviders.includes('mint');
+
+    if (includeMintDaily && effectiveTags.includes('mint')) {
       effectiveTags.splice(effectiveTags.indexOf('mint'), 1);
     }
 
-    const rawGames = await this.hg.get<RawGame[]>(`/games`);
-    let heroGames = rawGames.map((g) => this.transform(g));
+    const heroTags = effectiveTags.filter((tag) => tag !== 'mint');
+    const heroProviders = Array.from(new Set(normalizedProviders.filter((value) => value !== 'mint')));
 
-    if (effectiveTags.length) {
-      heroGames = heroGames.filter((game) => {
-        const tagSet = new Set([
-          ...(game.tags ?? []),
-          ...(game.categories?.map((category) => category.slug) ?? []),
-        ]);
+    const limitForRequest = limit ?? 999;
+    const heroLimit = Math.max(offset ? limitForRequest + offset : limitForRequest, 1);
+    const heroOrder = this.normaliseHeroOrder(order);
 
-        if (!tagSet.size) {
-          return false;
-        }
+    const buildTagsForProvider = (providerSlug: string) => {
+      const combined = new Set(heroTags);
+      combined.add(providerSlug);
+      return Array.from(combined);
+    };
 
-        return effectiveTags.some((tag) => tagSet.has(tag));
+    const queryBuckets: Record<string, unknown> = {};
+
+    if (heroProviders.length) {
+      heroProviders.forEach((providerSlug) => {
+        queryBuckets[providerSlug] = this.buildSearchBucket({
+          limit: heroLimit,
+          order: heroOrder,
+          tags: buildTagsForProvider(providerSlug),
+          text: search,
+        });
+      });
+    } else {
+      queryBuckets.results = this.buildSearchBucket({
+        limit: heroLimit,
+        order: heroOrder,
+        tags: heroTags,
+        text: search,
       });
     }
 
-    const providerFilters = providers.length
-      ? providers
-      : provider
-        ? [provider]
-        : [];
+    const response = await this.hg.post<GameSearchResponse>(HeroGamingApiRoutes.gamesSearch, {
+      q: queryBuckets,
+    });
 
-    const normalizedProviders = providerFilters.map((value) => value.toLowerCase());
+    const bucketsToRead = heroProviders.length ? heroProviders : ['results'];
 
-    if (providerFilters.length) {
+    const rawHeroGames = bucketsToRead
+      .flatMap((key) => this.extractGamesFromBucket(response?.result?.[key]))
+      .filter(Boolean);
+
+    const dedupedHeroGames = rawHeroGames.reduce<Record<string, Game>>((acc, rawGame) => {
+      const mapped = this.transform(rawGame);
+      acc[mapped.id] = mapped;
+      return acc;
+    }, {});
+
+    let heroGames = Object.values(dedupedHeroGames);
+
+    if (normalizedProviders.length) {
       heroGames = heroGames.filter((game) => {
         const providerValues = [
           game.provider?.toLowerCase(),
@@ -183,28 +274,29 @@ export class GamesService {
     };
 
     heroGames = heroGames.filter(filterBySearch);
-    let filteredMintDaily = mintDailyGames.filter(filterBySearch);
 
-    if (providerFilters.length) {
-      filteredMintDaily = filteredMintDaily.filter((game) => {
-        const providerValues = [
-          game.provider?.toLowerCase(),
-          game.providerSlug?.toLowerCase(),
-          game.displayProvider?.toLowerCase(),
-        ].filter(Boolean) as string[];
+    let filteredMintDaily: Game[] = [];
 
-        return providerValues.some((value) => normalizedProviders.includes(value));
-      });
-    }
+    if (includeMintDaily) {
+      const mintGames = this.getMintStaticGames({ provider: 'mint' });
+      if (Array.isArray(mintGames)) {
+        filteredMintDaily = mintGames
+          .map((game) => this.transform(game))
+          .filter(filterBySearch)
+          .filter((game) => {
+            if (!normalizedProviders.length) {
+              return true;
+            }
 
-    heroGames.sort((a, b) => {
-      const aTitle = a.title?.toLowerCase() ?? '';
-      const bTitle = b.title?.toLowerCase() ?? '';
-      return aTitle.localeCompare(bTitle);
-    });
+            const providerValues = [
+              game.provider?.toLowerCase(),
+              game.providerSlug?.toLowerCase(),
+              game.displayProvider?.toLowerCase(),
+            ].filter(Boolean) as string[];
 
-    if (order === 'DESC') {
-      heroGames.reverse();
+            return providerValues.some((value) => normalizedProviders.includes(value));
+          });
+      }
     }
 
     const combined = [...heroGames, ...filteredMintDaily];
