@@ -7,7 +7,7 @@ type NextLayoutProps = import('.next/types/app/casino/(games)/game/[slug]/layout
 const MAIN_LAYOUT_GAMES = new Set<string>(['minty-spins']);
 
 export default async function Layout({ children, params }: NextLayoutProps) {
-  const { slug: gameParam } = params;
+  const { slug: gameParam } = await params;
   const useMainLayout = MAIN_LAYOUT_GAMES.has(gameParam);
 
   return useMainLayout ? (

@@ -3,14 +3,14 @@ import { loadCasinoInitialData } from '@/app/casino/(main)/loader';
 import { CasinoHydrationBoundary } from '@/app/casino/(main)/hydrate';
 
 type PageProps = {
-  params: { category: string };
+  params: Promise<{ category: string }>;
   searchParams: Promise<Record<string, string | string[] | undefined>>;
 };
 
 export default async function Page({ params, searchParams }: PageProps) {
-  const resolvedSearchParams = await searchParams;
+  const [{ category }, resolvedSearchParams] = await Promise.all([params, searchParams]);
   const { filters, dehydratedState, hasError, syncUrl } = await loadCasinoInitialData({
-    category: params.category,
+    category,
     searchParams: resolvedSearchParams,
   });
 
