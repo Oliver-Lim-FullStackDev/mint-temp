@@ -21,11 +21,13 @@ export const GameMapper = {
 
             if (!slug) return undefined;
 
-            return {
+            const normalised: GameCategory = {
               id: category.id ?? slug,
               slug,
               name: category.name ?? category.title ?? slug,
-            } satisfies GameCategory;
+            };
+
+            return normalised;
           })
           .filter((category): category is GameCategory => Boolean(category))
       : [];
