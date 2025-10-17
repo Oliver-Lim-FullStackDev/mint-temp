@@ -1,6 +1,6 @@
 'use client';
 
-import { useMemo } from 'react';
+import { useEffect, useMemo, useRef } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { Box, Container } from '@mint/ui/components/core';
 import { Text, EmptyContent } from '@mint/ui/components';
@@ -12,10 +12,15 @@ import {
   buildCasinoQuery,
   CasinoCategoryNav,
   CasinoFiltersBar,
+  CasinoFiltersHydrator,
+  CasinoFiltersProvider,
   type CasinoApiResponse,
+  type CasinoFilters,
+  type CasinoQueryKey,
   useCasinoFilters,
   fetchCasinoGames,
 } from '@/modules/casino';
+import { DEFAULT_FILTERS } from '@/modules/casino/state/utils';
 
 let CAROUSEL_GAME_IDS = {
   octogame: '14098',
@@ -71,27 +76,72 @@ const COMING_SOON_GAMES: Game[] = [
 ];
 
 interface CasinoViewProps {
-  initialData: CasinoApiResponse | null;
+  initialFilters: CasinoFilters;
   hasError?: boolean;
+  pendingUrlSync?: {
+    provider: boolean;
+    order: boolean;
+  };
 }
 
-export function CasinoView({ initialData, hasError = false }: CasinoViewProps) {
+export function CasinoView({ initialFilters, hasError = false, pendingUrlSync }: CasinoViewProps) {
+  const shouldSyncUrl = Boolean(pendingUrlSync?.provider || pendingUrlSync?.order);
+
+  return (
+    <CasinoFiltersProvider initialFilters={initialFilters}>
+      <CasinoFiltersHydrator initialFilters={initialFilters} />
+      {shouldSyncUrl && pendingUrlSync ? (
+        <CasinoUrlSyncer pendingUrlSync={pendingUrlSync} />
+      ) : null}
+      <CasinoContent hasError={hasError} />
+    </CasinoFiltersProvider>
+  );
+}
+
+function CasinoUrlSyncer({
+  pendingUrlSync,
+}: {
+  pendingUrlSync: { provider: boolean; order: boolean };
+}) {
+  const hasSyncedRef = useRef(false);
+  const { filters, setProvider, setOrder } = useCasinoFilters();
+
+  useEffect(() => {
+    if (hasSyncedRef.current) {
+      return;
+    }
+
+    hasSyncedRef.current = true;
+
+    if (pendingUrlSync.provider && filters.provider) {
+      setProvider(filters.provider);
+    }
+
+    if (pendingUrlSync.order && filters.order !== DEFAULT_FILTERS.order) {
+      setOrder(filters.order);
+    }
+  }, [filters.order, filters.provider, pendingUrlSync.order, pendingUrlSync.provider, setOrder, setProvider]);
+
+  return null;
+}
+
+function CasinoContent({ hasError }: { hasError?: boolean }) {
   const { filters, setCategory, setOrder, setProvider, setSearch } = useCasinoFilters();
 
   const queryParams = useMemo(() => buildCasinoQuery(filters), [filters]);
+  const queryKey = useMemo<CasinoQueryKey>(() => ['games', queryParams], [queryParams]);
 
-  const { data, isFetching, isError } = useQuery({
-    queryKey: ['casino-games', queryParams],
+  const { data, isFetching, isError } = useQuery<CasinoApiResponse>({
+    queryKey,
     queryFn: () => fetchCasinoGames(queryParams),
-    initialData: initialData ?? undefined,
     staleTime: 30_000,
-    keepPreviousData: true,
+    gcTime: 5 * 60 * 1000,
+    refetchOnWindowFocus: false,
   });
 
-  const apiData = data ?? initialData ?? undefined;
-  const availableGames = apiData?.games ?? [];
-  const providers = apiData?.meta.providers ?? [];
-  const categories = apiData?.meta.categories ?? [
+  const availableGames = data?.games ?? [];
+  const providers = data?.meta.providers ?? [];
+  const categories = data?.meta.categories ?? [
     { slug: 'all', label: 'All Games', count: availableGames.length },
   ];
 
@@ -102,7 +152,7 @@ export function CasinoView({ initialData, hasError = false }: CasinoViewProps) {
     );
   }, [availableGames]);
 
-  const showErrorState = hasError || isError;
+  const showErrorState = ((hasError && !data) || isError) && !isFetching;
   const showEmptyState = !showErrorState && !isFetching && !sortedGames.length;
 
   const carrouselItems: CarrouselItem[] = [

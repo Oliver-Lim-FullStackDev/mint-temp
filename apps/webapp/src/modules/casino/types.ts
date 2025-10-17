@@ -29,6 +29,8 @@ export type CasinoQueryParams = {
   offset?: number;
 };
 
+export type CasinoQueryKey = ['games', CasinoQueryParams];
+
 export type CasinoApiResponse = {
   games: Game[];
   meta: {

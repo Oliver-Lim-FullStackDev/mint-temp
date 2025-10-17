@@ -1,4 +1,6 @@
 import type { Metadata } from 'next';
+import { HydrationBoundary } from '@tanstack/react-query';
+
 import { CasinoView } from '@/app/casino/(main)/view';
 import { loadCasinoInitialData } from '@/app/casino/(main)/loader';
 
@@ -12,9 +14,13 @@ type PageProps = {
 };
 
 export default async function Page({ searchParams }: PageProps) {
-  const { data, hasError } = await loadCasinoInitialData({ searchParams });
+  const { filters, dehydratedState, hasError, syncUrl } = await loadCasinoInitialData({ searchParams });
 
-  return <CasinoView initialData={data} hasError={hasError} />;
+  return (
+    <HydrationBoundary state={dehydratedState}>
+      <CasinoView initialFilters={filters} hasError={hasError} pendingUrlSync={syncUrl} />
+    </HydrationBoundary>
+  );
 }
 
 
