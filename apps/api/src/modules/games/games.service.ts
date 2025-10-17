@@ -107,7 +107,7 @@ export class GamesService {
   async findAll(): Promise<Game[]> {
     const order = this.normaliseHeroOrder('ASC');
 
-    const response = await this.hg.post<GameSearchResponse>(HeroGamingApiRoutes.gamesSearch, {
+    const response = await this.hg.v2.post<GameSearchResponse>(HeroGamingApiRoutes.gamesSearch, {
       q: {
         results: this.buildSearchBucket({
           limit: 999,
@@ -224,7 +224,7 @@ export class GamesService {
       });
     }
 
-    const response = await this.hg.post<GameSearchResponse>(HeroGamingApiRoutes.gamesSearch, {
+    const response = await this.hg.v2.post<GameSearchResponse>(HeroGamingApiRoutes.gamesSearch, {
       q: queryBuckets,
     });
 

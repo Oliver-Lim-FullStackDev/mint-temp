@@ -1,8 +1,7 @@
 import type { Metadata } from 'next';
-import { HydrationBoundary } from '@tanstack/react-query';
-
 import { CasinoView } from '@/app/casino/(main)/view';
 import { loadCasinoInitialData } from '@/app/casino/(main)/loader';
+import { CasinoHydrationBoundary } from '@/app/casino/(main)/hydrate';
 
 export const metadata: Metadata = {
   title: 'Mint.io | Casinos',
@@ -20,9 +19,9 @@ export default async function Page({ searchParams }: PageProps) {
   });
 
   return (
-    <HydrationBoundary state={dehydratedState}>
+    <CasinoHydrationBoundary state={dehydratedState}>
       <CasinoView initialFilters={filters} hasError={hasError} pendingUrlSync={syncUrl} />
-    </HydrationBoundary>
+    </CasinoHydrationBoundary>
   );
 }
 

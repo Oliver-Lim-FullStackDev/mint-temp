@@ -1,7 +1,6 @@
-import { HydrationBoundary } from '@tanstack/react-query';
-
 import { CasinoView } from '@/app/casino/(main)/view';
 import { loadCasinoInitialData } from '@/app/casino/(main)/loader';
+import { CasinoHydrationBoundary } from '@/app/casino/(main)/hydrate';
 
 type PageProps = {
   params: { slug: string };
@@ -16,8 +15,8 @@ export default async function Page({ params, searchParams }: PageProps) {
   });
 
   return (
-    <HydrationBoundary state={dehydratedState}>
+    <CasinoHydrationBoundary state={dehydratedState}>
       <CasinoView initialFilters={filters} hasError={hasError} pendingUrlSync={syncUrl} />
-    </HydrationBoundary>
+    </CasinoHydrationBoundary>
   );
 }
