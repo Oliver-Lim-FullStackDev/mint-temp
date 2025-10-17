@@ -10,11 +10,14 @@ export const metadata: Metadata = {
 };
 
 type PageProps = {
-  searchParams: Record<string, string | string[] | undefined>;
+  searchParams: Promise<Record<string, string | string[] | undefined>>;
 };
 
 export default async function Page({ searchParams }: PageProps) {
-  const { filters, dehydratedState, hasError, syncUrl } = await loadCasinoInitialData({ searchParams });
+  const resolvedSearchParams = await searchParams;
+  const { filters, dehydratedState, hasError, syncUrl } = await loadCasinoInitialData({
+    searchParams: resolvedSearchParams,
+  });
 
   return (
     <HydrationBoundary state={dehydratedState}>

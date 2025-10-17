@@ -5,13 +5,14 @@ import { loadCasinoInitialData } from '@/app/casino/(main)/loader';
 
 type PageProps = {
   params: { slug: string };
-  searchParams: Record<string, string | string[] | undefined>;
+  searchParams: Promise<Record<string, string | string[] | undefined>>;
 };
 
 export default async function Page({ params, searchParams }: PageProps) {
+  const resolvedSearchParams = await searchParams;
   const { filters, dehydratedState, hasError, syncUrl } = await loadCasinoInitialData({
     category: params.slug,
-    searchParams,
+    searchParams: resolvedSearchParams,
   });
 
   return (
