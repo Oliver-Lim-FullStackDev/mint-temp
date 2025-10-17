@@ -10,8 +10,13 @@ export const metadata: Metadata = {
 };
 
 const DEFAULT_SEARCH_PARAMS = {
-  tags: ['mint', 'originals', 'tinyrex'],
-  limit: 9999,
+  q: {
+    results: {
+      tags: ['mint', 'originals', 'tinyrex'],
+      limit: 999,
+      order: 'sort_order',
+    },
+  },
 };
 
 export default async function Page() {
