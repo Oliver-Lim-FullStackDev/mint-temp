@@ -15,10 +15,10 @@ export const metadata: Metadata = {
 };
 
 // **Use the generated PageProps** from Next’s app folder
-type NextPageProps = import('.next/types/app/casino/(games)/[game]/page').PageProps
+type NextPageProps = import('.next/types/app/casino/(games)/[slug]/page').PageProps
 
 export default async function Page({ params }: NextPageProps) {
-  const { game: gameParam } = await params;
+  const { slug: gameParam } = await params;
 
   // 2. Fetch game metadata
   let game: Game = {} as Game;

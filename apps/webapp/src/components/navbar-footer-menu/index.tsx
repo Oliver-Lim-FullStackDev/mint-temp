@@ -181,7 +181,7 @@ const getActiveMenuItem = (currentPath: string): string => {
   if (currentPath === '/mint') return 'mint';
   if (currentPath === '/drops') return 'drops';
 
-  // Handle casino routes (including dynamic routes like /casino/[game])
+  // Handle casino routes (including dynamic routes like /casino/[slug])
   if (currentPath.startsWith('/casino')) return 'play-win';
 
   // Handle other exact matches
