@@ -40,6 +40,10 @@ export function deriveCategoryFromPath(pathname: string): string {
     return DEFAULT_FILTERS.category;
   }
 
+  if (segments[0] === 'game') {
+    return DEFAULT_FILTERS.category;
+  }
+
   return normaliseCategory(segments[0]);
 }
 

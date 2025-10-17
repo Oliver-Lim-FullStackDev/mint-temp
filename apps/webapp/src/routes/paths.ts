@@ -9,7 +9,7 @@ const ROOTS = {
 export const paths = {
   casinos: {
     root: ROOTS.CASINOS,
-    details: (id: string) => `${ROOTS.CASINOS}/${id}`,
+    details: (id: string) => `${ROOTS.CASINOS}/game/${id}`,
   },
   rankings: '/rankings',
   earn: '/earn',

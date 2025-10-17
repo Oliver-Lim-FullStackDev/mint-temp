@@ -36,7 +36,7 @@ export const paths = {
   figmaUrl: 'https://www.figma.com/design/oAxS3CUFO0ou7rH2lTS8oI/%5BPreview%5D-Minimal-Web.v7.0.0',
   casinos: {
     root: '/casino',
-    details: (id: string) => `/casino/${id}`,
+    details: (id: string) => `/casino/game/${id}`,
   },
   product: {
     root: `/product`,

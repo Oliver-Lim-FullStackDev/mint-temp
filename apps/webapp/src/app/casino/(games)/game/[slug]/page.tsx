@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
 import React from 'react';
-import { notFound, redirect } from 'next/navigation';
+import { notFound } from 'next/navigation';
 import { apiFetch } from '@mint/client';
 import type { SlotGameInitDto } from '@/modules/games/components/mint-slots/mint-game-slots.dto';
 import type { Game } from '@/modules/games/games.types';
@@ -15,10 +15,10 @@ export const metadata: Metadata = {
 };
 
 // **Use the generated PageProps** from Next’s app folder
-type NextPageProps = import('.next/types/app/casino/(games)/[slug]/page').PageProps
+type NextPageProps = import('.next/types/app/casino/(games)/game/[slug]/page').PageProps
 
 export default async function Page({ params }: NextPageProps) {
-  const { slug: gameParam } = await params;
+  const { slug: gameParam } = params;
 
   // 2. Fetch game metadata
   let game: Game = {} as Game;

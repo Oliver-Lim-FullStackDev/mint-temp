@@ -1,11 +1,16 @@
 'use client';
 
-import type { PropsWithChildren } from 'react';
-import type { DehydratedState } from '@tanstack/react-query';
-import { HydrationBoundary } from '@tanstack/react-query';
+import { useState, type PropsWithChildren } from 'react';
+import { HydrationBoundary, QueryClient, QueryClientProvider, type DehydratedState } from '@tanstack/react-query';
 
 export type CasinoHydrationBoundaryProps = PropsWithChildren<{ state: DehydratedState }>;
 
 export function CasinoHydrationBoundary({ state, children }: CasinoHydrationBoundaryProps) {
-  return <HydrationBoundary state={state}>{children}</HydrationBoundary>;
+  const [queryClient] = useState(() => new QueryClient());
+
+  return (
+    <QueryClientProvider client={queryClient}>
+      <HydrationBoundary state={state}>{children}</HydrationBoundary>
+    </QueryClientProvider>
+  );
 }
