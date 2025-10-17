@@ -1,4 +1,4 @@
-import { Game, RawGame } from './games.types';
+import { Game, GameCategory, RawGame } from './games.types';
 
 export const GameMapper = {
   fromApi(raw: RawGame): Game {
@@ -25,9 +25,9 @@ export const GameMapper = {
               id: category.id ?? slug,
               slug,
               name: category.name ?? category.title ?? slug,
-            };
+            } satisfies GameCategory;
           })
-          .filter((category): category is { id?: string; slug: string; name?: string } => Boolean(category))
+          .filter((category): category is GameCategory => Boolean(category))
       : [];
 
     return {
