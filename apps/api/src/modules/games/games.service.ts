@@ -80,6 +80,16 @@ export class GamesService {
     return 'sort_order';
   }
 
+  private normaliseProviderSlug(value: string): string {
+    return value
+      .trim()
+      .toLowerCase()
+      .replace(/[_\s]+/g, '-')
+      .replace(/[^a-z0-9-]/g, '-')
+      .replace(/-+/g, '-')
+      .replace(/^-|-$/g, '');
+  }
+
   private buildSearchBucket(params: {
     limit: number;
     order: string;
@@ -127,22 +137,57 @@ export class GamesService {
 
     const mapped = providers
       .map((provider) => {
-        const slug =
-          provider.slug ?? provider.tag ?? provider.id ?? provider.name ?? provider.displayName ?? provider.title;
+        if (!provider) {
+          return undefined;
+        }
+
+        if (typeof provider === 'string') {
+          const label = provider.trim();
+
+          if (!label) {
+            return undefined;
+          }
+
+          const slug = this.normaliseProviderSlug(label) || label.toLowerCase();
+
+          return {
+            id: slug,
+            slug,
+            name: label,
+            displayName: label,
+          } satisfies GameProvider;
+        }
+
+        const slugSource =
+          provider.slug ??
+          provider.tag ??
+          provider.id ??
+          provider.name ??
+          provider.displayName ??
+          provider.title;
+
+        if (!slugSource) {
+          return undefined;
+        }
+
+        const preferredLabel =
+          (provider.displayName ?? provider.name ?? provider.title ?? slugSource)?.toString().trim() ?? '';
+        const label = preferredLabel || slugSource.toString();
+        const slugFromSource = this.normaliseProviderSlug(slugSource.toString());
+        const slug = slugFromSource || slugSource.toString().trim().toLowerCase();
 
         if (!slug) {
           return undefined;
         }
 
-        const id = provider.id ?? slug;
-        const name = provider.name ?? provider.displayName ?? provider.title ?? slug;
-        const displayName = provider.displayName ?? provider.name ?? provider.title ?? name;
+        const id = (provider.id ?? slug).toString();
+        const name = (provider.name ?? label).toString().trim() || label;
 
         return {
           id,
           slug,
           name,
-          displayName,
+          displayName: label || name,
         } satisfies GameProvider;
       })
       .filter((provider): provider is GameProvider => Boolean(provider))

@@ -53,14 +53,16 @@ export interface GameSearchResponse {
   result: Record<string, HeroGameSearchBucket>;
 }
 
-export interface RawGameProvider {
-  id?: string;
-  slug?: string;
-  tag?: string;
-  name?: string;
-  displayName?: string;
-  title?: string;
-}
+export type RawGameProvider =
+  | string
+  | {
+      id?: string;
+      slug?: string;
+      tag?: string;
+      name?: string;
+      displayName?: string;
+      title?: string;
+    };
 
 export interface GameProvider {
   id: string;

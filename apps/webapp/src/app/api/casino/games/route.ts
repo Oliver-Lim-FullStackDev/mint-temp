@@ -7,14 +7,11 @@ type ProviderOption = {
   label: string;
 };
 
-type RawProvider = {
-  id?: string;
-  slug?: string;
-  tag?: string;
-  provider?: string;
-  name?: string;
-  displayName?: string;
-  title?: string;
+type ApiGameProvider = {
+  id: string;
+  slug: string;
+  name: string;
+  displayName: string;
 };
 
 type CategoryOption = {
@@ -80,17 +77,16 @@ function buildCategories(games: Game[]): CategoryOption[] {
   ];
 }
 
-function buildProviders(games: Game[], providersFromApi: RawProvider[]): ProviderOption[] {
+function buildProviders(games: Game[], providersFromApi: ApiGameProvider[]): ProviderOption[] {
   const providerMap = new Map<string, ProviderOption>();
 
   providersFromApi.forEach((provider) => {
-    const slug =
-      provider.slug ?? provider.provider ?? provider.tag ?? provider.id ?? provider.name ?? provider.displayName ?? provider.title;
+    const slug = provider.slug?.trim();
 
     if (!slug) return;
 
     const key = slug.toLowerCase();
-    const label = provider.displayName ?? provider.name ?? provider.title ?? slug;
+    const label = provider.displayName?.trim() || provider.name?.trim() || slug;
 
     if (!providerMap.has(key)) {
       providerMap.set(key, {
@@ -100,21 +96,23 @@ function buildProviders(games: Game[], providersFromApi: RawProvider[]): Provide
     }
   });
 
-  games.forEach((game) => {
-    const slug = game.providerSlug ?? game.provider ?? '';
-    const label = game.displayProvider ?? game.provider ?? slug;
+  if (!providerMap.size) {
+    games.forEach((game) => {
+      const slug = (game.providerSlug ?? game.provider ?? '').trim();
+      const label = (game.displayProvider ?? game.provider ?? slug)?.toString().trim();
 
-    if (!slug) return;
+      if (!slug) return;
 
-    const key = slug.toLowerCase();
+      const key = slug.toLowerCase();
 
-    if (!providerMap.has(key)) {
-      providerMap.set(key, {
-        value: slug,
-        label,
-      });
-    }
-  });
+      if (!providerMap.has(key)) {
+        providerMap.set(key, {
+          value: slug,
+          label: label || slug,
+        });
+      }
+    });
+  }
 
   return Array.from(providerMap.values()).sort((a, b) => a.label.localeCompare(b.label));
 }
@@ -145,10 +143,10 @@ export async function GET(request: NextRequest) {
         provider,
       }),
       mintApi.get<Game[]>('/games/all'),
-      mintApi.get<RawProvider[]>('/games/providers'),
+      mintApi.get<ApiGameProvider[]>('/games/providers'),
     ]);
 
-    const providerOptions = buildProviders(allGames, Array.isArray(providers) ? providers : []);
+    const providerOptions = buildProviders(allGames, providers ?? []);
     const categories = buildCategories(allGames);
 
     const response: CasinoGamesResponse = {
