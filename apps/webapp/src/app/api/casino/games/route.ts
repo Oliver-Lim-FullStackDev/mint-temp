@@ -7,6 +7,16 @@ type ProviderOption = {
   label: string;
 };
 
+type RawProvider = {
+  id?: string;
+  slug?: string;
+  tag?: string;
+  provider?: string;
+  name?: string;
+  displayName?: string;
+  title?: string;
+};
+
 type CategoryOption = {
   slug: string;
   label: string;
@@ -70,8 +80,25 @@ function buildCategories(games: Game[]): CategoryOption[] {
   ];
 }
 
-function buildProviders(games: Game[]): ProviderOption[] {
+function buildProviders(games: Game[], providersFromApi: RawProvider[]): ProviderOption[] {
   const providerMap = new Map<string, ProviderOption>();
+
+  providersFromApi.forEach((provider) => {
+    const slug =
+      provider.slug ?? provider.provider ?? provider.tag ?? provider.id ?? provider.name ?? provider.displayName ?? provider.title;
+
+    if (!slug) return;
+
+    const key = slug.toLowerCase();
+    const label = provider.displayName ?? provider.name ?? provider.title ?? slug;
+
+    if (!providerMap.has(key)) {
+      providerMap.set(key, {
+        value: slug,
+        label,
+      });
+    }
+  });
 
   games.forEach((game) => {
     const slug = game.providerSlug ?? game.provider ?? '';
@@ -108,7 +135,7 @@ export async function GET(request: NextRequest) {
 
     const tags = category && category !== 'all' ? [category] : [];
 
-    const [games, allGames] = await Promise.all([
+    const [games, allGames, providers] = await Promise.all([
       mintApi.post<Game[]>('/games/search', {
         tags,
         limit,
@@ -118,9 +145,10 @@ export async function GET(request: NextRequest) {
         provider,
       }),
       mintApi.get<Game[]>('/games/all'),
+      mintApi.get<RawProvider[]>('/games/providers'),
     ]);
 
-    const providers = buildProviders(allGames);
+    const providerOptions = buildProviders(allGames, Array.isArray(providers) ? providers : []);
     const categories = buildCategories(allGames);
 
     const response: CasinoGamesResponse = {
@@ -128,7 +156,7 @@ export async function GET(request: NextRequest) {
       meta: {
         total: games.length,
         categories,
-        providers,
+        providers: providerOptions,
       },
     };
 

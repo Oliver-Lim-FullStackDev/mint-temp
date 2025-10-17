@@ -1,6 +1,6 @@
 import { Body, Controller, Get, Post, Param } from '@nestjs/common';
 import { GamesService } from './games.service';
-import { Game } from './games.types';
+import { Game, GameProvider } from './games.types';
 import { GameSearchDto } from './games.dto';
 
 @Controller('games')
@@ -26,6 +26,11 @@ export class GamesController {
   @Get('all')
   findAll(): Promise<Game[]> {
     return this.service.findAll();
+  }
+
+  @Get('providers')
+  findProviders(): Promise<GameProvider[]> {
+    return this.service.findProviders();
   }
 
   @Get(':id')

@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { HeroGamingApiRoutes } from 'src/shared/hero-gaming-api-routes';
 import { HeroGamingClient } from 'src/shared/hero-gaming.client';
 import { GameMapper } from './games.mapper';
-import { Game, RawGame } from './games.types';
+import { Game, GameProvider, RawGame, RawGameProvider } from './games.types';
 
 @Injectable()
 export class GamesService {
@@ -52,6 +52,44 @@ export class GamesService {
   async findAll(): Promise<Game[]> {
     const games = await this.hg.get<RawGame[]>(`/games`);
     return games.map((g) => this.transform(g));
+  }
+
+  async findProviders(): Promise<GameProvider[]> {
+    const providers = await this.hg.get<RawGameProvider[]>(`/game_providers`);
+
+    const mapped = providers
+      .map((provider) => {
+        const slug =
+          provider.slug ?? provider.tag ?? provider.id ?? provider.name ?? provider.displayName ?? provider.title;
+
+        if (!slug) {
+          return undefined;
+        }
+
+        const id = provider.id ?? slug;
+        const name = provider.name ?? provider.displayName ?? provider.title ?? slug;
+        const displayName = provider.displayName ?? provider.name ?? provider.title ?? name;
+
+        return {
+          id,
+          slug,
+          name,
+          displayName,
+        } satisfies GameProvider;
+      })
+      .filter((provider): provider is GameProvider => Boolean(provider))
+      .reduce<GameProvider[]>((acc, provider) => {
+        const exists = acc.find((existing) => existing.slug.toLowerCase() === provider.slug.toLowerCase());
+
+        if (!exists) {
+          acc.push(provider);
+        }
+
+        return acc;
+      }, [])
+      .sort((a, b) => a.displayName.localeCompare(b.displayName));
+
+    return mapped;
   }
 
   async search(params: {

@@ -52,3 +52,19 @@ export type HeroGameSearchBucket = RawGame[] | { data: RawGame[] };
 export interface GameSearchResponse {
   result: Record<string, HeroGameSearchBucket>;
 }
+
+export interface RawGameProvider {
+  id?: string;
+  slug?: string;
+  tag?: string;
+  name?: string;
+  displayName?: string;
+  title?: string;
+}
+
+export interface GameProvider {
+  id: string;
+  slug: string;
+  name: string;
+  displayName: string;
+}
