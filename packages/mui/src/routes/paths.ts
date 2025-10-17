@@ -35,8 +35,8 @@ export const paths = {
   freeUI: 'https://mui.com/store/items/minimal-dashboard-free/',
   figmaUrl: 'https://www.figma.com/design/oAxS3CUFO0ou7rH2lTS8oI/%5BPreview%5D-Minimal-Web.v7.0.0',
   casinos: {
-    root: '/casinos',
-    details: (id: string) => `/casinos/${id}`,
+    root: '/casino',
+    details: (id: string) => `/casino/${id}`,
   },
   product: {
     root: `/product`,

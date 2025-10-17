@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { HeroGamingApiRoutes } from 'src/shared/hero-gaming-api-routes';
 import { HeroGamingClient } from 'src/shared/hero-gaming.client';
 import { GameMapper } from './games.mapper';
-import { Game, GameSearchResponse, RawGame } from './games.types';
+import { Game, RawGame } from './games.types';
 
 @Injectable()
 export class GamesService {
@@ -54,43 +54,126 @@ export class GamesService {
     return games.map((g) => this.transform(g));
   }
 
-  async search(params: { tags?: string[]; limit?: number }): Promise<Game[]> {
+  async search(params: {
+    tags?: string[];
+    limit?: number;
+    offset?: number;
+    search?: string;
+    order?: 'ASC' | 'DESC';
+    provider?: string;
+    providers?: string[];
+  }): Promise<Game[]> {
+    const {
+      tags = [],
+      limit = 9999,
+      offset = 0,
+      search,
+      order = 'ASC',
+      provider,
+      providers = [],
+    } = params;
+
+    const effectiveTags = [...tags];
+
     // Mint Games (Daily Plays) - Static for now
     const mintDailyGames: Game[] = [];
-    if (params.tags?.includes('mint')) {
+    if (effectiveTags.includes('mint')) {
       const games = this.getMintStaticGames({ provider: 'mint' }) as Game[];
       if (games) {
         mintDailyGames.push(...games);
       }
 
-      // clean tags or Hero wont find anything with mint-daily
-      params.tags.splice(params.tags.indexOf('mint'), 1);
+      // Remove mint tag before applying Hub88 filters
+      effectiveTags.splice(effectiveTags.indexOf('mint'), 1);
     }
 
-    // Normalise tags ['yolted', 'tinyrex', ...], query for Herogaming
-    let query = { ...params };
-    if (params.tags?.length) {
-      // we send to Hero
-      // {
-      //   "originals": { "tags": ["originals"], limit: 123, ... },
-      //   "tinyrex": { "tags": ["tinyrex"], limit: 123, ... }
-      // }
-      query = Object.fromEntries(
-        params.tags.map(tag => [tag, { ...params, tags: [tag] }])
-      );
+    const rawGames = await this.hg.get<RawGame[]>(`/games`);
+    let heroGames = rawGames.map((g) => this.transform(g));
+
+    if (effectiveTags.length) {
+      heroGames = heroGames.filter((game) => {
+        const tagSet = new Set([
+          ...(game.tags ?? []),
+          ...(game.categories?.map((category) => category.slug) ?? []),
+        ]);
+
+        if (!tagSet.size) {
+          return false;
+        }
+
+        return effectiveTags.some((tag) => tagSet.has(tag));
+      });
     }
 
-    const response = await this.hg.v2.post<GameSearchResponse>(HeroGamingApiRoutes.gamesSearch, {
-      q: query,
+    const providerFilters = providers.length
+      ? providers
+      : provider
+        ? [provider]
+        : [];
+
+    const normalizedProviders = providerFilters.map((value) => value.toLowerCase());
+
+    if (providerFilters.length) {
+      heroGames = heroGames.filter((game) => {
+        const providerValues = [
+          game.provider?.toLowerCase(),
+          game.providerSlug?.toLowerCase(),
+          game.displayProvider?.toLowerCase(),
+        ].filter(Boolean) as string[];
+
+        return providerValues.some((value) => normalizedProviders.includes(value));
+      });
+    }
+
+    const filterBySearch = (game: Game) => {
+      if (!search) {
+        return true;
+      }
+
+      const term = search.toLowerCase();
+      const searchable = [
+        game.title,
+        game.provider,
+        game.displayProvider,
+        ...(game.tags ?? []),
+        ...(game.categories?.map((category) => category.name ?? category.slug) ?? []),
+      ]
+        .filter(Boolean)
+        .map((value) => value!.toString().toLowerCase());
+
+      return searchable.some((value) => value.includes(term));
+    };
+
+    heroGames = heroGames.filter(filterBySearch);
+    let filteredMintDaily = mintDailyGames.filter(filterBySearch);
+
+    if (providerFilters.length) {
+      filteredMintDaily = filteredMintDaily.filter((game) => {
+        const providerValues = [
+          game.provider?.toLowerCase(),
+          game.providerSlug?.toLowerCase(),
+          game.displayProvider?.toLowerCase(),
+        ].filter(Boolean) as string[];
+
+        return providerValues.some((value) => normalizedProviders.includes(value));
+      });
+    }
+
+    heroGames.sort((a, b) => {
+      const aTitle = a.title?.toLowerCase() ?? '';
+      const bTitle = b.title?.toLowerCase() ?? '';
+      return aTitle.localeCompare(bTitle);
     });
 
-    if (!response) {
-      throw new Error('Unexpected response from HeroGaming API');
+    if (order === 'DESC') {
+      heroGames.reverse();
     }
 
-    const heroGames = Object.values(response.result).flat();
+    const combined = [...heroGames, ...filteredMintDaily];
 
-    // Merge Mint and Hero games
-    return [...heroGames, ...mintDailyGames].map((g) => this.transform(g));
+    const start = Math.max(offset, 0);
+    const end = limit ? start + limit : combined.length;
+
+    return combined.slice(start, end);
   }
 }

@@ -1,12 +1,21 @@
 // TODO move type to types package for both API and webapp
+export interface GameCategory {
+  id?: string;
+  slug: string;
+  name?: string;
+}
+
 export interface Game {
   id: string;
   title: string;
+  slug?: string;
   provider: string;
+  providerSlug?: string;
   displayProvider: string;
   imageUrl: string;
   titleUrl: string;
-
+  categories?: GameCategory[];
+  tags?: string[];
 
   // rtp: string;
   // hideRtp: boolean;
@@ -19,10 +28,15 @@ export interface Game {
 export interface RawGame {
   id: string;
   title: string;
+  slug?: string;
   provider: string;
+  providerSlug?: string;
+  providerName?: string;
   displayProvider?: string;
   imageUrl: string;
   titleUrl: string;
+  categories?: { id?: string; slug?: string; name?: string; tag?: string; title?: string }[];
+  tags?: (string | { id?: string; slug?: string; tag?: string })[];
 
   // seoName: string;
   // rtp: string; // i.e. "96.16%"
@@ -33,8 +47,8 @@ export interface RawGame {
   // biggestWinCents: string; // i.e. "160000000";
 }
 
+export type HeroGameSearchBucket = RawGame[] | { data: RawGame[] };
+
 export interface GameSearchResponse {
-  result: {
-    data: RawGame[];
-  };
+  result: Record<string, HeroGameSearchBucket>;
 }

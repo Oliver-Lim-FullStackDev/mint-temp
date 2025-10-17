@@ -1,6 +1,6 @@
 const ROOTS = {
   AUTH: '/auth',
-  CASINOS: '/casinos',
+  CASINOS: '/casino',
   DASHBOARD: '/dashboard',
 };
 

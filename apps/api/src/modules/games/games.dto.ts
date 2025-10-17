@@ -1,4 +1,4 @@
-import { IsArray, IsOptional, IsInt, Min } from 'class-validator';
+import { IsArray, IsIn, IsInt, IsOptional, IsString, Min } from 'class-validator';
 import { Type } from 'class-transformer';
 
 export class GameSearchDto {
@@ -12,4 +12,27 @@ export class GameSearchDto {
   @IsInt()
   @Min(1)
   limit?: number;
+
+  @IsOptional()
+  @Type(() => Number)
+  @IsInt()
+  @Min(0)
+  offset?: number;
+
+  @IsOptional()
+  @IsString()
+  search?: string;
+
+  @IsOptional()
+  @IsIn(['ASC', 'DESC'])
+  order?: 'ASC' | 'DESC';
+
+  @IsOptional()
+  @IsString()
+  provider?: string;
+
+  @IsOptional()
+  @IsArray()
+  @Type(() => String)
+  providers?: string[];
 }

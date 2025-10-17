@@ -12,7 +12,15 @@ export class GamesController {
     const tags = dto.tags ?? [];
     const limit = dto.limit ?? 20;
 
-    return this.service.search({ tags, limit });
+    return this.service.search({
+      tags,
+      limit,
+      offset: dto.offset,
+      search: dto.search,
+      order: dto.order,
+      provider: dto.provider,
+      providers: dto.providers,
+    });
   }
 
   @Get('all')

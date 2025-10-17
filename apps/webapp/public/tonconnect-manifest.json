@@ -1,7 +1,7 @@
 {
   "name": "MINT Web App",
   "description": "MINT web experience",
-  "url": "https://app.mint.io/casinos",
+  "url": "https://app.mint.io/casino",
   "iconUrl": "https://app.mint.io/mint-banner.png",
   "platforms": ["web"],
   "termsOfUseUrl": "https://mint.io/docs/terms-and-conditions",

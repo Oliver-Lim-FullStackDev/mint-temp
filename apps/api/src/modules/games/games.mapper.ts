@@ -2,13 +2,45 @@ import { Game, RawGame } from './games.types';
 
 export const GameMapper = {
   fromApi(raw: RawGame): Game {
+    const tags = Array.isArray(raw.tags)
+      ? raw.tags
+          .map((tag) => {
+            if (!tag) return undefined;
+            if (typeof tag === 'string') return tag;
+            return tag.slug ?? tag.tag ?? tag.id ?? undefined;
+          })
+          .filter((tag): tag is string => Boolean(tag))
+      : [];
+
+    const categories = Array.isArray(raw.categories)
+      ? raw.categories
+          .map((category) => {
+            if (!category) return undefined;
+
+            const slug = category.slug ?? category.tag ?? category.id ?? category.title ?? category.name;
+
+            if (!slug) return undefined;
+
+            return {
+              id: category.id ?? slug,
+              slug,
+              name: category.name ?? category.title ?? slug,
+            };
+          })
+          .filter((category): category is { id?: string; slug: string; name?: string } => Boolean(category))
+      : [];
+
     return {
       id: raw.id,
       title: raw.title,
+      slug: raw.slug ?? raw.id,
       provider: raw.provider,
-      displayProvider: raw.displayProvider ?? raw.provider,
+      providerSlug: raw.providerSlug ?? raw.provider,
+      displayProvider: raw.displayProvider ?? raw.providerName ?? raw.provider,
       imageUrl: raw.imageUrl,
       titleUrl: raw.titleUrl,
+      categories,
+      tags,
     };
   },
 };
