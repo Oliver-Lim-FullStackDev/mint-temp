@@ -68,9 +68,23 @@ export function CasinoView({ games, hasError = false }: CasinoViewProps) {
     }
   ]
 
-  const sortedGames = useMemo(() => [...games, ...commingSoonGames]
-    .sort((a, b) => (b.provider === 'mint' ? 1 : 0) - (a.provider === 'mint' ? 1 : 0)),
-    [games]);
+  const sortedGames = useMemo(() => {
+    const activeGames = [...games].sort((a, b) => {
+      const orderA = typeof a.sort_order === 'number' ? a.sort_order : Number.MAX_SAFE_INTEGER;
+      const orderB = typeof b.sort_order === 'number' ? b.sort_order : Number.MAX_SAFE_INTEGER;
+
+      if (orderA !== orderB) {
+        return orderA - orderB;
+      }
+
+      const titleA = a.title ?? a.slug ?? '';
+      const titleB = b.title ?? b.slug ?? '';
+
+      return titleA.localeCompare(titleB, undefined, { sensitivity: 'base' });
+    });
+
+    return [...activeGames, ...commingSoonGames];
+  }, [games]);
 
   const showEmptyState = hasError || !sortedGames.length;
 

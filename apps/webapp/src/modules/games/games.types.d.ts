@@ -12,4 +12,5 @@ export type Game = {
   provider?: string;
   title?: string;
   titleUrl?: string;
+  sort_order?: number;
 };
