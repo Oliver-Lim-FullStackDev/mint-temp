@@ -32,21 +32,94 @@ import { rememberCasinoOrder, rememberCasinoProvider } from '@/app/casino/(main)
 
 type CasinoFiltersState = {
   filters: CasinoFilters;
-  setFilters: (filters: CasinoFilters) => void;
+  defaults: CasinoFilters;
+  setFilters: (filters: CasinoFilters) => CasinoFilters;
+  syncInitialFilters: (filters: CasinoFilters) => void;
+  setSearch: (value: string) => CasinoFilters;
+  setProvider: (value: string) => CasinoFilters;
+  setOrder: (value: CasinoSortOrder) => CasinoFilters;
+  setCategory: (value: string) => CasinoFilters;
+  resetFilters: () => CasinoFilters;
 };
 
 type CasinoFiltersStore = StoreApi<CasinoFiltersState>;
 
 function createCasinoFiltersStore(initialFilters: CasinoFilters) {
+  const defaults = {
+    ...DEFAULT_FILTERS,
+    category: normaliseCategory(initialFilters.category ?? DEFAULT_FILTERS.category),
+  };
+
   return createStore<CasinoFiltersState>()((set, get) => ({
     filters: initialFilters,
+    defaults,
     setFilters: (next) => {
       const current = get().filters;
       if (areFiltersEqual(current, next)) {
-        return;
+        return current;
       }
 
       set({ filters: next });
+      return next;
+    },
+    syncInitialFilters: (next) => {
+      set(({ defaults: currentDefaults }) => ({
+        defaults: {
+          ...currentDefaults,
+          ...DEFAULT_FILTERS,
+          category: normaliseCategory(next.category ?? DEFAULT_FILTERS.category),
+        },
+      }));
+
+      get().setFilters(next);
+    },
+    setSearch: (value) => {
+      const current = get().filters;
+      const trimmed = value.trim();
+
+      if (current.search.trim() === trimmed) {
+        return current;
+      }
+
+      const next = mergeFilters(current, { search: trimmed });
+      return get().setFilters(next);
+    },
+    setProvider: (value) => {
+      const current = get().filters;
+      if (current.provider === value) {
+        return current;
+      }
+
+      const next = mergeFilters(current, { provider: value });
+      return get().setFilters(next);
+    },
+    setOrder: (value) => {
+      const current = get().filters;
+      if (current.order === value) {
+        return current;
+      }
+
+      const next = mergeFilters(current, { order: value });
+      return get().setFilters(next);
+    },
+    setCategory: (value) => {
+      const current = get().filters;
+      if (normaliseCategory(value) === current.category) {
+        return current;
+      }
+
+      const next = mergeFilters(current, { category: value });
+      return get().setFilters(next);
+    },
+    resetFilters: () => {
+      const { defaults: baseDefaults, filters: current } = get();
+      const next = mergeFilters(current, {
+        search: baseDefaults.search,
+        provider: baseDefaults.provider,
+        order: baseDefaults.order,
+      });
+
+      return get().setFilters(next);
     },
   }));
 }
@@ -69,7 +142,7 @@ export function CasinoFiltersProvider({
   const store = storeRef.current;
 
   useEffect(() => {
-    store?.getState().setFilters(initialFilters);
+    store?.getState().syncInitialFilters(initialFilters);
   }, [initialFilters, store]);
 
   return (
@@ -165,59 +238,95 @@ function mergeFilters(current: CasinoFilters, patch: Partial<CasinoFilters>): Ca
 export function useCasinoFilters() {
   const store = useCasinoFiltersStore();
   const router = useRouter();
-  const filters = useStore(store, (state) => state.filters);
+  const { filters, defaults } = useStore(store, (state) => ({
+    filters: state.filters,
+    defaults: state.defaults,
+  }));
 
-  const updateFilters = useCallback(
-    (patch: Partial<CasinoFilters>) => {
-      const nextFilters = mergeFilters(filters, patch);
-      store.getState().setFilters(nextFilters);
-
+  const updateUrl = useCallback(
+    (nextFilters: CasinoFilters) => {
       const url = buildUrlForFilters(nextFilters);
       router.replace(url, { scroll: false });
     },
-    [filters, router, store],
+    [router],
   );
 
   const setSearch = useCallback(
     (value: string) => {
-      updateFilters({ search: value });
+      const previousFilters = store.getState().filters;
+      const nextFilters = store.getState().setSearch(value);
+
+      if (nextFilters === previousFilters) {
+        return;
+      }
+
+      updateUrl(nextFilters);
     },
-    [updateFilters],
+    [store, updateUrl],
   );
 
   const setProvider = useCallback(
     (value: string) => {
-      updateFilters({ provider: value });
+      const previousFilters = store.getState().filters;
+      const nextFilters = store.getState().setProvider(value);
+
+      if (nextFilters === previousFilters) {
+        return;
+      }
+
+      updateUrl(nextFilters);
       startTransition(() => {
         void rememberCasinoProvider(value);
       });
     },
-    [updateFilters],
+    [store, updateUrl],
   );
 
   const setOrder = useCallback(
     (value: CasinoSortOrder) => {
-      updateFilters({ order: value });
+      const previousFilters = store.getState().filters;
+      const nextFilters = store.getState().setOrder(value);
+
+      if (nextFilters === previousFilters) {
+        return;
+      }
+
+      updateUrl(nextFilters);
       startTransition(() => {
         void rememberCasinoOrder(value);
       });
     },
-    [updateFilters],
+    [store, updateUrl],
   );
 
   const setCategory = useCallback(
     (value: string) => {
-      updateFilters({ category: value });
+      const previousFilters = store.getState().filters;
+      const nextFilters = store.getState().setCategory(value);
+
+      if (nextFilters === previousFilters) {
+        return;
+      }
+
+      updateUrl(nextFilters);
     },
-    [updateFilters],
+    [store, updateUrl],
   );
 
   const reset = useCallback(() => {
-    updateFilters({ search: '', provider: '', order: DEFAULT_FILTERS.order });
-  }, [updateFilters]);
+    const previousFilters = store.getState().filters;
+    const nextFilters = store.getState().resetFilters();
+
+    if (nextFilters === previousFilters) {
+      return;
+    }
+
+    updateUrl(nextFilters);
+  }, [store, updateUrl]);
 
   return {
     filters,
+    defaults,
     setSearch,
     setProvider,
     setOrder,
