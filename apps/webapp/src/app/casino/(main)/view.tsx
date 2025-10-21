@@ -7,20 +7,20 @@ import { Text, EmptyContent } from '@mint/ui/components';
 import BannerCarrousel, { CarrouselItem } from '@/components/banner-carrousel';
 import { GamesList } from '@/modules/games/components/games-list';
 import type { Game } from '@/modules/games/games.types';
-import { CASINO_CATEGORY_DEFINITIONS, DEFAULT_FILTERS } from '@/modules/casino/state';
+import { GAMES_CATEGORY_DEFINITIONS, DEFAULT_FILTERS } from '@/modules/games/state';
 import { paths } from '@/routes/paths';
 import {
-  buildCasinoQuery,
-  CasinoCategoryNav,
-  CasinoFiltersBar,
-  CasinoFiltersHydrator,
-  CasinoFiltersProvider,
-  type CasinoApiResponse,
-  type CasinoFilters,
-  type CasinoQueryKey,
-  useCasinoFilters,
-  fetchCasinoGames,
-} from '@/modules/casino';
+  buildGamesQuery,
+  GamesCategoryNav,
+  GamesFiltersBar,
+  GamesFiltersHydrator,
+  GamesFiltersProvider,
+  type GamesApiResponse,
+  type GamesFilters,
+  type GamesQueryKey,
+  useGamesFilters,
+  fetchGames,
+} from '@/modules/games';
 
 let CAROUSEL_GAME_IDS = {
   octogame: '14098',
@@ -76,7 +76,7 @@ const COMING_SOON_GAMES: Game[] = [
 ];
 
 interface CasinoViewProps {
-  initialFilters: CasinoFilters;
+  initialFilters: GamesFilters;
   hasError?: boolean;
   pendingUrlSync?: {
     provider: boolean;
@@ -88,23 +88,23 @@ export function CasinoView({ initialFilters, hasError = false, pendingUrlSync }:
   const shouldSyncUrl = Boolean(pendingUrlSync?.provider || pendingUrlSync?.order);
 
   return (
-    <CasinoFiltersProvider initialFilters={initialFilters}>
-      <CasinoFiltersHydrator initialFilters={initialFilters} />
+    <GamesFiltersProvider initialFilters={initialFilters}>
+      <GamesFiltersHydrator initialFilters={initialFilters} />
       {shouldSyncUrl && pendingUrlSync ? (
-        <CasinoUrlSyncer pendingUrlSync={pendingUrlSync} />
+        <GamesUrlSyncer pendingUrlSync={pendingUrlSync} />
       ) : null}
-      <CasinoContent hasError={hasError} />
-    </CasinoFiltersProvider>
+      <GamesContent hasError={hasError} />
+    </GamesFiltersProvider>
   );
 }
 
-function CasinoUrlSyncer({
+function GamesUrlSyncer({
   pendingUrlSync,
 }: {
   pendingUrlSync: { provider: boolean; order: boolean };
 }) {
   const hasSyncedRef = useRef(false);
-  const { filters, setProvider, setOrder } = useCasinoFilters();
+  const { filters, setProvider, setOrder } = useGamesFilters();
 
   useEffect(() => {
     if (hasSyncedRef.current) {
@@ -125,15 +125,15 @@ function CasinoUrlSyncer({
   return null;
 }
 
-function CasinoContent({ hasError }: { hasError?: boolean }) {
-  const { filters, setCategory, setOrder, setProvider, setSearch } = useCasinoFilters();
+function GamesContent({ hasError }: { hasError?: boolean }) {
+  const { filters, setCategory, setOrder, setProvider, setSearch } = useGamesFilters();
 
-  const queryParams = useMemo(() => buildCasinoQuery(filters), [filters]);
-  const queryKey = useMemo<CasinoQueryKey>(() => ['games', queryParams], [queryParams]);
+  const queryParams = useMemo(() => buildGamesQuery(filters), [filters]);
+  const queryKey = useMemo<GamesQueryKey>(() => ['games', queryParams], [queryParams]);
 
-  const { data, isFetching, isError } = useQuery<CasinoApiResponse>({
+  const { data, isFetching, isError } = useQuery<GamesApiResponse>({
     queryKey,
-    queryFn: () => fetchCasinoGames(queryParams),
+    queryFn: () => fetchGames(queryParams),
     staleTime: 30_000,
     gcTime: 5 * 60 * 1000,
     refetchOnWindowFocus: false,
@@ -155,7 +155,7 @@ function CasinoContent({ hasError }: { hasError?: boolean }) {
       );
     });
 
-    return CASINO_CATEGORY_DEFINITIONS.map((definition) => {
+    return GAMES_CATEGORY_DEFINITIONS.map((definition) => {
       if (!definition.tags.length) {
         return {
           slug: definition.slug,
@@ -241,13 +241,13 @@ function CasinoContent({ hasError }: { hasError?: boolean }) {
           gap: 1.5,
         }}
       >
-        <CasinoCategoryNav
+        <GamesCategoryNav
           categories={categories}
           activeCategory={filters.category}
           onSelect={setCategory}
         />
 
-        <CasinoFiltersBar
+        <GamesFiltersBar
           search={filters.search}
           provider={filters.provider}
           order={filters.order}

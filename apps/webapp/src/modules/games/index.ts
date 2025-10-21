@@ -1,5 +1,5 @@
 export * from './api';
-export * from './query/build-casino-query';
+export * from './query/build-games-query';
 export * from './state';
-export * from './types';
+export * from './filters.types';
 export * from './components';

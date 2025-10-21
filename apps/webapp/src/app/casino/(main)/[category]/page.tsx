@@ -1,5 +1,5 @@
 import { CasinoView } from '@/app/casino/(main)/view';
-import { loadCasinoInitialData } from '@/app/casino/(main)/loader';
+import { loadGamesInitialData } from '@/app/casino/(main)/loader';
 import { CasinoHydrationBoundary } from '@/app/casino/(main)/hydrate';
 
 type PageProps = {
@@ -9,7 +9,7 @@ type PageProps = {
 
 export default async function Page({ params, searchParams }: PageProps) {
   const [{ category }, resolvedSearchParams] = await Promise.all([params, searchParams]);
-  const { filters, dehydratedState, hasError, syncUrl } = await loadCasinoInitialData({
+  const { filters, dehydratedState, hasError, syncUrl } = await loadGamesInitialData({
     category,
     searchParams: resolvedSearchParams,
   });

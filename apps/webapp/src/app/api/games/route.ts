@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { mintApi } from '@mint/client';
 import type { Game } from '@/modules/games/games.types';
-import { CASINO_CATEGORY_DEFINITIONS } from '@/modules/casino/state';
+import { GAMES_CATEGORY_DEFINITIONS } from '@/modules/games/state';
 import { searchGames, type GamesSearchRequest } from './search/searchGames';
 
 type ProviderOption = {
@@ -45,7 +45,7 @@ function buildCategories(games: Game[]): CategoryOption[] {
     );
   });
 
-  return CASINO_CATEGORY_DEFINITIONS.map((definition) => {
+  return GAMES_CATEGORY_DEFINITIONS.map((definition) => {
     if (!definition.tags.length) {
       return {
         slug: definition.slug,
