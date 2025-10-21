@@ -1,2 +1,2 @@
-export * from './casino-filters-store';
+export * from './game-filters-store';
 export * from './utils';

@@ -5,11 +5,11 @@ export class ProvablyFairService {
   private readonly serverSeeds = new Map<string, string>();
 
   generateServerSeed(): string {
-    return crypto.randomBytes(this.entropySize).toString();
+    return crypto.randomBytes(this.entropySize).toString('hex');
   }
 
   generateClientSeed(): string {
-    return crypto.randomBytes(this.entropySize).toString();
+    return crypto.randomBytes(this.entropySize).toString('hex');
   }
 
   /**
