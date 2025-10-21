@@ -10,31 +10,43 @@ type GamesListProps = {
 };
 
 export function GamesList({ games, loading }: GamesListProps) {
+  const gridStyles = {
+    gap: 1.25,
+    display: 'grid',
+    gridTemplateColumns: {
+      xs: 'repeat(2, minmax(0, 1fr))',
+      sm: 'repeat(3, minmax(0, 1fr))',
+      md: 'repeat(4, minmax(0, 1fr))',
+      lg: 'repeat(8, minmax(0, 1fr))',
+      xl: 'repeat(8, minmax(0, 1fr))',
+    },
+  } as const;
+
   const renderLoading = () => (
-    <Box
-      sx={{
-        gap: 1.25,
-        display: 'grid',
-        gridTemplateColumns: { xs: 'repeat(1, 1fr)', sm: 'repeat(2, 1fr)', md: 'repeat(4, 1fr)' },
-      }}
-    >
-      <ListItemSkeleton />
+    <Box sx={gridStyles}>
+      <ListItemSkeleton
+        itemCount={16}
+        sx={{
+          width: '100%',
+          borderRadius: 1,
+          aspectRatio: '658 / 1000',
+        }}
+      />
     </Box>
   );
 
   const renderList = () => (
-    <Grid container spacing={1.25}>
+    <Box sx={gridStyles}>
       {games.map((game) => (
-        <Grid
-          key={game.id}
-          size={{
-            xs: 4,
-          }}
-        >
-          <GamesListItem game={game} detailsHref={paths.casinos.details(game.id)} />
-        </Grid>
+        <Box key={game.id} sx={{ minWidth: 0 }}>
+        <GamesListItem
+          game={game}
+          detailsHref={paths.casinos.details(game.id)}
+          sx={{ height: '100%' }}
+        />
+      </Box>
       ))}
-    </Grid>
+    </Box>
   );
 
   return (

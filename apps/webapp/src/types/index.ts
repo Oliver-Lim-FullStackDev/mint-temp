@@ -32,6 +32,7 @@ export interface User {
   id: string;
   wallet: string;
   displayName?: string;
+  username?: string;
   profileImageUrl?: string;
   balance?: number;
   level?: number;

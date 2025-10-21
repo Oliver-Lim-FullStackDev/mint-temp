@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useMemo, useState } from 'react';
-import { Box, InputAdornment, MenuItem, Select, TextField, ToggleButton, ToggleButtonGroup } from '@mint/ui/components/core';
+import { Box, InputAdornment, MenuItem, Select, TextField } from '@mint/ui/components/core';
 import { Iconify } from '@mint/ui/components/iconify';
 import type { CasinoProviderOption, CasinoSortOrder } from '../types';
 
@@ -44,14 +44,34 @@ export function CasinoFiltersBar({
   }, [onSearchChange, search, searchValue]);
 
   const providerOptions = useMemo(() => [{ value: '', label: 'All providers' }, ...providers], [providers]);
+  const sortOptions: { value: CasinoSortOrder; label: string }[] = useMemo(
+    () => [
+      { value: 'ASC', label: 'A-Z' },
+      { value: 'DESC', label: 'Z-A' },
+    ],
+    [],
+  );
 
   return (
     <Box
       sx={{
         display: 'grid',
         gap: 2,
-        gridTemplateColumns: { xs: '1fr', md: '2fr 1fr 1fr' },
         alignItems: 'center',
+        gridTemplateColumns: {
+          xs: '2fr 3fr',      // two columns for mobile
+          md: '3fr 2fr 3fr',  // three columns from md up
+          lg: '10fr 2fr 3fr', // wider layout on large screens
+        },
+        gridTemplateAreas: {
+          xs: `
+        "search search"
+        "order provider"
+      `,
+          md: `
+        "search order provider"
+      `,
+        },
       }}
     >
       <TextField
@@ -65,12 +85,30 @@ export function CasinoFiltersBar({
             </InputAdornment>
           ),
         }}
+        sx={{ gridArea: 'search' }}
       />
+
+      <Select
+        value={order}
+        onChange={(event) => onOrderChange(event.target.value as CasinoSortOrder)}
+        displayEmpty
+        renderValue={(value) =>
+          sortOptions.find((option) => option.value === value)?.label ?? 'Sort'
+        }
+        sx={{ gridArea: 'order' }}
+      >
+        {sortOptions.map((option) => (
+          <MenuItem key={option.value} value={option.value}>
+            {option.label}
+          </MenuItem>
+        ))}
+      </Select>
 
       <Select
         value={provider}
         onChange={(event) => onProviderChange(event.target.value as string)}
         displayEmpty
+        sx={{ gridArea: 'provider' }}
       >
         {providerOptions.map((option) => (
           <MenuItem key={option.value || 'all'} value={option.value}>
@@ -78,24 +116,6 @@ export function CasinoFiltersBar({
           </MenuItem>
         ))}
       </Select>
-
-      <ToggleButtonGroup
-        value={order}
-        exclusive
-        onChange={(_event, value) => {
-          if (value) {
-            onOrderChange(value);
-          }
-        }}
-        color="primary"
-      >
-        <ToggleButton value="ASC" sx={{ textTransform: 'none', px: 2 }}>
-          <Iconify icon="solar:sort-linear-outline" width={18} style={{ marginRight: 8 }} /> A-Z
-        </ToggleButton>
-        <ToggleButton value="DESC" sx={{ textTransform: 'none', px: 2 }}>
-          <Iconify icon="solar:sort-vertical-outline" width={18} style={{ marginRight: 8 }} /> Z-A
-        </ToggleButton>
-      </ToggleButtonGroup>
     </Box>
   );
 }

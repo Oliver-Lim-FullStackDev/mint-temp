@@ -8,7 +8,7 @@ import { NextRequest, NextResponse } from "next/server";
  * - Calls `mintApi.get('/auth/privy/verify')` to validate the Id token.
  * - Optionally forwards `userId` as a query param.
  */
-export async function GET(_req: NextRequest) {
+export async function POST(req: NextRequest) {
   try {
     // Read identity token set by Privy in cookies
     const idToken = (await cookies()).get("privy-token")?.value;
@@ -17,8 +17,12 @@ export async function GET(_req: NextRequest) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
 
+    // Extract referralId and referrerId from body
+    const body = await req.json();
+    const { referralId, referrerId } = body;
+
     // Forward the token to the backend via a header for verification
-    const user = await mintApi.get("/auth/privy/verify", {
+    const user = await mintApi.post("/auth/privy/verify", { referralId, referrerId }, {
       headers: {
         "privy-id-token": idToken,
       },

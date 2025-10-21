@@ -1,9 +1,10 @@
 # Changelog
 
-## v2.0 — 2025-10-16
+## v2.0 — 2025-10-17
 
 ### Changelog (v2.0)
 - Payload CMS for Banners & Promos [#869anq1b5](https://app.clickup.com/t/869anq1b5) 
+- Implement TXN for On-Ramping [#869akz5e3](https://app.clickup.com/t/869akz5e3) ![payments](https://img.shields.io/badge/payments-%20?color=A94C4F)
 - Setup v2 Web View Main Layout [#869ag1thz](https://app.clickup.com/t/869ag1thz) ![core](https://img.shields.io/badge/core-%20?color=D84208)
 
 ## v1.4.1 — 2025-10-04

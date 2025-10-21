@@ -3,7 +3,7 @@ import type { Game } from '../games.types';
 import { apiFetch } from '@mint/client';
 
 const defaultParams = {
-  tags: ['mint', 'originals', 'tinyrex'],
+  tags: [] as string[],
   limit: 9999, // no limit for now
 };
 

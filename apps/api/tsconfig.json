@@ -16,6 +16,20 @@
     "forceConsistentCasingInFileNames": true,
     "noImplicitAny": false,
     "strictBindCallApply": false,
-    "noFallthroughCasesInSwitch": false
+    "noFallthroughCasesInSwitch": false,
+    "paths": {
+      "@mint/gamestudio-api": [
+        "../../packages/gamestudio-api/src/index.ts"
+      ],
+      "@mint/gamestudio-api/*": [
+        "../../packages/gamestudio-api/src/*"
+      ],
+      "@mint/game-internal": [
+        "../../packages/game-internal/src/index.ts"
+      ],
+      "@mint/game-internal/*": [
+        "../../packages/game-internal/src/*"
+      ]
+    }
   }
 }

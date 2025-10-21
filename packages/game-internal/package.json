@@ -1,0 +1,14 @@
+{
+  "name": "@mint/game-internal",
+  "version": "0.1.0",
+  "description": "Internal Mint game runtime and slot engine",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "private": true,
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsc -p tsconfig.json"
+  }
+}

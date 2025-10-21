@@ -7,8 +7,8 @@ export interface DebitRequestDto {
   gameId: string;
   transactionId: number;
   roundId: number;
-  buyIn?: boolean,
-  nr_of_rounds?: number,
+  buyIn?: boolean;
+  nr_of_rounds?: number;
   externalPlayerId?: string;
 }
 

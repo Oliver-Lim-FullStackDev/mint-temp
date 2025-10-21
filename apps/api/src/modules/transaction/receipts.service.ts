@@ -43,9 +43,7 @@ export class ReceiptsService {
       }
 
       // Support "Bearer <token>" or raw token
-      const cleanToken = typeof token === 'string' && token.startsWith('Bearer ')
-        ? token.slice(7)
-        : token;
+      const cleanToken = typeof token === 'string' && token.startsWith('Bearer ') ? token.slice(7) : token;
 
       const url = `${this.baseUrl}${HeroGamingApiRoutes.receipts}`;
 

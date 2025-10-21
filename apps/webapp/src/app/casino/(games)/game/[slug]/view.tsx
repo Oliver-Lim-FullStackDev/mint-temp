@@ -3,13 +3,11 @@
 import { Container } from '@mint/ui/components/core';
 import { EmptyContent } from '@mint/ui/components';
 import { GameLauncher } from '@/modules/games/components/game-launcher';
-import { MintGameLauncher } from '@/modules/games/components/mint-game-launcher';
-import type { SlotGameInitDto } from '@/modules/games/components/mint-slots/mint-game-slots.dto';
 import type { Game } from '@/modules/games/games.types';
 
 interface GameViewProps {
   game: Game;
-  initial: SlotGameInitDto;
+  initial: null;
 }
 
 export function GameView({
@@ -27,15 +25,7 @@ export function GameView({
 
   return (
     <Container sx={{ flex: 1, display: 'flex', flexDirection: 'column' }}>
-      {game.provider === 'mint' ? (
-        // We know slotConfig & initial are non-null for mint
-        <MintGameLauncher
-          gameId={game.id}
-          initial={initial}
-        />
-      ) : (
-        <GameLauncher game={game} mode="classic" />
-      )}
+      <GameLauncher game={game} mode="classic" />
     </Container>
   );
 }

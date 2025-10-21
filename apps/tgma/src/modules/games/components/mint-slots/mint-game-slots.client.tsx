@@ -88,7 +88,7 @@ export function MintGameSlots({
 
       setIsLoading(true);
       try {
-        responseRef.current = await apiFetch(`/games/minty-spins/play`);
+        responseRef.current = await apiFetch(`/games/mint/minty-spins/play`);
       } catch (err) {
         console.error('Spin failed:', err);
       } finally {
@@ -279,9 +279,10 @@ export function MintGameSlots({
         Match symbols to win coins, XP, and tickets. The rarer the combo, the better the haul.
       </Text>
 
-      <Box sx={{ my: 1.5 }}>
-        <MintGameSlotsWinsTable config={initial.config.visuals} />
-      </Box>
+      {initial.config &&
+        <Box sx={{ my: 1.5 }}>
+          <MintGameSlotsWinsTable config={initial.config.visuals} />
+        </Box>}
 
       {showConfetti && (
         <ReactConfetti

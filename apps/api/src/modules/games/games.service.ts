@@ -2,14 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { HeroGamingApiRoutes } from 'src/shared/hero-gaming-api-routes';
 import { HeroGamingClient } from 'src/shared/hero-gaming.client';
 import { GameMapper } from './games.mapper';
-import {
-  Game,
-  GameProvider,
-  GameSearchResponse,
-  HeroGameSearchBucket,
-  RawGame,
-  RawGameProvider,
-} from './games.types';
+import { Game, GameProvider, GameSearchResponse, HeroGameSearchBucket, RawGame, RawGameProvider } from './games.types';
 
 @Injectable()
 export class GamesService {
@@ -90,25 +83,37 @@ export class GamesService {
       .replace(/^-|-$/g, '');
   }
 
+  private normaliseHeroProvider(value: string): string {
+    const trimmed = value?.trim();
+
+    if (!trimmed) {
+      return '';
+    }
+
+    return trimmed[0].toUpperCase() + trimmed.slice(1).toLowerCase();
+  }
+
   private buildSearchBucket(params: {
     limit: number;
     order: string;
     tags: string[];
     text?: string;
+    providers?: string[];
   }) {
-    const { limit, order, tags, text } = params;
+    const { limit, order, tags, text, providers } = params;
 
     const bucket: Record<string, unknown> = {
       limit,
       order,
+      tags,
     };
-
-    if (tags.length) {
-      bucket.tags = tags;
-    }
 
     if (text) {
       bucket.text = text;
+    }
+
+    if (providers?.length) {
+      bucket.providers = providers;
     }
 
     return bucket;
@@ -159,12 +164,7 @@ export class GamesService {
         }
 
         const slugSource =
-          provider.slug ??
-          provider.tag ??
-          provider.id ??
-          provider.name ??
-          provider.displayName ??
-          provider.title;
+          provider.slug ?? provider.tag ?? provider.id ?? provider.name ?? provider.displayName ?? provider.title;
 
         if (!slugSource) {
           return undefined;
@@ -214,67 +214,71 @@ export class GamesService {
     provider?: string;
     providers?: string[];
   }): Promise<Game[]> {
-    const {
-      tags = [],
-      limit = 9999,
-      offset = 0,
-      search,
-      order = 'ASC',
-      provider,
-      providers = [],
-    } = params;
+    const { tags = [], limit = 9999, offset = 0, search, order = 'ASC', provider, providers = [] } = params;
 
     const effectiveTags = [...new Set(tags.map((tag) => tag.toLowerCase()))];
 
     const providerFilters = providers.length ? providers : provider ? [provider] : [];
-    const normalizedProviders = providerFilters.map((value) => value.toLowerCase());
+    const normalizedProviders = providerFilters
+      .map((value) => value?.toString().trim().toLowerCase())
+      .filter((value): value is string => Boolean(value?.length));
 
-    const includeMintDaily =
-      effectiveTags.includes('mint') || normalizedProviders.includes('mint');
+    const includeMintDaily = effectiveTags.includes('mint') || normalizedProviders.includes('mint');
 
     if (includeMintDaily && effectiveTags.includes('mint')) {
       effectiveTags.splice(effectiveTags.indexOf('mint'), 1);
     }
 
     const heroTags = effectiveTags.filter((tag) => tag !== 'mint');
-    const heroProviders = Array.from(new Set(normalizedProviders.filter((value) => value !== 'mint')));
+    const heroProviders = providerFilters.reduce<string[]>((acc, value) => {
+      const trimmed = value?.toString().trim();
+
+      if (!trimmed) {
+        return acc;
+      }
+
+      const lower = trimmed.toLowerCase();
+
+      if (lower === 'mint') {
+        return acc;
+      }
+
+      const heroValue = this.normaliseHeroProvider(trimmed);
+
+      if (!heroValue) {
+        return acc;
+      }
+
+      if (!acc.some((existing) => existing.toLowerCase() === lower)) {
+        acc.push(heroValue);
+      }
+
+      return acc;
+    }, []);
 
     const limitForRequest = limit ?? 999;
     const heroLimit = Math.max(offset ? limitForRequest + offset : limitForRequest, 1);
     const heroOrder = this.normaliseHeroOrder(order);
 
-    const buildTagsForProvider = (providerSlug: string) => {
-      const combined = new Set(heroTags);
-      combined.add(providerSlug);
-      return Array.from(combined);
-    };
+    const baseBucket = this.buildSearchBucket({
+      limit: heroLimit,
+      order: heroOrder,
+      tags: heroTags,
+      text: search,
+    });
 
-    const queryBuckets: Record<string, unknown> = {};
+    const providerAwareBucket = heroProviders.length ? { ...baseBucket, providers: heroProviders } : baseBucket;
 
-    if (heroProviders.length) {
-      heroProviders.forEach((providerSlug) => {
-        queryBuckets[providerSlug] = this.buildSearchBucket({
-          limit: heroLimit,
-          order: heroOrder,
-          tags: buildTagsForProvider(providerSlug),
-          text: search,
-        });
-      });
-    } else {
-      queryBuckets.results = this.buildSearchBucket({
-        limit: heroLimit,
-        order: heroOrder,
-        tags: heroTags,
-        text: search,
-      });
-    }
+    const queryBuckets: Record<string, unknown> = heroProviders.length
+      ? { search: providerAwareBucket }
+      : { results: providerAwareBucket };
 
     const response = await this.hg.v2.post<GameSearchResponse>(HeroGamingApiRoutes.gamesSearch, {
       q: queryBuckets,
-    });
+    });    
 
-    const bucketsToRead = heroProviders.length ? heroProviders : ['results'];
-
+    const bucketsToRead = heroProviders.length ? ['search'] : ['results'];
+    
     const rawHeroGames = bucketsToRead
       .flatMap((key) => this.extractGamesFromBucket(response?.result?.[key]))
       .filter(Boolean);

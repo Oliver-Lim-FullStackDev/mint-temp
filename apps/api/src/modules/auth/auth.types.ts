@@ -38,7 +38,7 @@ export interface HG_User {
 
 export interface User {
   id: string | number;
-  wallet?: string[];
+  wallet?: any[];
   username?: string;
   balance?: number;
   level?: number;

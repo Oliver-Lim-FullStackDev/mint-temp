@@ -17,7 +17,7 @@ import { defaultSettings, SettingsProvider } from '@mint/ui/components/settings'
 import { detectSettings } from '@mint/ui/components/settings/server';
 
 import { CONFIG } from '@/global-config';
-import { TonAuthProvider, TonConnectProvider } from '@/modules/ton/providers';
+import { TonConnectProvider, UserAuthProvider } from '@/modules/ton/providers';
 import { sessionStore } from '@/modules/account/session-store';
 import { QueryProvider } from '@/providers/query-provider';
 import { AuthGuard } from '@/components/auth/auth-guard';
@@ -27,6 +27,7 @@ import { OmnistonProviderWrapper } from '@/components/providers/omniston-provide
 import '@mint/ui/global.css';
 import { SessionHydrator } from '@/components/session-hydrator';
 import PrivyProviders from '@/components/providers/privy-provider';
+import { PrivyAuthProvider } from '@/modules/privy/providers';
 
 // Cache so that it triggers only once on app load
 const getServerSession = cache(async () => _getServerSession());
@@ -233,11 +234,11 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
         <PrivyProviders>
           <SessionHydrator session={session} />
 
-        <InitColorSchemeScript
-          defaultMode={themeConfig.defaultMode}
-          modeStorageKey={themeConfig.modeStorageKey}
-          attribute={themeConfig.cssVariables.colorSchemeSelector}
-        />
+          <InitColorSchemeScript
+            defaultMode={themeConfig.defaultMode}
+            modeStorageKey={themeConfig.modeStorageKey}
+            attribute={themeConfig.cssVariables.colorSchemeSelector}
+          />
           <I18nProvider lang={appConfig.i18nLang}>
             <AuthProvider>
               <SettingsProvider
@@ -266,12 +267,14 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
                         <QueryProvider>
                           <OmnistonProviderWrapper>
                             <TonConnectProvider>
-                              <TonAuthProvider>
-                                <AuthGuard>
-                                  <ProgressBar />
-                                  {children}
-                                </AuthGuard>
-                              </TonAuthProvider>
+                              <UserAuthProvider>
+                                <PrivyAuthProvider>
+                                  <AuthGuard>
+                                    <ProgressBar />
+                                    {children}
+                                  </AuthGuard>
+                                </PrivyAuthProvider>
+                              </UserAuthProvider>
                             </TonConnectProvider>
                           </OmnistonProviderWrapper>
                         </QueryProvider>

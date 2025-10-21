@@ -1,0 +1,18 @@
+{
+  "name": "@mint/gamestudio-api",
+  "version": "0.1.0",
+  "description": "Game Studio API contracts and helpers for Mint games",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "private": true,
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "prebuild": "pnpm --filter @mint/game-internal build",
+    "build": "tsc -p tsconfig.json"
+  },
+  "dependencies": {
+    "@mint/game-internal": "workspace:*"
+  }
+}

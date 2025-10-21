@@ -52,7 +52,6 @@ pnpm --filter=@mint/webapp dev:https:proxy
 pnpm --filter=@mint/tgma dev:https:proxy
 ```
 
-
 # CI, Builds & Deployments
 
 ## CI Secrets

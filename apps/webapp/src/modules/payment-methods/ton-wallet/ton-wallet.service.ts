@@ -1,10 +1,10 @@
+import { useUserAuth } from '@/modules/privy/auth/context/user-auth-privy-provider';
+import { PriceResponse } from '@mint/types';
 import { useTonAddress, useTonConnectUI } from '@tonconnect/ui-react';
+import { v4 as uuidv4 } from 'uuid';
+import { useTonPurchase } from '../../store/hooks/useStorePurchase';
 import { StoreItem } from '../../store/types';
 import { PaymentMethodHandler, PurchaseResult } from '../types';
-import { useTonPurchase } from '../../store/hooks/useStorePurchase';
-import { v4 as uuidv4 } from 'uuid';
-import { useUserAuth } from '@/modules/ton/auth/context/user-auth-ton-provider';
-import { PriceResponse } from '@mint/types';
 
 const RECEIVER_ADDRESS = process.env.NEXT_PUBLIC_RECEIVER_ADDRESS_TON_WALLET;
 const getTxValidUntil = () => Math.floor(Date.now() / 1000) + 600; // 10 minutes from now

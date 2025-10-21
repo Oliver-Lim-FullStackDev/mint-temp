@@ -7,6 +7,7 @@ import { Text, EmptyContent } from '@mint/ui/components';
 import BannerCarrousel, { CarrouselItem } from '@/components/banner-carrousel';
 import { GamesList } from '@/modules/games/components/games-list';
 import type { Game } from '@/modules/games/games.types';
+import { CASINO_CATEGORY_DEFINITIONS } from '@/modules/casino/constants';
 import { paths } from '@/routes/paths';
 import {
   buildCasinoQuery,
@@ -141,9 +142,44 @@ function CasinoContent({ hasError }: { hasError?: boolean }) {
 
   const availableGames = data?.games ?? [];
   const providers = data?.meta.providers ?? [];
-  const categories = data?.meta.categories ?? [
-    { slug: 'all', label: 'All Games', count: availableGames.length },
-  ];
+  const fallbackCategories = useMemo(() => {
+    const tagSets = availableGames.map((game) => {
+      const combined = [
+        ...(game.tags ?? []),
+        ...(game.categories?.map((category) => category.slug) ?? []),
+      ];
+
+      return new Set(
+        combined
+          .map((tag) => tag?.toString().trim().toLowerCase())
+          .filter((tag): tag is string => Boolean(tag)),
+      );
+    });
+
+    return CASINO_CATEGORY_DEFINITIONS.map((definition) => {
+      if (!definition.tags.length) {
+        return {
+          slug: definition.slug,
+          label: definition.label,
+          count: availableGames.length,
+        };
+      }
+
+      const normalisedTags = definition.tags.map((tag) => tag.trim().toLowerCase());
+
+      const count = tagSets.reduce((total, tags) => {
+        return total + (normalisedTags.some((tag) => tags.has(tag)) ? 1 : 0);
+      }, 0);
+
+      return {
+        slug: definition.slug,
+        label: definition.label,
+        count,
+      };
+    });
+  }, [availableGames]);
+
+  const categories = data?.meta.categories ?? fallbackCategories;
 
   const sortedGames = useMemo(() => {
     const combined = [...availableGames];
@@ -195,13 +231,17 @@ function CasinoContent({ hasError }: { hasError?: boolean }) {
         autoPlayInterval={5000}
       />
 
-      <Box mt={2}>
-        <Text variant="h5" centered>
-          Play games and chase the bags!
-        </Text>
-      </Box>
-
-      <Box sx={{ py: 2, display: 'flex', flexDirection: 'column', gap: 2 }}>
+      <Box
+        sx={{
+          width: '100%',
+          borderRadius: 2,
+          background:
+            'linear-gradient(90deg, rgba(0, 0, 0, 0.58) 0%, rgba(0, 0, 0, 0.64) 100%)',
+          display: 'flex',
+          flexDirection: 'column',
+          gap: 1.5,
+        }}
+      >
         <CasinoCategoryNav
           categories={categories}
           activeCategory={filters.category}

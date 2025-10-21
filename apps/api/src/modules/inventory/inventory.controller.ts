@@ -7,7 +7,7 @@ import type { InventoryItem } from './inventory.types';
 export class InventoryController {
   constructor(private readonly inventoryService: InventoryService) {}
 
-    /**
+  /**
    * GET /inventory
    * Fetch user's inventory
    */
@@ -17,7 +17,7 @@ export class InventoryController {
     return this.inventoryService.getUserInventory(sessionToken);
   }
 
-    /**
+  /**
    * GET /inventory/daily-rewards
    * Get user's daily reward items
    */
@@ -27,7 +27,7 @@ export class InventoryController {
     return this.inventoryService.getDailyRewards(sessionToken);
   }
 
-    /**
+  /**
    * GET /inventory/has-daily-rewards
    * Check if user has available daily rewards
    */

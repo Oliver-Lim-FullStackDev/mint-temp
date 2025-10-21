@@ -12,17 +12,22 @@ type CasinoCategoryNavProps = {
 
 export function CasinoCategoryNav({ categories, activeCategory, onSelect }: CasinoCategoryNavProps) {
   return (
-    <Box sx={{ overflowX: 'auto', width: '100%' }}>
+    <Box sx={{
+      overflowX: 'auto', width: '100%',
+      display: 'flex',
+      justifyContent: 'space-between',
+    }}>
       <ToggleButtonGroup
         color="primary"
         exclusive
+        fullWidth
         value={activeCategory}
         onChange={(_event, value) => {
           if (value) {
             onSelect(value);
           }
         }}
-        sx={{ flexWrap: 'nowrap', display: 'inline-flex' }}
+        sx={{ flexWrap: 'nowrap', display: 'inline-flex', width: '100%', }}
       >
         {categories.map((category) => (
           <ToggleButton
@@ -32,6 +37,9 @@ export function CasinoCategoryNav({ categories, activeCategory, onSelect }: Casi
               textTransform: 'none',
               px: 2,
               whiteSpace: 'nowrap',
+              flex: 1,
+              background:
+                'var(--grey-8, color(display-p3 0.5882 0.6039 0.6275 / 0.08))',
               '&.Mui-selected': {
                 fontWeight: 700,
               },

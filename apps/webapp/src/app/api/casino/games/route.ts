@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { mintApi } from '@mint/client';
 import type { Game } from '@/modules/games/games.types';
+import { CASINO_CATEGORY_DEFINITIONS } from '@/modules/casino/constants';
 
 type ProviderOption = {
   value: string;
@@ -29,52 +30,41 @@ type CasinoGamesResponse = {
   };
 };
 
-function normaliseCategoryLabel(slug: string, label?: string): string {
-  if (label) {
-    return label;
-  }
-
-  return slug
-    .replace(/[-_]/g, ' ')
-    .replace(/\b\w/g, (character) => character.toUpperCase());
-}
-
 function buildCategories(games: Game[]): CategoryOption[] {
-  const categoryMap = new Map<string, CategoryOption>();
-
-  games.forEach((game) => {
-    const tags = new Set([
+  const gameTagSets = games.map((game) => {
+    const combined = [
       ...(game.tags ?? []),
       ...(game.categories?.map((category) => category.slug) ?? []),
-    ]);
+    ];
 
-    tags.forEach((tag) => {
-      if (!tag) return;
-      const key = tag.toLowerCase();
-      const existing = categoryMap.get(key);
-      const label = normaliseCategoryLabel(
-        tag,
-        game.categories?.find((category) => (category.slug ?? '').toLowerCase() === key)?.name,
-      );
-
-      if (existing) {
-        existing.count += 1;
-      } else {
-        categoryMap.set(key, {
-          slug: tag,
-          label,
-          count: 1,
-        });
-      }
-    });
+    return new Set(
+      combined
+        .map((tag) => tag?.toString().trim().toLowerCase())
+        .filter((tag): tag is string => Boolean(tag)),
+    );
   });
 
-  const sorted = Array.from(categoryMap.values()).sort((a, b) => a.label.localeCompare(b.label));
+  return CASINO_CATEGORY_DEFINITIONS.map((definition) => {
+    if (!definition.tags.length) {
+      return {
+        slug: definition.slug,
+        label: definition.label,
+        count: games.length,
+      } satisfies CategoryOption;
+    }
 
-  return [
-    { slug: 'all', label: 'All Games', count: games.length },
-    ...sorted,
-  ];
+    const normalisedTags = definition.tags.map((tag) => tag.trim().toLowerCase());
+
+    const count = gameTagSets.reduce((total, tags) => {
+      return total + (normalisedTags.some((tag) => tags.has(tag)) ? 1 : 0);
+    }, 0);
+
+    return {
+      slug: definition.slug,
+      label: definition.label,
+      count,
+    } satisfies CategoryOption;
+  });
 }
 
 function buildProviders(games: Game[], providersFromApi: ApiGameProvider[]): ProviderOption[] {
@@ -123,7 +113,7 @@ export async function GET(request: NextRequest) {
 
     const category = searchParams.get('category') ?? undefined;
     const search = searchParams.get('q') ?? undefined;
-    const provider = searchParams.get('provider') ?? undefined;
+    const provider = searchParams.get('provider')?.trim() || undefined;
     const order = (searchParams.get('order') ?? 'ASC').toUpperCase() === 'DESC' ? 'DESC' : 'ASC';
     const limitParam = searchParams.get('limit');
     const offsetParam = searchParams.get('offset');
@@ -141,6 +131,7 @@ export async function GET(request: NextRequest) {
         search,
         order,
         provider,
+        providers: provider ? [provider] : undefined,
       }),
       mintApi.get<Game[]>('/games/all'),
       mintApi.get<ApiGameProvider[]>('/games/providers'),

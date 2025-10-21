@@ -13,10 +13,12 @@ function globToRegex(pattern: string): RegExp {
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
-  app.useGlobalPipes(new ValidationPipe({
-    whitelist: true,
-    forbidNonWhitelisted: true,
-  }));
+  app.useGlobalPipes(
+    new ValidationPipe({
+      whitelist: true,
+      forbidNonWhitelisted: true,
+    }),
+  );
 
   app.use(cookieParser());
 
@@ -37,15 +39,16 @@ async function bootstrap() {
     });
     Logger.log('CORS: DEV allow all (reflect origin)', 'Bootstrap');
   } else {
-    const rules = corsEnv.split(',')
-      .map(s => s.trim())
+    const rules = corsEnv
+      .split(',')
+      .map((s) => s.trim())
       .filter(Boolean)
       .map(globToRegex);
 
     const corsOptions: CorsOptions = {
       origin: (origin, cb) => {
         if (!origin) return cb(null, true); // curl/Postman
-        const ok = rules.some(re => re.test(origin));
+        const ok = rules.some((re) => re.test(origin));
         return ok ? cb(null, true) : cb(new Error(`CORS blocked origin: ${origin}`));
       },
       credentials: true,
