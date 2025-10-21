@@ -176,7 +176,7 @@ export class HeroGamingClient {
       return this.v1; // Default to v1 for any other value
     }
 
-    return this.v1;
+    return this.vx;
   }
 
   /**

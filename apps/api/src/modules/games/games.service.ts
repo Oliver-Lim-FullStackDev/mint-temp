@@ -2,7 +2,8 @@ import { Injectable } from '@nestjs/common';
 import { HeroGamingApiRoutes } from 'src/shared/hero-gaming-api-routes';
 import { HeroGamingClient } from 'src/shared/hero-gaming.client';
 import { GameMapper } from './games.mapper';
-import { Game, GameProvider, GameSearchResponse, HeroGameSearchBucket, RawGame, RawGameProvider } from './games.types';
+import { HeroGamesTransformer } from './hero-games.transformer';
+import { Game, GameProvider, GameSearchResponse, RawGame, RawGameProvider } from './games.types';
 
 @Injectable()
 export class GamesService {
@@ -49,82 +50,12 @@ export class GamesService {
     return this.transform(game);
   }
 
-  private extractGamesFromBucket(bucket?: HeroGameSearchBucket): RawGame[] {
-    if (!bucket) {
-      return [];
-    }
-
-    if (Array.isArray(bucket)) {
-      return bucket;
-    }
-
-    if ('data' in bucket && Array.isArray(bucket.data)) {
-      return bucket.data;
-    }
-
-    return [];
-  }
-
-  private normaliseHeroOrder(order?: 'ASC' | 'DESC'): string {
-    if (order === 'DESC') {
-      return 'DESC';
-    }
-
-    return 'sort_order';
-  }
-
-  private normaliseProviderSlug(value: string): string {
-    return value
-      .trim()
-      .toLowerCase()
-      .replace(/[_\s]+/g, '-')
-      .replace(/[^a-z0-9-]/g, '-')
-      .replace(/-+/g, '-')
-      .replace(/^-|-$/g, '');
-  }
-
-  private normaliseHeroProvider(value: string): string {
-    const trimmed = value?.trim();
-
-    if (!trimmed) {
-      return '';
-    }
-
-    return trimmed[0].toUpperCase() + trimmed.slice(1).toLowerCase();
-  }
-
-  private buildSearchBucket(params: {
-    limit: number;
-    order: string;
-    tags: string[];
-    text?: string;
-    providers?: string[];
-  }) {
-    const { limit, order, tags, text, providers } = params;
-
-    const bucket: Record<string, unknown> = {
-      limit,
-      order,
-      tags,
-    };
-
-    if (text) {
-      bucket.text = text;
-    }
-
-    if (providers?.length) {
-      bucket.providers = providers;
-    }
-
-    return bucket;
-  }
-
   async findAll(): Promise<Game[]> {
-    const order = this.normaliseHeroOrder('ASC');
+    const order = HeroGamesTransformer.normaliseOrder('ASC');
 
     const response = await this.hg.v2.post<GameSearchResponse>(HeroGamingApiRoutes.gamesSearch, {
       q: {
-        results: this.buildSearchBucket({
+        results: HeroGamesTransformer.buildSearchBucket({
           limit: 999,
           order,
           tags: [],
@@ -132,7 +63,7 @@ export class GamesService {
       },
     });
 
-    const rawGames = this.extractGamesFromBucket(response?.result?.results);
+    const rawGames = HeroGamesTransformer.extractGamesFromBucket(response?.result?.results);
 
     return rawGames.map((game) => this.transform(game));
   }
@@ -140,69 +71,7 @@ export class GamesService {
   async findProviders(): Promise<GameProvider[]> {
     const providers = await this.hg.v1.get<RawGameProvider[]>(`/game_providers`);
 
-    const mapped = providers
-      .map((provider) => {
-        if (!provider) {
-          return undefined;
-        }
-
-        if (typeof provider === 'string') {
-          const label = provider.trim();
-
-          if (!label) {
-            return undefined;
-          }
-
-          const slug = this.normaliseProviderSlug(label) || label.toLowerCase();
-
-          return {
-            id: slug,
-            slug,
-            name: label,
-            displayName: label,
-          } satisfies GameProvider;
-        }
-
-        const slugSource =
-          provider.slug ?? provider.tag ?? provider.id ?? provider.name ?? provider.displayName ?? provider.title;
-
-        if (!slugSource) {
-          return undefined;
-        }
-
-        const preferredLabel =
-          (provider.displayName ?? provider.name ?? provider.title ?? slugSource)?.toString().trim() ?? '';
-        const label = preferredLabel || slugSource.toString();
-        const slugFromSource = this.normaliseProviderSlug(slugSource.toString());
-        const slug = slugFromSource || slugSource.toString().trim().toLowerCase();
-
-        if (!slug) {
-          return undefined;
-        }
-
-        const id = (provider.id ?? slug).toString();
-        const name = (provider.name ?? label).toString().trim() || label;
-
-        return {
-          id,
-          slug,
-          name,
-          displayName: label || name,
-        } satisfies GameProvider;
-      })
-      .filter((provider): provider is GameProvider => Boolean(provider))
-      .reduce<GameProvider[]>((acc, provider) => {
-        const exists = acc.find((existing) => existing.slug.toLowerCase() === provider.slug.toLowerCase());
-
-        if (!exists) {
-          acc.push(provider);
-        }
-
-        return acc;
-      }, [])
-      .sort((a, b) => a.displayName.localeCompare(b.displayName));
-
-    return mapped;
+    return HeroGamesTransformer.mapProviders(providers);
   }
 
   async search(params: {
@@ -230,58 +99,29 @@ export class GamesService {
     }
 
     const heroTags = effectiveTags.filter((tag) => tag !== 'mint');
-    const heroProviders = providerFilters.reduce<string[]>((acc, value) => {
-      const trimmed = value?.toString().trim();
-
-      if (!trimmed) {
-        return acc;
-      }
-
-      const lower = trimmed.toLowerCase();
-
-      if (lower === 'mint') {
-        return acc;
-      }
-
-      const heroValue = this.normaliseHeroProvider(trimmed);
-
-      if (!heroValue) {
-        return acc;
-      }
-
-      if (!acc.some((existing) => existing.toLowerCase() === lower)) {
-        acc.push(heroValue);
-      }
-
-      return acc;
-    }, []);
+    const heroProviders = HeroGamesTransformer.normaliseSearchProviders(providerFilters);
 
     const limitForRequest = limit ?? 999;
     const heroLimit = Math.max(offset ? limitForRequest + offset : limitForRequest, 1);
-    const heroOrder = this.normaliseHeroOrder(order);
+    const heroOrder = HeroGamesTransformer.normaliseOrder(order);
 
-    const baseBucket = this.buildSearchBucket({
+    const baseBucket = HeroGamesTransformer.buildSearchBucket({
       limit: heroLimit,
       order: heroOrder,
       tags: heroTags,
       text: search,
+      providers: heroProviders,
     });
 
-    const providerAwareBucket = heroProviders.length ? { ...baseBucket, providers: heroProviders } : baseBucket;
-
-    const queryBuckets: Record<string, unknown> = heroProviders.length
-      ? { search: providerAwareBucket }
-      : { results: providerAwareBucket };
+    const queryBuckets = HeroGamesTransformer.buildQueryBuckets(baseBucket, heroProviders);
 
     const response = await this.hg.v2.post<GameSearchResponse>(HeroGamingApiRoutes.gamesSearch, {
       q: queryBuckets,
-    });    
+    });
 
     const bucketsToRead = heroProviders.length ? ['search'] : ['results'];
-    
-    const rawHeroGames = bucketsToRead
-      .flatMap((key) => this.extractGamesFromBucket(response?.result?.[key]))
-      .filter(Boolean);
+
+    const rawHeroGames = HeroGamesTransformer.extractGamesFromResponse(response, bucketsToRead);
 
     const dedupedHeroGames = rawHeroGames.reduce<Record<string, Game>>((acc, rawGame) => {
       const mapped = this.transform(rawGame);
