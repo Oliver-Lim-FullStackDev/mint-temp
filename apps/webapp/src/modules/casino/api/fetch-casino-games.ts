@@ -35,5 +35,5 @@ function buildQueryString(params: CasinoQueryParams): string {
 
 export async function fetchCasinoGames(params: CasinoQueryParams): Promise<CasinoApiResponse> {
   const queryString = buildQueryString(params);
-  return apiFetch<CasinoApiResponse>(`/casino/games${queryString}`);
+  return apiFetch<CasinoApiResponse>(`/games${queryString}`);
 }

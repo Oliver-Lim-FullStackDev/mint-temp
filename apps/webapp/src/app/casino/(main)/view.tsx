@@ -7,7 +7,7 @@ import { Text, EmptyContent } from '@mint/ui/components';
 import BannerCarrousel, { CarrouselItem } from '@/components/banner-carrousel';
 import { GamesList } from '@/modules/games/components/games-list';
 import type { Game } from '@/modules/games/games.types';
-import { CASINO_CATEGORY_DEFINITIONS } from '@/modules/casino/constants';
+import { CASINO_CATEGORY_DEFINITIONS, DEFAULT_FILTERS } from '@/modules/casino/state';
 import { paths } from '@/routes/paths';
 import {
   buildCasinoQuery,
@@ -21,7 +21,6 @@ import {
   useCasinoFilters,
   fetchCasinoGames,
 } from '@/modules/casino';
-import { DEFAULT_FILTERS } from '@/modules/casino/state/utils';
 
 let CAROUSEL_GAME_IDS = {
   octogame: '14098',
