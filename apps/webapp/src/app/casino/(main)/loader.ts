@@ -2,24 +2,24 @@ import { cookies } from 'next/headers';
 import { dehydrate, QueryClient, type DehydratedState } from '@tanstack/react-query';
 
 import {
-  type CasinoFilters,
-  type CasinoQueryKey,
-  type CasinoQueryParams,
-  buildCasinoQuery,
-  fetchCasinoGames,
-} from '@/modules/casino';
-import { DEFAULT_FILTERS, normaliseCategory, sanitiseOrder } from '@/modules/casino/state/utils';
+  type GamesFilters,
+  type GamesQueryKey,
+  type GamesQueryParams,
+  buildGamesQuery,
+  fetchGames,
+} from '@/modules/games';
+import { DEFAULT_FILTERS, normaliseCategory, sanitiseOrder } from '@/modules/games/state/utils';
 
-import { CASINO_ORDER_COOKIE, CASINO_PROVIDER_COOKIE } from './preferences';
+import { GAMES_ORDER_COOKIE, GAMES_PROVIDER_COOKIE } from './preferences';
 
 type LoadParams = {
   category?: string;
   searchParams: Record<string, string | string[] | undefined>;
 };
 
-export type CasinoInitialData = {
-  filters: CasinoFilters;
-  queryParams: CasinoQueryParams;
+export type GamesInitialData = {
+  filters: GamesFilters;
+  queryParams: GamesQueryParams;
   dehydratedState: DehydratedState;
   hasError: boolean;
   syncUrl: {
@@ -36,11 +36,14 @@ function normaliseParam(value: string | string[] | undefined): string | undefine
   return value ?? undefined;
 }
 
-export async function loadCasinoInitialData({ category, searchParams }: LoadParams): Promise<CasinoInitialData> {
+export async function loadGamesInitialData({
+  category,
+  searchParams,
+}: LoadParams): Promise<GamesInitialData> {
   const cookieStore = await cookies();
 
-  const cookieProvider = cookieStore.get(CASINO_PROVIDER_COOKIE)?.value;
-  const cookieOrder = cookieStore.get(CASINO_ORDER_COOKIE)?.value;
+  const cookieProvider = cookieStore.get(GAMES_PROVIDER_COOKIE)?.value;
+  const cookieOrder = cookieStore.get(GAMES_ORDER_COOKIE)?.value;
 
   const search = normaliseParam(searchParams.q)?.trim() ?? DEFAULT_FILTERS.search;
 
@@ -56,29 +59,29 @@ export async function loadCasinoInitialData({ category, searchParams }: LoadPara
   const shouldSyncOrder = !orderParam && Boolean(cookieOrder) && order !== DEFAULT_FILTERS.order;
   const resolvedCategory = normaliseCategory(category);
 
-  const filters: CasinoFilters = {
+  const filters: GamesFilters = {
     category: resolvedCategory,
     search,
     provider,
     order,
   };
 
-  const queryParams = buildCasinoQuery(filters);
+  const queryParams = buildGamesQuery(filters);
 
   const queryClient = new QueryClient();
   let hasError = false;
 
-  const queryKey: CasinoQueryKey = ['games', queryParams];
+  const queryKey: GamesQueryKey = ['games', queryParams];
 
   try {
     await queryClient.prefetchQuery({
       queryKey,
-      queryFn: () => fetchCasinoGames(queryParams),
+      queryFn: () => fetchGames(queryParams),
       staleTime: 30_000,
     });
   } catch (error) {
     hasError = true;
-    console.error('Failed to prefetch casino games', error);
+    console.error('Failed to prefetch games', error);
   }
 
   return {

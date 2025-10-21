@@ -1,7 +1,7 @@
 import { apiFetch } from '@mint/client';
-import { CasinoApiResponse, CasinoQueryParams } from '../types';
+import { GamesApiResponse, GamesQueryParams } from '../filters.types';
 
-function buildQueryString(params: CasinoQueryParams): string {
+function buildQueryString(params: GamesQueryParams): string {
   const searchParams = new URLSearchParams();
 
   if (params.category) {
@@ -33,7 +33,7 @@ function buildQueryString(params: CasinoQueryParams): string {
   return query ? `?${query}` : '';
 }
 
-export async function fetchCasinoGames(params: CasinoQueryParams): Promise<CasinoApiResponse> {
+export async function fetchGames(params: GamesQueryParams): Promise<GamesApiResponse> {
   const queryString = buildQueryString(params);
-  return apiFetch<CasinoApiResponse>(`/games${queryString}`);
+  return apiFetch<GamesApiResponse>(`/games${queryString}`);
 }

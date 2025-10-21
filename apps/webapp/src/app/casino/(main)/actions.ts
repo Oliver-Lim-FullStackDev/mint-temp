@@ -2,42 +2,42 @@
 
 import { cookies } from 'next/headers';
 
-import type { CasinoSortOrder } from '@/modules/casino';
-import { DEFAULT_FILTERS } from '@/modules/casino/state/utils';
+import type { GamesSortOrder } from '@/modules/games';
+import { DEFAULT_FILTERS } from '@/modules/games/state/utils';
 
 import {
-  CASINO_COOKIE_MAX_AGE,
-  CASINO_ORDER_COOKIE,
-  CASINO_PROVIDER_COOKIE,
+  GAMES_COOKIE_MAX_AGE,
+  GAMES_ORDER_COOKIE,
+  GAMES_PROVIDER_COOKIE,
 } from './preferences';
 
-export async function rememberCasinoProvider(provider: string) {
+export async function rememberGamesProvider(provider: string) {
   const cookieStore = await cookies();
 
   if (provider) {
-    cookieStore.set(CASINO_PROVIDER_COOKIE, provider, {
+    cookieStore.set(GAMES_PROVIDER_COOKIE, provider, {
       path: '/',
       httpOnly: false,
       sameSite: 'lax',
-      maxAge: CASINO_COOKIE_MAX_AGE,
+      maxAge: GAMES_COOKIE_MAX_AGE,
     });
   } else {
-    cookieStore.delete(CASINO_PROVIDER_COOKIE);
+    cookieStore.delete(GAMES_PROVIDER_COOKIE);
   }
 }
 
-export async function rememberCasinoOrder(order: CasinoSortOrder) {
+export async function rememberGamesOrder(order: GamesSortOrder) {
   const cookieStore = await cookies();
 
   if (order === DEFAULT_FILTERS.order) {
-    cookieStore.delete(CASINO_ORDER_COOKIE);
+    cookieStore.delete(GAMES_ORDER_COOKIE);
     return;
   }
 
-  cookieStore.set(CASINO_ORDER_COOKIE, order, {
+  cookieStore.set(GAMES_ORDER_COOKIE, order, {
     path: '/',
     httpOnly: false,
     sameSite: 'lax',
-    maxAge: CASINO_COOKIE_MAX_AGE,
+    maxAge: GAMES_COOKIE_MAX_AGE,
   });
 }

@@ -1,13 +1,13 @@
 import { paths } from '@/routes/paths';
-import type { CasinoFilters, CasinoSortOrder } from '../types';
+import type { GamesFilters, GamesSortOrder } from '../filters.types';
 
-export type CasinoCategoryDefinition = {
+export type GamesCategoryDefinition = {
   slug: string;
   label: string;
   tags: string[];
 };
 
-export const CASINO_CATEGORY_DEFINITIONS: CasinoCategoryDefinition[] = [
+export const GAMES_CATEGORY_DEFINITIONS: GamesCategoryDefinition[] = [
   { slug: 'all', label: 'Explore', tags: [] },
   { slug: 'originals', label: 'Mint Originals', tags: ['originals'] },
   { slug: 'slots', label: 'Slots', tags: ['slots'] },
@@ -19,14 +19,14 @@ export const CASINO_CATEGORY_DEFINITIONS: CasinoCategoryDefinition[] = [
   { slug: 'baccarat', label: 'Baccarat', tags: ['baccarat'] },
 ];
 
-export const DEFAULT_FILTERS: CasinoFilters = {
+export const DEFAULT_FILTERS: GamesFilters = {
   category: 'all',
   search: '',
   order: 'ASC',
   provider: '',
 };
 
-export function sanitiseOrder(value: string | null | undefined): CasinoSortOrder {
+export function sanitiseOrder(value: string | null | undefined): GamesSortOrder {
   if (value && value.toUpperCase() === 'DESC') {
     return 'DESC';
   }
@@ -65,7 +65,7 @@ export function deriveCategoryFromPath(pathname: string): string {
   return normaliseCategory(segments[0]);
 }
 
-export function areFiltersEqual(a: CasinoFilters, b: CasinoFilters): boolean {
+export function areFiltersEqual(a: GamesFilters, b: GamesFilters): boolean {
   return (
     a.category === b.category &&
     a.search.trim() === b.search.trim() &&

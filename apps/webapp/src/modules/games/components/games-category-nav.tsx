@@ -2,21 +2,24 @@
 
 import { Box, ToggleButton, ToggleButtonGroup } from '@mint/ui/components/core';
 import { Text } from '@mint/ui/components';
-import type { CasinoCategoryOption } from '../types';
+import type { GamesCategoryOption } from '../filters.types';
 
-type CasinoCategoryNavProps = {
-  categories: CasinoCategoryOption[];
+type GamesCategoryNavProps = {
+  categories: GamesCategoryOption[];
   activeCategory: string;
   onSelect: (slug: string) => void;
 };
 
-export function CasinoCategoryNav({ categories, activeCategory, onSelect }: CasinoCategoryNavProps) {
+export function GamesCategoryNav({ categories, activeCategory, onSelect }: GamesCategoryNavProps) {
   return (
-    <Box sx={{
-      overflowX: 'auto', width: '100%',
-      display: 'flex',
-      justifyContent: 'space-between',
-    }}>
+    <Box
+      sx={{
+        overflowX: 'auto',
+        width: '100%',
+        display: 'flex',
+        justifyContent: 'space-between',
+      }}
+    >
       <ToggleButtonGroup
         color="primary"
         exclusive
@@ -27,7 +30,7 @@ export function CasinoCategoryNav({ categories, activeCategory, onSelect }: Casi
             onSelect(value);
           }
         }}
-        sx={{ flexWrap: 'nowrap', display: 'inline-flex', width: '100%', }}
+        sx={{ flexWrap: 'nowrap', display: 'inline-flex', width: '100%' }}
       >
         {categories.map((category) => (
           <ToggleButton
@@ -38,8 +41,7 @@ export function CasinoCategoryNav({ categories, activeCategory, onSelect }: Casi
               px: 2,
               whiteSpace: 'nowrap',
               flex: 1,
-              background:
-                'var(--grey-8, color(display-p3 0.5882 0.6039 0.6275 / 0.08))',
+              background: 'var(--grey-8, color(display-p3 0.5882 0.6039 0.6275 / 0.08))',
               '&.Mui-selected': {
                 fontWeight: 700,
               },

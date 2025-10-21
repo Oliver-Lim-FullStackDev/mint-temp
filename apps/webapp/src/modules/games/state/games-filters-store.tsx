@@ -19,7 +19,7 @@ import {
 import { useStore } from 'zustand';
 import { createStore, type StoreApi } from 'zustand/vanilla';
 
-import type { CasinoFilters, CasinoSortOrder } from '../types';
+import type { GamesFilters, GamesSortOrder } from '../filters.types';
 import {
   DEFAULT_FILTERS,
   areFiltersEqual,
@@ -28,29 +28,29 @@ import {
   sanitiseOrder,
 } from './utils';
 import { paths } from '@/routes/paths';
-import { rememberCasinoOrder, rememberCasinoProvider } from '@/app/casino/(main)/actions';
+import { rememberGamesOrder, rememberGamesProvider } from '@/app/casino/(main)/actions';
 
-type CasinoFiltersState = {
-  filters: CasinoFilters;
-  defaults: CasinoFilters;
-  setFilters: (filters: CasinoFilters) => CasinoFilters;
-  syncInitialFilters: (filters: CasinoFilters) => void;
-  setSearch: (value: string) => CasinoFilters;
-  setProvider: (value: string) => CasinoFilters;
-  setOrder: (value: CasinoSortOrder) => CasinoFilters;
-  setCategory: (value: string) => CasinoFilters;
-  resetFilters: () => CasinoFilters;
+type GamesFiltersState = {
+  filters: GamesFilters;
+  defaults: GamesFilters;
+  setFilters: (filters: GamesFilters) => GamesFilters;
+  syncInitialFilters: (filters: GamesFilters) => void;
+  setSearch: (value: string) => GamesFilters;
+  setProvider: (value: string) => GamesFilters;
+  setOrder: (value: GamesSortOrder) => GamesFilters;
+  setCategory: (value: string) => GamesFilters;
+  resetFilters: () => GamesFilters;
 };
 
-type CasinoFiltersStore = StoreApi<CasinoFiltersState>;
+type GamesFiltersStore = StoreApi<GamesFiltersState>;
 
-function createCasinoFiltersStore(initialFilters: CasinoFilters) {
+function createGamesFiltersStore(initialFilters: GamesFilters) {
   const defaults = {
     ...DEFAULT_FILTERS,
     category: normaliseCategory(initialFilters.category ?? DEFAULT_FILTERS.category),
   };
 
-  return createStore<CasinoFiltersState>()((set, get) => ({
+  return createStore<GamesFiltersState>()((set, get) => ({
     filters: initialFilters,
     defaults,
     setFilters: (next) => {
@@ -124,19 +124,19 @@ function createCasinoFiltersStore(initialFilters: CasinoFilters) {
   }));
 }
 
-const CasinoFiltersContext = createContext<CasinoFiltersStore | null>(null);
+const GamesFiltersContext = createContext<GamesFiltersStore | null>(null);
 
-export function CasinoFiltersProvider({
+export function GamesFiltersProvider({
   initialFilters,
   children,
 }: {
-  initialFilters: CasinoFilters;
+  initialFilters: GamesFilters;
   children: ReactNode;
 }) {
-  const storeRef = useRef<CasinoFiltersStore | null>(null);
+  const storeRef = useRef<GamesFiltersStore | null>(null);
 
   if (!storeRef.current) {
-    storeRef.current = createCasinoFiltersStore(initialFilters);
+    storeRef.current = createGamesFiltersStore(initialFilters);
   }
 
   const store = storeRef.current;
@@ -146,17 +146,17 @@ export function CasinoFiltersProvider({
   }, [initialFilters, store]);
 
   return (
-    <CasinoFiltersContext.Provider value={store!}>
+    <GamesFiltersContext.Provider value={store!}>
       {children}
-    </CasinoFiltersContext.Provider>
+    </GamesFiltersContext.Provider>
   );
 }
 
-export function useCasinoFiltersStore() {
-  const store = useContext(CasinoFiltersContext);
+export function useGamesFiltersStore() {
+  const store = useContext(GamesFiltersContext);
 
   if (!store) {
-    throw new Error('useCasinoFiltersStore must be used within CasinoFiltersProvider');
+    throw new Error('useGamesFiltersStore must be used within GamesFiltersProvider');
   }
 
   return store;
@@ -165,7 +165,7 @@ export function useCasinoFiltersStore() {
 function deriveFiltersFromLocation(
   pathname: string,
   searchParams: ReadonlyURLSearchParams,
-): CasinoFilters {
+): GamesFilters {
   const search = searchParams.get('q')?.trim() ?? DEFAULT_FILTERS.search;
   const provider = searchParams.get('provider') ?? DEFAULT_FILTERS.provider;
   const order = sanitiseOrder(searchParams.get('order'));
@@ -178,8 +178,8 @@ function deriveFiltersFromLocation(
   };
 }
 
-export function CasinoFiltersHydrator({ initialFilters }: { initialFilters: CasinoFilters }) {
-  const store = useCasinoFiltersStore();
+export function GamesFiltersHydrator({ initialFilters }: { initialFilters: GamesFilters }) {
+  const store = useGamesFiltersStore();
   const pathname = usePathname();
   const searchParams = useSearchParams();
   const initialisedRef = useRef(false);
@@ -198,7 +198,7 @@ export function CasinoFiltersHydrator({ initialFilters }: { initialFilters: Casi
   return null;
 }
 
-function buildUrlForFilters(filters: CasinoFilters) {
+function buildUrlForFilters(filters: GamesFilters) {
   const params = new URLSearchParams();
 
   if (filters.search.trim()) {
@@ -223,7 +223,7 @@ function buildUrlForFilters(filters: CasinoFilters) {
   return query ? `${basePath}?${query}` : basePath;
 }
 
-function mergeFilters(current: CasinoFilters, patch: Partial<CasinoFilters>): CasinoFilters {
+function mergeFilters(current: GamesFilters, patch: Partial<GamesFilters>): GamesFilters {
   return {
     category: normaliseCategory(patch.category ?? current.category),
     search:
@@ -235,8 +235,8 @@ function mergeFilters(current: CasinoFilters, patch: Partial<CasinoFilters>): Ca
   };
 }
 
-export function useCasinoFilters() {
-  const store = useCasinoFiltersStore();
+export function useGamesFilters() {
+  const store = useGamesFiltersStore();
   const router = useRouter();
   const { filters, defaults } = useStore(store, (state) => ({
     filters: state.filters,
@@ -244,7 +244,7 @@ export function useCasinoFilters() {
   }));
 
   const updateUrl = useCallback(
-    (nextFilters: CasinoFilters) => {
+    (nextFilters: GamesFilters) => {
       const url = buildUrlForFilters(nextFilters);
       router.replace(url, { scroll: false });
     },
@@ -276,14 +276,14 @@ export function useCasinoFilters() {
 
       updateUrl(nextFilters);
       startTransition(() => {
-        void rememberCasinoProvider(value);
+        void rememberGamesProvider(value);
       });
     },
     [store, updateUrl],
   );
 
   const setOrder = useCallback(
-    (value: CasinoSortOrder) => {
+    (value: GamesSortOrder) => {
       const previousFilters = store.getState().filters;
       const nextFilters = store.getState().setOrder(value);
 
@@ -293,7 +293,7 @@ export function useCasinoFilters() {
 
       updateUrl(nextFilters);
       startTransition(() => {
-        void rememberCasinoOrder(value);
+        void rememberGamesOrder(value);
       });
     },
     [store, updateUrl],

@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
 import { CasinoView } from '@/app/casino/(main)/view';
-import { loadCasinoInitialData } from '@/app/casino/(main)/loader';
+import { loadGamesInitialData } from '@/app/casino/(main)/loader';
 import { CasinoHydrationBoundary } from '@/app/casino/(main)/hydrate';
 
 export const metadata: Metadata = {
@@ -14,7 +14,7 @@ type PageProps = {
 
 export default async function Page({ searchParams }: PageProps) {
   const resolvedSearchParams = await searchParams;
-  const { filters, dehydratedState, hasError, syncUrl } = await loadCasinoInitialData({
+  const { filters, dehydratedState, hasError, syncUrl } = await loadGamesInitialData({
     searchParams: resolvedSearchParams,
   });
 

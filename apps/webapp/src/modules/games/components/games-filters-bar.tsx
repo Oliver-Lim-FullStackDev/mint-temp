@@ -3,21 +3,21 @@
 import { useEffect, useMemo, useState } from 'react';
 import { Box, InputAdornment, MenuItem, Select, TextField } from '@mint/ui/components/core';
 import { Iconify } from '@mint/ui/components/iconify';
-import type { CasinoProviderOption, CasinoSortOrder } from '../types';
+import type { GamesProviderOption, GamesSortOrder } from '../filters.types';
 
-type CasinoFiltersBarProps = {
+type GamesFiltersBarProps = {
   search: string;
   provider: string;
-  order: CasinoSortOrder;
-  providers: CasinoProviderOption[];
+  order: GamesSortOrder;
+  providers: GamesProviderOption[];
   onSearchChange: (value: string) => void;
   onProviderChange: (value: string) => void;
-  onOrderChange: (value: CasinoSortOrder) => void;
+  onOrderChange: (value: GamesSortOrder) => void;
 };
 
 const SEARCH_DEBOUNCE_MS = 400;
 
-export function CasinoFiltersBar({
+export function GamesFiltersBar({
   search,
   provider,
   order,
@@ -25,7 +25,7 @@ export function CasinoFiltersBar({
   onSearchChange,
   onProviderChange,
   onOrderChange,
-}: CasinoFiltersBarProps) {
+}: GamesFiltersBarProps) {
   const [searchValue, setSearchValue] = useState(search);
 
   useEffect(() => {
@@ -44,7 +44,7 @@ export function CasinoFiltersBar({
   }, [onSearchChange, search, searchValue]);
 
   const providerOptions = useMemo(() => [{ value: '', label: 'All providers' }, ...providers], [providers]);
-  const sortOptions: { value: CasinoSortOrder; label: string }[] = useMemo(
+  const sortOptions: { value: GamesSortOrder; label: string }[] = useMemo(
     () => [
       { value: 'ASC', label: 'A-Z' },
       { value: 'DESC', label: 'Z-A' },
@@ -59,8 +59,8 @@ export function CasinoFiltersBar({
         gap: 2,
         alignItems: 'center',
         gridTemplateColumns: {
-          xs: '2fr 3fr',      // two columns for mobile
-          md: '3fr 2fr 3fr',  // three columns from md up
+          xs: '2fr 3fr', // two columns for mobile
+          md: '3fr 2fr 3fr', // three columns from md up
           lg: '10fr 2fr 3fr', // wider layout on large screens
         },
         gridTemplateAreas: {
@@ -90,11 +90,9 @@ export function CasinoFiltersBar({
 
       <Select
         value={order}
-        onChange={(event) => onOrderChange(event.target.value as CasinoSortOrder)}
+        onChange={(event) => onOrderChange(event.target.value as GamesSortOrder)}
         displayEmpty
-        renderValue={(value) =>
-          sortOptions.find((option) => option.value === value)?.label ?? 'Sort'
-        }
+        renderValue={(value) => sortOptions.find((option) => option.value === value)?.label ?? 'Sort'}
         sx={{ gridArea: 'order' }}
       >
         {sortOptions.map((option) => (

@@ -1,9 +1,9 @@
-import { CasinoFilters, CasinoQueryParams } from '../types';
+import { GamesFilters, GamesQueryParams } from '../filters.types';
 
 const DEFAULT_LIMIT = 48;
 
-export function buildCasinoQuery(filters: CasinoFilters): CasinoQueryParams {
-  const query: CasinoQueryParams = {
+export function buildGamesQuery(filters: GamesFilters): GamesQueryParams {
+  const query: GamesQueryParams = {
     limit: DEFAULT_LIMIT,
     offset: 0,
   };
