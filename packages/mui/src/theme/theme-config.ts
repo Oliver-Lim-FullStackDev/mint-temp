@@ -1,7 +1,7 @@
 import type { CommonColors } from '@mui/material/styles';
 
 import type { PaletteColorNoChannels } from './core/palette';
-import type { ThemeDirection, ThemeColorScheme, ThemeCssVariables } from './types';
+import type { ThemeColorScheme, ThemeCssVariables, ThemeDirection } from './types';
 
 // ----------------------------------------------------------------------
 
@@ -19,7 +19,7 @@ type ThemeConfig = {
   > & {
     common: Pick<CommonColors, 'black' | 'white'>;
     grey: Record<
-      '50' | '100' | '200' | '300' | '400' | '500' | '600' | '700' | '800' | '900',
+      '50' | '100' | '200' | '300' | '400' | '500' | '600' | '700' | '800' | '900' | '9',
       string
     >;
   };
@@ -50,7 +50,7 @@ export const themeConfig: ThemeConfig = {
       light: '#5DFFE5',
       main: '#00F1CB',
       dark: '#008A72',
-      darker: '#00241D',
+      darker: '#03141B',
       contrastText: '#000000',
     },
     secondary: {
@@ -88,7 +88,7 @@ export const themeConfig: ThemeConfig = {
     error: {
       lighter: '#FFE9D5',
       light: '#FFAC82',
-      main: '#FF5630',
+      main: '#FF2000',
       dark: '#B71D18',
       darker: '#7A0916',
       contrastText: '#FFFFFF',
@@ -104,6 +104,7 @@ export const themeConfig: ThemeConfig = {
       '700': '#454F5B',
       '800': '#1C252E',
       '900': '#141A21',
+      '9': '#969AA0',
     },
     common: { black: '#000000', white: '#FFFFFF' },
   },

@@ -1,20 +1,23 @@
 const ROOTS = {
   AUTH: '/auth',
-  CASINOS: '/casinos',
+  CASINO: '/casino',
+  SPORTS: '/sports',
   DASHBOARD: '/dashboard',
 };
 
 // ----------------------------------------------------------------------
 
 export const paths = {
-  casinos: {
-    root: ROOTS.CASINOS,
-    details: (id: string) => `${ROOTS.CASINOS}/${id}`,
+  casino: {
+    root: ROOTS.CASINO,
+    details: (id: string) => `${ROOTS.CASINO}/game/${id}`,
   },
-  rankings: '/rankings',
-  earn: '/earn',
-  store: '/store',
-
+  sports: {
+    root: ROOTS.SPORTS,
+    details: (id: string) => `${ROOTS.SPORTS}/${id}`,
+  },
+  account: '/account',
+  promotions: '/promotions',
   support: '/support',
   about: '/about-us',
   contact: '/contact-us',

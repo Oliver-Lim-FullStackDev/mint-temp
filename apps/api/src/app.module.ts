@@ -4,9 +4,10 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { AuthModule } from './modules/auth/auth.module';
 import { GamesModule } from './modules/games/games.module';
-import { SlotGameModule } from './modules/games/slots/slot-game.module';
 import { SessionModule } from './modules/session/session.module';
 import { TokenModule } from './modules/session/token.module';
+import { SlotGameModule } from './modules/games/minty-spins/slot-game.module';
+import { SportsbookModule } from './modules/sportsbook/sportsbook.module';
 import { StoreModule } from './modules/store/store.module';
 import { WalletModule } from './modules/wallet/wallet.module';
 import { MissionsModule } from './modules/missions/missions.module';
@@ -31,6 +32,7 @@ import { PaymentsModule } from './modules/payments/payments.module';
     MissionsModule,
     SessionModule,
     SlotGameModule,
+    SportsbookModule,
     StoreModule,
     WalletModule,
     TokenModule,

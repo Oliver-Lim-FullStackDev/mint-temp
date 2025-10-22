@@ -8,18 +8,42 @@ export interface PayloadBannerActionButton {
   url: string;
 }
 
+export interface PayloadMedia {
+  id: number;
+  alt?: string;
+  url: string;
+  filename?: string;
+  mimeType?: string;
+  width?: number;
+  height?: number;
+}
+
+export interface PayloadCarouselSlide {
+  id: string;
+  title: string;
+  subtitle?: string;
+  slideType: 'image' | 'video';
+  slideImage?: PayloadMedia | null;
+  slideVideo?: PayloadMedia | null;
+  tags?: PayloadBannerTag[];
+  actionButton?: PayloadBannerActionButton;
+}
+
 export interface PayloadBanner {
   id: number | string;
   title: string;
   subtitle?: string;
-  tags?: PayloadBannerTag[];
-  actionButton?: PayloadBannerActionButton;
-  background?: string | null;
   section?: string;
-  type?: string;
+  type?: 'image' | 'video' | 'carousel';
   published?: boolean;
   createdAt: string;
   updatedAt: string;
+  image?: PayloadMedia | null;
+  video?: PayloadMedia | null;
+  carousel?: PayloadCarouselSlide[];
+  tags?: PayloadBannerTag[];
+  actionButton?: PayloadBannerActionButton;
+  background?: string | null;
 }
 
 export interface PayloadBannerResponse {

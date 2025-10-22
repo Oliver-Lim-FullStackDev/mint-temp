@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 import React from 'react';
 import { CasinoView } from '@/app/casinos/(main)/view';
-import type { Game } from '@/modules/games/games.types';
+import type { Game } from '@mint/types';
 import { apiFetch } from '@mint/client';
 
 export const metadata: Metadata = {
@@ -11,13 +11,8 @@ export const metadata: Metadata = {
 };
 
 const DEFAULT_SEARCH_PARAMS = {
-  q: {
-    results: {
-      tags: ['mint', 'originals', 'tinyrex'],
-      limit: 999,
-      order: 'sort_order',
-    },
-  },
+  tags: ['mint', 'originals', 'tinyrex'],
+  limit: 9999,
 };
 
 export default async function Page() {

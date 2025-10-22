@@ -1,3 +1,4 @@
-export { TonAuthProvider } from '../auth/providers/ton-auth-provider';
-export { UserAuthProvider } from '../auth/context/user-auth-ton-provider';
+export { UserAuthProvider } from '@/modules/privy/auth/context/user-auth-privy-provider';
+export { TonAuthProvider } from '@/modules/ton/auth/providers/ton-auth-provider';
 export { TonConnectProvider } from './ton-connect-provider';
+

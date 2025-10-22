@@ -1,7 +1,7 @@
 export const getTgUserPic = async (userId: string | number) => {
   const BOT_TOKEN = process.env.TELEGRAM_BOT_TOKEN;
 
-  if (!BOT_TOKEN) return null
+  if (!BOT_TOKEN) return null;
 
   const fileId = await getFileId(BOT_TOKEN, userId);
   if (!fileId) {

@@ -1,14 +1,12 @@
-import { Request, type Response as ExpressResponse } from 'express';
 import { Inject, Injectable, Logger, UnauthorizedException } from '@nestjs/common';
 import { REQUEST } from '@nestjs/core';
-import { HG_SessionResponse, SessionResponse, TonWalletLoginInput } from 'src/shared/hero-gaming.types';
+import { Request, type Response as ExpressResponse } from 'express';
 import { HeroGamingApiRoutes } from 'src/shared/hero-gaming-api-routes';
 import { HeroGamingClient } from 'src/shared/hero-gaming.client';
+import { HG_SessionResponse, PrivyLoginInput, SessionResponse, TonWalletLoginInput } from 'src/shared/hero-gaming.types';
 import { errorHandler } from '../auth/lib/fn-errors';
 import { extractClientType, extractIpAddress } from '../auth/lib/fn-validators';
 import { SessionMapper } from './session.mapper';
-
-Logger.log('ENV', process.env);
 
 @Injectable()
 export class SessionService {
@@ -16,7 +14,7 @@ export class SessionService {
 
   constructor(
     private readonly hg: HeroGamingClient,
-    @Inject(REQUEST) private readonly request: Request
+    @Inject(REQUEST) private readonly request: Request,
   ) {
     this.baseUrl = process.env.HEROGAMING_API_URL!;
   }
@@ -31,7 +29,7 @@ export class SessionService {
    * Throws UnauthorizedException if missing or invalid.
    */
   async getSessionFromRequest(): Promise<SessionResponse> {
-    const auth = this.getSessionIdFromHeaders()
+    const auth = this.getSessionIdFromHeaders();
     if (!auth) {
       throw new UnauthorizedException('Missing Authorization header');
     }
@@ -104,7 +102,55 @@ export class SessionService {
     }
   }
 
-  setSessionCookie (token, res: ExpressResponse): void {
+  /**
+   * Authenticate with Privy wallet using fetch
+   * @param walletAddress - The wallet address object
+   * @param referralId - Optional referralId
+   * @param referrer - Optional referrer partner code
+   * @returns Session token response
+   */
+  async privySession(
+    did: PrivyLoginInput,
+    referralId?: string,
+    referrer?: string,
+  ): Promise<SessionResponse | null> {
+    // Extract IP address and client type from request
+    const ipAddress = extractIpAddress(this.request);
+    const clientType = extractClientType(this.request);
+
+    const privyRegisterPayload: Record<string, any> = {
+      country_code: process.env.HEROGAMING_FRONTEND_COUNTRY_CODE || 'GB',
+      ip_address: ipAddress,
+      client_type: clientType,
+      did,
+      referred_by_id: referralId?.trim() || undefined,
+      request_referrer: referrer?.trim() || undefined,
+    };
+
+    try {
+      // Call the Privy auth endpoint using fetch
+      const response = await fetch(`${this.baseUrl}${HeroGamingApiRoutes.mint.privyAuth}`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Basic ${process.env.HEROGAMING_MINT_API_TOKEN}`,
+        },
+        body: JSON.stringify(privyRegisterPayload),
+      });
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      const { session_token } = (await response.json()) as { session_token: string };
+      const sessionData = await this.validateSession(session_token);
+
+      return sessionData;
+    } catch (err) {
+      return errorHandler(err, 'Hero Gaming API TON auth failed');
+    }
+  }
+
+  setSessionCookie(token, res: ExpressResponse): void {
     if (!token || !res.cookie) {
       return;
     }
@@ -133,7 +179,8 @@ export class SessionService {
         {
           Authorization: `Basic ${process.env.HEROGAMING_MINT_API_TOKEN}`,
           'frontend-country-code': process.env.HEROGAMING_FRONTEND_COUNTRY_CODE || 'GB',
-        });
+        },
+      );
 
       // API can return { message } (keep old token) or { token } (new token)
       if (response?.message) {
@@ -151,18 +198,15 @@ export class SessionService {
     }
   }
 
-
   /**
    * Validate existing session token.
    * On 401, tries ONE refresh and re-validates; otherwise throws.
    */
   async validateSession(sessionToken?: string, _retried = false): Promise<SessionResponse | null> {
     try {
-      const response = await this.hg.v1.get<HG_SessionResponse>(
-        HeroGamingApiRoutes.session,
-        undefined,
-        { authorization: sessionToken }
-      );
+      const response = await this.hg.v1.get<HG_SessionResponse>(HeroGamingApiRoutes.session, undefined, {
+        authorization: sessionToken,
+      });
 
       return SessionMapper.fromApi(response);
     } catch (err: any) {
@@ -188,11 +232,7 @@ export class SessionService {
       }
 
       // Non-401 or already retried → stop
-      throw new UnauthorizedException(
-        'Session Error',
-        `${sessionToken ?? '(no token)'} ${err?.message ?? err}`
-      );
+      throw new UnauthorizedException('Session Error', `${sessionToken ?? '(no token)'} ${err?.message ?? err}`);
     }
   }
-
 }

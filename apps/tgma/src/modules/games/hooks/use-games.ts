@@ -1,43 +1,21 @@
 import { useQuery } from '@tanstack/react-query';
-import type { Game } from '../games.types';
+import type { Game } from '@mint/types';
 import { apiFetch } from '@mint/client';
-
-type OrderDirection = 'asc' | 'desc' | 'ASC' | 'DESC';
-
-const DEFAULT_ORDER_FIELD = 'sort_order';
 
 const defaultParams = {
   tags: ['mint', 'originals', 'tinyrex'],
-  limit: 999,
-  orderDirection: 'asc' as OrderDirection,
+  limit: 9999, // no limit for now
 };
 
 type SearchParams = {
   tags?: string[];
   limit?: number;
-  orderDirection?: OrderDirection;
 };
 
-function buildOrderValue(field: string, direction: 'asc' | 'desc') {
-  return direction === 'desc' ? `-${field}` : field;
-}
-
 export function useGames(params: SearchParams = {}) {
-  const tags = params.tags ?? defaultParams.tags;
-  const limit = params.limit ?? defaultParams.limit;
-  const defaultDirection =
-    defaultParams.orderDirection.toLowerCase() === 'desc' ? 'desc' : 'asc';
-  const normalizedDirection: 'asc' | 'desc' =
-    params.orderDirection?.toLowerCase() === 'desc' ? 'desc' : defaultDirection;
-
   const payload = {
-    q: {
-      results: {
-        tags,
-        limit,
-        order: buildOrderValue(DEFAULT_ORDER_FIELD, normalizedDirection),
-      },
-    },
+    tags: params.tags ?? defaultParams.tags,
+    limit: params.limit ?? defaultParams.limit,
   };
 
   return useQuery({
@@ -48,7 +26,7 @@ export function useGames(params: SearchParams = {}) {
           method: 'POST',
           body: payload,
         });
-        
+
         return data as Game[];
       } catch {
         throw new Error('Failed to get filtered games');

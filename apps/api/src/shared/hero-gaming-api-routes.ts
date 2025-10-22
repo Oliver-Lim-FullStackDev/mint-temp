@@ -14,6 +14,9 @@ export const HeroGamingApiRoutes = {
    * Endpoint for session creation
    */
   me: '/me',
+  my: {
+    betby: '/my/betby_jwt_token',
+  },
   /**
    * Endpoint for game search
    */
@@ -77,7 +80,11 @@ export const HeroGamingApiRoutes = {
     /**
      * Endpoint for Ton authentication
      */
-    tonAuth: '/mint/ton_wallet_auth',
+    tonAuth: '/mint/wallet_auth',
+    /**
+     * Endpoint for Ton authentication
+     */
+    privyAuth: '/mint/privy_auth',
 
     /**
      * Mint Wallet endpoints (FreePlay, MintySpins, Games)

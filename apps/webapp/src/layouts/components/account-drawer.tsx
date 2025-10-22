@@ -178,7 +178,7 @@ function AccountDrawerComp({ onLogout, portalContainer, portalContainerId }: Acc
                       <Link
                         onClick={closeAccountDrawer}
                         component={RouterLink}
-                        href={paths.casinos.details('minty-spins')}
+                        href={paths.casino.details('minty-spins')}
                         sx={{
                           color: '#00F1CB',
                           textDecoration: 'none',

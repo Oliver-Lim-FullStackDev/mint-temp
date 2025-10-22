@@ -37,7 +37,7 @@ export default function PurchaseSuccessModal({ currentPurchase, onClose }: Purch
   const spins = getSpinsFromItem(currentPurchase.item.id);
 
   const handleGoToMintySpins = () => {
-    router.push(paths.casinos.details('minty-spins'));
+    router.push(paths.casino.details('minty-spins'));
     onClose();
   };
 

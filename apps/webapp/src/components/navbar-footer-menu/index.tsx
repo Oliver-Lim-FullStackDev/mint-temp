@@ -19,25 +19,25 @@ const menuItems: MenuItem[] = [
   {
     id: 'store',
     label: 'Store',
-    path: paths.store,
+    path: '',
     icon: 'navbar-footer-menu:mint-store-icon',
   },
   {
     id: 'rankings',
     label: 'Rankings',
-    path: paths.rankings,
+    path: '',
     icon: 'navbar-footer-menu:mint-ranking-icon',
   },
   {
     id: 'play-win',
     label: 'Play & Win',
-    path: paths.casinos.root,
+    path: paths.casino.root,
     icon: 'navbar-footer-menu:play-win-icon',
   },
   {
     id: 'earn',
     label: 'Earn',
-    path: paths.earn,
+    path: '',
     icon: 'navbar-footer-menu:earn-icon',
   },
   {
@@ -181,8 +181,8 @@ const getActiveMenuItem = (currentPath: string): string => {
   if (currentPath === '/mint') return 'mint';
   if (currentPath === '/drops') return 'drops';
 
-  // Handle casinos routes (including dynamic routes like /casinos/[game])
-  if (currentPath.startsWith('/casinos')) return 'play-win';
+  // Handle casino routes (including dynamic routes like /casino/[slug])
+  if (currentPath.startsWith('/casino')) return 'play-win';
 
   // Handle other exact matches
   if (currentPath === '/store') return 'store';

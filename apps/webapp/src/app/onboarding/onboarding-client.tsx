@@ -9,8 +9,8 @@ import { Box, Button, Container, Typography } from '@mint/ui/components/core';
 import { paths } from '@/routes/paths';
 
 const REDIRECTS = {
-  home: paths.casinos.root,
-  spinNow: paths.casinos.details('minty-spins'),
+  home: paths.casino.root,
+  spinNow: paths.casino.details('minty-spins'),
 };
 interface OnboardingStep {
   id: number;

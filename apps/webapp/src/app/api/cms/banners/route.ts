@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { mintApi } from '@mint/client'; // tu cliente para llamar al backend NestJS
+import { mintApi } from '@mint/client';
 
 /**
  * GET /cms/banners

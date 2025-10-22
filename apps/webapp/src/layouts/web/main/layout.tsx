@@ -1,17 +1,15 @@
 import type { ComponentProps } from 'react';
 
-import React from 'react';
-import { Box } from '@mint/ui/components/core';
-import { UIProvider } from '@/modules/ui/ui-context';
-import type { LayoutSectionProps } from '@/layouts/core/layout-section';
-import type { MainSectionProps } from '@/layouts/core/main-section';
-import { LayoutSection } from '@/layouts/core/layout-section';
-import { MainSection } from '@/layouts/core/main-section';
-import NavbarFooterMenu from '@/components/navbar-footer-menu';
-import { ACCOUNT_DRAWER_PORTAL_ID } from '@/layouts/constants';
-import { MainHeader } from '@/components/layout/main-header';
-import { MainFooter } from '@/components/layout/main-footer';
 import { AppBackground } from '@/components/layout/app-background';
+import { MainFooter } from '@/components/layout/main-footer';
+import { MainHeader } from '@/components/layout/main-header';
+import { ACCOUNT_DRAWER_PORTAL_ID } from '@/layouts/constants';
+import type { LayoutSectionProps } from '@/layouts/core/layout-section';
+import { LayoutSection } from '@/layouts/core/layout-section';
+import type { MainSectionProps } from '@/layouts/core/main-section';
+import { MainSection } from '@/layouts/core/main-section';
+import { UIProvider } from '@/modules/ui/ui-context';
+import { Box } from '@mint/ui/components/core';
 
 type LayoutBaseProps = Pick<LayoutSectionProps, 'sx' | 'children' | 'cssVars'>;
 

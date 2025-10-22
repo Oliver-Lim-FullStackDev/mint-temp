@@ -7,7 +7,7 @@ export interface CreditRequestDto {
   gameId: string;
   transactionId: number;
   roundId: number;
-  buyIn?: boolean,
+  buyIn?: boolean;
   externalPlayerId?: string;
 }
 

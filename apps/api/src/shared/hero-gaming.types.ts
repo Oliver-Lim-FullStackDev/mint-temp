@@ -17,6 +17,11 @@ export interface TonWalletLoginInput {
   external_data: { username: string };
 }
 
+export interface PrivyLoginInput {
+  userId: string;
+  external_data: { username: string };
+}
+
 export interface RegisterResponse {
   username: string;
 }

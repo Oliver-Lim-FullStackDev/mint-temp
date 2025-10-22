@@ -21,11 +21,11 @@ export const publicPages = [
 // For example, all paths under /terms/* would be public
 const publicPrefixes = [
   // TGMA (by-pass for all pages, auto-auth in place)
-  paths.casinos.root,
-  `${paths.casinos.root}/*`,
-  paths.earn,
-  paths.store,
-  paths.rankings,
+  paths.casino.root,
+  `${paths.casino.root}/*`,
+  paths.sports.root,
+  `${paths.sports.root}/*`,
+  paths.promotions,
 ];
 
 /**

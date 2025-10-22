@@ -82,7 +82,10 @@ export class AuthController {
    * @returns User data after successful authentication
    */
   @Post('telegram')
-  async authenticateTelegram(@Body() dto: TelegramAuthDto, @Res({ passthrough: true }) res: ExpressResponse): Promise<User> {
+  async authenticateTelegram(
+    @Body() dto: TelegramAuthDto,
+    @Res({ passthrough: true }) res: ExpressResponse,
+  ): Promise<User> {
     const user = await this.auth.authenticateTelegram(dto);
 
     if (!user) {
@@ -100,16 +103,22 @@ export class AuthController {
    * Verify Privy identity token and return Privy user object
    * Reads the identity token from cookie `privy-id-token` or header `privy-id-token`.
    */
-  @Get('privy/verify')
-  async verifyPrivy(@Req() req: ExpressRequest): Promise<any> {
+  @Post('privy/verify')
+  async verifyPrivy(
+    @Req() req: ExpressRequest,
+    @Body() body: { referralId?: string; referrerId?: string },
+    @Res({ passthrough: true }) res: ExpressResponse
+  ): Promise<any> {
     const idToken = req.cookies?.['privy-id-token'] || (req.headers['privy-id-token'] as string | undefined);
-    
+
     if (!idToken) {
       throw new BadRequestException('Identity token is required');
     }
 
-    const user = await this.auth.verifyPrivyToken(idToken);
-    // TODO: Authentificate the user with Hero Gaming
-    return user;
+    const user = await this.auth.verifyPrivyToken(idToken, body);    
+    if (user.token) {
+      this.sessionService.setSessionCookie(user.token, res);
+    }
+    return AuthMapper.fromApi(user);
   }
 }

@@ -1,6 +1,6 @@
 'use client';
 
-import { useUserAuth } from '@/modules/ton/auth/context/user-auth-ton-provider';
+import { useUserAuth } from '@/modules/privy/auth/context/user-auth-privy-provider';
 import { useTonAuth } from '@/modules/ton/auth/hooks/useTonAuth';
 import { Box, Typography } from '@mint/ui/components/core';
 import { TonConnectButton } from '@tonconnect/ui-react';

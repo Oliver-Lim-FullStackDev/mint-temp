@@ -8,6 +8,7 @@ export type UIState = {
   navbarOpen: boolean;
   openedFromInvite: boolean;
   leaderboardSelectedTab: string;
+  accountSelectedTab: string;
 };
 
 type UIActions = {
@@ -22,6 +23,7 @@ type UIActions = {
   openNavbar: () => void;
   closeNavbar: () => void;
   setLeaderboardTab: (tab: string) => void;
+  setAccountTab: (tab: string) => void;
   setInitialState: (state: Partial<UIState>) => void;
 };
 
@@ -31,6 +33,7 @@ const defaultState: UIState = {
   navbarOpen: false,
   openedFromInvite: false,
   leaderboardSelectedTab: 'month',
+  accountSelectedTab: 'account',
 };
 
 export const useUIStore = create<UIState & UIActions>((set, get) => ({
@@ -64,6 +67,9 @@ export const useUIStore = create<UIState & UIActions>((set, get) => ({
 
   setLeaderboardTab: (tab) =>
     set(() => ({ leaderboardSelectedTab: tab })),
+
+  setAccountTab: (tab) =>
+    set(() => ({ accountSelectedTab: tab })),
 
   setInitialState: (partial) =>
     set((s) => ({ ...s, ...partial })),

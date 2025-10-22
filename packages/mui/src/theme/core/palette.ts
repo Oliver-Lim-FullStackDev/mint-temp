@@ -1,6 +1,6 @@
-import type { PaletteColor, ColorSystemOptions, PaletteColorChannel } from '@mui/material/styles';
+import type { ColorSystemOptions, PaletteColor, PaletteColorChannel } from '@mui/material/styles';
 
-import { varAlpha, createPaletteChannel } from 'minimal-shared/utils';
+import { createPaletteChannel, varAlpha } from 'minimal-shared/utils';
 
 import { themeConfig } from '../theme-config';
 
@@ -37,6 +37,7 @@ export type TypeTextExtend = {
 export type TypeBackgroundExtend = {
   neutral: string;
   neutralChannel: string;
+  panel: string;
 };
 
 // Extended palette colors
@@ -59,12 +60,33 @@ export type GreyExtend = {
   '700Channel': string;
   '800Channel': string;
   '900Channel': string;
+  '9Channel': string;
 };
 
 // ----------------------------------------------------------------------
 
 // Primary color
 export const primary = createPaletteChannel(themeConfig.palette.primary);
+
+// Primary-2 color
+export const primary2 = createPaletteChannel({
+  lighter: '#E6F7F4',
+  light: '#80D4C4',
+  main: '#009C79',
+  dark: '#007A5E',
+  darker: '#005A46',
+  contrastText: '#FFFFFF',
+});
+
+// Error-2 color
+export const error2 = createPaletteChannel({
+  lighter: '#FFE6E6',
+  light: '#FF8080',
+  main: '#FF2000',
+  dark: '#CC1A00',
+  darker: '#991300',
+  contrastText: '#FFFFFF',
+});
 
 // Secondary color
 export const secondary = createPaletteChannel(themeConfig.palette.secondary);
@@ -95,8 +117,16 @@ export const text = {
 
 // Background color
 export const background = {
-  light: createPaletteChannel({ paper: '#FFFFFF', default: '#FFFFFF', neutral: grey[200] }),
-  dark: createPaletteChannel({ paper: grey[800], default: grey[900], neutral: '#28323D' }),
+  light: createPaletteChannel({ 
+    paper: '#FFFFFF', 
+    default: '#FFFFFF', 
+    neutral: grey[200]
+  }),
+  dark: createPaletteChannel({ 
+    paper: grey[800], 
+    default: grey[900], 
+    neutral: '#28323D'
+  }),
 };
 
 // Base action color
@@ -118,14 +148,16 @@ export const action = {
 
 // ----------------------------------------------------------------------
 
-// Base palette
+// Base palette with all colors
 export const basePalette = {
   primary,
+  'primary-2': primary2,
   secondary,
   info,
   success,
   warning,
   error,
+  'error-2': error2,
   common,
   grey,
   divider: varAlpha(grey['500Channel'], 0.2),
@@ -135,13 +167,19 @@ export const palette: Record<ThemeColorScheme, ColorSystemOptions['palette']> = 
   light: {
     ...basePalette,
     text: text.light,
-    background: background.light,
+    background: {
+      ...background.light,
+      panel: 'linear-gradient(90deg, rgba(0, 0, 0, 0.58) 0%, rgba(0, 0, 0, 0.64) 100%)'
+    },
     action: action.light,
   },
   dark: {
     ...basePalette,
     text: text.dark,
-    background: background.dark,
+    background: {
+      ...background.dark,
+      panel: 'linear-gradient(90deg, rgba(0, 0, 0, 0.58) 0%, rgba(0, 0, 0, 0.64) 100%)'
+    },
     action: action.dark,
   },
 };

@@ -185,7 +185,7 @@ export function Logo({
 
   return (
     <Link
-      href="/casinos">
+      href="/casino">
       {singleLogo}
     </Link>
   );

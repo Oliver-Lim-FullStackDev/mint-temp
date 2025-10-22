@@ -33,7 +33,7 @@ export function DropsView() {
         </Text>
         <Text variant="body3">
           In the meantime why not check out &nbsp;
-          <Link style={{ textDecoration: "none", fontWeight: 800, color: 'var(--p-main)' }} href={paths.casinos.details('minty-spins')}>
+          <Link style={{ textDecoration: "none", fontWeight: 800, color: 'var(--p-main)' }} href={paths.casino.details('minty-spins')}>
           <span>
             Minty Spins
           </span>

@@ -1,14 +1,14 @@
 import type { Metadata } from 'next';
 
-import { HomeView } from '../(web)/view';
+import { SportsView } from './view';
 
 export const metadata: Metadata = {
-  title: '...',
+  title: 'Mint.io | Sports',
   description:
-    '...',
+    'MINT Sportsbook',
 };
 
 
 export default function Page() {
-  return <HomeView />;
+  return <SportsView />;
 }

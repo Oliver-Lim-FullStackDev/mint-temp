@@ -20,8 +20,8 @@ export default function PrivyProviders({ children }: { children: React.ReactNode
 
 const PRIVY_CONFIG : PrivyClientConfig = {
     "appearance": {
-        "accentColor": "#6A6FF5",
-        "theme": "#FFFFFF",
+        "accentColor": "#ffffff",
+        "theme": "#07141a",
         "showWalletLoginFirst": false,
         "logo": MINT_LOGO,
         "walletChainType": "ethereum-only",

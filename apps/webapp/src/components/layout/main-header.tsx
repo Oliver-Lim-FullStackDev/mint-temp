@@ -1,8 +1,9 @@
-'use client'
+'use client';
 
-import { useEffect, useRef, type ReactNode } from 'react';
-import { alpha, styled, useTheme, useMediaQuery } from '@mint/ui/components/core/styles';
+import { alpha, styled, useMediaQuery, useTheme } from '@mint/ui/components/core/styles';
+import { Ref, useEffect, useRef, type ReactNode } from 'react';
 
+import { AccountMenuDropdown } from '@/modules/account/components';
 import {
   Avatar,
   Box,
@@ -10,21 +11,14 @@ import {
   Container,
   IconButton,
   Stack,
-  Typography,
+  Typography
 } from '@mint/ui/components/core';
-import { Iconify } from '@mint/ui/components/iconify';
 import type { IconifyName } from '@mint/ui/components/iconify';
+import { Iconify } from '@mint/ui/components/iconify';
+import { useDropdown } from '@mint/ui/hooks';
 import PrivyAuthButton from '../auth/privy/privy-auth-button';
-
-type HeaderNavItem = {
-  id: string;
-  label: string;
-  active?: boolean;
-  icon?: ReactNode;
-  iconName?: IconifyName;
-  iconSrc?: string;
-  onClick?: () => void;
-};
+import { paths } from '@/routes/paths';
+import { navData as mainNavData } from '@/layouts/nav-config-main';
 
 type HeaderWallet = {
   balanceLabel?: string;
@@ -39,41 +33,14 @@ type HeaderUtilityAction = {
   onClick?: () => void;
   icon?: ReactNode;
   iconName?: IconifyName;
+  isDropdown?: boolean;
 };
 
 export type MainHeaderProps = {
   logo?: ReactNode;
-  navItems?: HeaderNavItem[];
   wallet?: HeaderWallet;
   utilityActions?: HeaderUtilityAction[];
 };
-
-const DEFAULT_NAV_ITEMS: HeaderNavItem[] = [
-  {
-    id: 'casino',
-    label: 'Casino',
-    active: true,
-    iconName: 'mint:header-casino',
-  },
-  {
-    id: 'sports',
-    label: 'Sports',
-    iconName: 'mint:header-sports',
-  },
-  {
-    id: 'promotions',
-    label: 'Promotions',
-    iconName: 'mint:header-promotions',
-  },
-];
-
-const DEFAULT_UTILITY_ACTIONS: HeaderUtilityAction[] = [
-  {
-    id: 'notifications',
-    'aria-label': 'Open notifications',
-    iconName: 'mint:header-user',
-  },
-];
 
 function DefaultLogo() {
   const theme = useTheme();
@@ -161,26 +128,6 @@ const UtilityButton = styled(IconButton)(({ theme }) => ({
   },
 }));
 
-function DefaultNavIcon({ active }: { active?: boolean }) {
-  return (
-    <Box
-      component="span"
-      sx={{
-        width: 20,
-        height: 20,
-        borderRadius: 1.5,
-        position: 'relative',
-        background: active
-          ? 'linear-gradient(180deg, rgba(255, 255, 255, 0.95) 0%, rgba(255, 255, 255, 0.75) 100%)'
-          : undefined,
-        overflow: 'hidden',
-      }}
-    >
-      {!active && <NavIconPlaceholder />}
-    </Box>
-  );
-}
-
 function DefaultWalletIcon() {
   return (
     <Avatar
@@ -204,12 +151,8 @@ function DefaultUtilityIcon() {
   );
 }
 
-type NavItemProps = {
-  item: HeaderNavItem;
-};
-
-function HeaderNavItemButton({ item }: NavItemProps) {
-  const { active, label, onClick } = item;
+function HeaderNavItemButton({ item }) {
+  const { active = window.location.pathname.includes(item.path), title, onClick } = item;
 
   return (
     <Box
@@ -238,44 +181,20 @@ function HeaderNavItemButton({ item }: NavItemProps) {
       )}
 
       <Button
+        href={item.path}
         color="inherit"
-        startIcon={(() => {
-          if (item.icon) {
-            return item.icon;
-          }
-
-          if (item.iconName) {
-            return (
-              <Iconify
-                icon={item.iconName}
-                width={20}
-                height={20}
-                sx={{
-                  color: 'inherit',
-                  opacity: active ? 1 : 0.72,
-                  transition: 'opacity 0.2s ease, color 0.2s ease',
-                }}
-              />
-            );
-          }
-
-          if (item.iconSrc) {
-            return (
-              <Box component="img"
-                src={item.iconSrc}
-                alt={label}
-                sx={{
-                  width: 18,
-                  height: 18,
-                  opacity: active ? 1 : 0.7,
-                  filter: active ? 'none' : 'grayscale(60%)',
-                }}
-              />
-            );
-          }
-
-          return <DefaultNavIcon active={active} />;
-        })()}
+        startIcon={(
+          <Iconify
+            icon={item.icon}
+            width={20}
+            height={20}
+            sx={{
+              color: 'inherit',
+              opacity: active ? 1 : 0.72,
+              transition: 'opacity 0.2s ease, color 0.2s ease',
+            }}
+          />
+        )}
         onClick={onClick}
         sx={{
           position: 'relative',
@@ -300,7 +219,7 @@ function HeaderNavItemButton({ item }: NavItemProps) {
           },
         }}
       >
-        {label}
+        {title}
       </Button>
     </Box>
   );
@@ -332,11 +251,12 @@ function HeaderWalletSummary({
   );
 }
 
-function HeaderUtilityButton({ action }: { action: HeaderUtilityAction }) {
+
+function HeaderUtilityButton({ action, buttonRef }: { action: HeaderUtilityAction; buttonRef?: React.RefObject<HTMLDivElement> }) {
   const { onClick, icon, 'aria-label': ariaLabel } = action;
 
   return (
-    <UtilityButton onClick={onClick} aria-label={ariaLabel}>
+    <UtilityButton ref={buttonRef as Ref<HTMLButtonElement> | undefined} onClick={onClick} aria-label={ariaLabel}>
       {action.iconName ? (
         <Iconify
           icon={action.iconName}
@@ -353,12 +273,19 @@ function HeaderUtilityButton({ action }: { action: HeaderUtilityAction }) {
 
 export function MainHeader({
   logo,
-  navItems,
   wallet,
   utilityActions,
 }: MainHeaderProps) {
+  const { isOpen, openDialog, closeDialog, dropdownRef, triggerRef } = useDropdown();
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
+
   const safeAreaTop = 'env(safe-area-inset-top, 0px)';
   const headerRef = useRef<HTMLDivElement | null>(null);
+
+  const handleMenuClick = () => {
+    openDialog();
+  };
 
   useEffect(() => {
     const node = headerRef.current;
@@ -389,7 +316,19 @@ export function MainHeader({
     };
   }, []);
 
-  const itemsToRender = navItems && navItems.length > 0 ? navItems : DEFAULT_NAV_ITEMS;
+  const navData = mainNavData;
+
+  // Create utility actions with access to menu handlers
+  const DEFAULT_UTILITY_ACTIONS: HeaderUtilityAction[] = [
+    {
+      id: 'notifications',
+      'aria-label': 'Open user menu',
+      iconName: 'mint:header-user',
+      onClick: handleMenuClick,
+      isDropdown: true,
+    },
+  ];
+
   const actionsToRender =
     utilityActions && utilityActions.length > 0 ? utilityActions : DEFAULT_UTILITY_ACTIONS;
 
@@ -432,8 +371,8 @@ export function MainHeader({
                 display: { xs: 'none', sm: 'flex' },
               }}
             >
-              {itemsToRender.map((item) => (
-                <HeaderNavItemButton key={item.id} item={item} />
+              {navData.items.map((item) => (
+                <HeaderNavItemButton key={item.title} item={item} />
               ))}
             </Stack>
 
@@ -445,13 +384,20 @@ export function MainHeader({
             >
               <HeaderWalletSummary {...(wallet ?? {})} />
               {actionsToRender.map((action) => (
-                <HeaderUtilityButton key={action.id} action={action} />
+                <HeaderUtilityButton
+                  key={action.id}
+                  action={action}
+                  buttonRef={action?.isDropdown ? triggerRef as React.RefObject<HTMLDivElement> : undefined}
+                />
               ))}
               <PrivyAuthButton />
             </Stack>
           </HeaderSurface>
         </Container>
       </Box>
+
+      {/* Custom Dropdown using useDropdown hook */}
+      <AccountMenuDropdown isOpen={isOpen} dropdownRef={dropdownRef} triggerRef={triggerRef} onMenuItemClick={() => closeDialog()} />
     </Box>
   );
 }

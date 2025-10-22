@@ -42,7 +42,7 @@ export function AuthGuard({ children }: AuthGuardProps) {
       const returnTo = params.get('returnTo');
 
       // Redirect to the original URL if available, otherwise to the play & win page
-      router.push(returnTo || paths.casinos.root);
+      router.push(returnTo || paths.casino.root);
     }
 
   }, [isAuthenticated, loading, pathname, router]);

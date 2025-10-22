@@ -28,7 +28,7 @@ export function AppBackground() {
     >
       <Box
         component="img"
-        src="assets/background/bg-app.png"
+        src="assets/background/mountain-bg.png"
         alt="Background gradient"
         sx={{
           width: '100%',

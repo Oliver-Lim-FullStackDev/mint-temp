@@ -3,7 +3,7 @@
 import React, { useMemo } from 'react';
 import { Box, CircularProgress, Typography } from '@mint/ui/components/core';
 import { useGame } from '@/modules/games/hooks/use-game';
-import type { Game } from '@/modules/games/games.types';
+import type { Game } from '@mint/types';
 import { Amount } from '@/components/amount';
 import { Translation } from '@/components/translation';
 

@@ -6,7 +6,7 @@ import {
   PaymentAuthorizeRequest,
   PaymentAuthorizeResponse,
   PaymentTransferRequest,
-  PaymentTransferResponse
+  PaymentTransferResponse,
 } from '../../shared/hero-gaming.types';
 import { extractSpinsFromItemId } from './utils';
 import { SubProvider } from 'src/modules/payments/shared/payment.types';
@@ -95,7 +95,9 @@ export class TransactionService {
    */
   async transferTransaction(data: PaymentTransferRequest): Promise<TransactionResult> {
     try {
-      this.logger.log(`Transferring transaction ${data.transaction_id} for user ${data.username} with auth_code: ${data.auth_code}`);
+      this.logger.log(
+        `Transferring transaction ${data.transaction_id} for user ${data.username} with auth_code: ${data.auth_code}`,
+      );
 
       const response = await fetch(`${this.baseUrl}${HeroGamingApiRoutes.paymentsTransfer}`, {
         method: 'POST',
@@ -423,11 +425,7 @@ export class TransactionService {
   /**
    * Cancel a transaction by sending cancel status
    */
-  private async cancelTransaction(
-    username: string,
-    transactionId: string,
-    authCode: string,
-  ): Promise<void> {
+  private async cancelTransaction(username: string, transactionId: string, authCode: string): Promise<void> {
     try {
       this.logger.log(`Canceling transaction ${transactionId} for user ${username}`);
 

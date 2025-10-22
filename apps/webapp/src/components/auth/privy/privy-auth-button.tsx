@@ -1,49 +1,52 @@
 'use client';
 
-import { useCallback, useEffect, useMemo, useState } from 'react';
-import { usePrivy, User } from '@privy-io/react-auth';
-import { Text } from "@mint/ui/components";
-import { Button, Stack } from '@mint/ui/components/core';
-import { verifyPrivyAuth } from './verify-auth';
+import { useUserAuth } from '@/modules/privy/auth/context/user-auth-privy-provider';
+import { PRIVY_FLAG_KEY } from '@/modules/privy/auth/providers/privy-auth-provider';
+import { Button, Stack } from '@mint/ui';
+import { Text } from '@mint/ui/components';
+import { usePrivy } from '@privy-io/react-auth';
+import { useCallback, useMemo, useState } from 'react';
 
 type PrivyAuthButtonProps = {
   /** Optional label for the button */
   label?: string;
-  /** Optional callback invoked after successful server verification */
-  onVerified?: (result: User) => void;
+  /** Optional callback invoked after successful login */
+  onLogin?: () => void;
   /** Disabled state override */
   disabled?: boolean;
 };
 
 /**
  * PrivyAuthButton
- * - Triggers Privy login flow on click.
- * - Optionally performs server verification using a backend route that validates
- *   the Privy access token with `PRIVY_APP_SECRET`.
+ * - Triggers Privy login flow on click using SDK hooks directly
+ * - Shows user info when authenticated
+ * - Handles logout functionality
  *
  * Notes:
- * - Ensure `PrivyProvider` is added at the app root with `NEXT_PUBLIC_PRIVY_APP_ID`.
- * - When `serverVeririfcation` is true, this component will POST to
- *   `/api/auth/privy/verify`
+ * - Ensure `PrivyProvider` is added at the app root with `NEXT_PUBLIC_PRIVY_APP_ID`
+ * - Authentication verification is handled by `PrivyAuthProvider`
  */
 export function PrivyAuthButton({
   label = 'Login with Privy',
-  onVerified,
+  onLogin,
   disabled,
 }: PrivyAuthButtonProps) {
-  const { login, ready, authenticated, user, logout } = usePrivy();
+  const { login, ready, authenticated, logout } = usePrivy();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
-
+  const { user, clearUser } = useUserAuth();
 
   const appId = useMemo(() => process.env.NEXT_PUBLIC_PRIVY_APP_ID, []);
 
   const handleClick = useCallback(async () => {
     setError(null);
     setLoading(true);
+    
     if (authenticated) {
       await logout();
+      clearUser();
       setLoading(false);
+      if (typeof window !== 'undefined') (window as any)[PRIVY_FLAG_KEY] = false;
       return;
     }
 
@@ -52,6 +55,7 @@ export function PrivyAuthButton({
       if (!appId) console.warn('NEXT_PUBLIC_PRIVY_APP_ID is not set.');
 
       await login();
+      onLogin?.();
     } catch (e) {
       const message = e instanceof Error ? e.message : 'Unknown error';
       setError(message);
@@ -59,27 +63,7 @@ export function PrivyAuthButton({
     } finally {
       setLoading(false);
     }
-  }, [appId, ready, authenticated, login, logout]);
-
-
-  // Alert only once per page lifecycle or on first login
-  // Uses a window-scoped flag that resets on full page refresh
-  useEffect(() => {
-    if (!authenticated) return;
-    const flagKey = '__privyAlerted__';
-    const alerted = typeof window !== 'undefined' && (window as any)[flagKey];
-    if (!alerted) {
-      verifyPrivyAuth().then((user) => {
-        // TODO: set the user Object after Finishing Hero gaming Auth implmentation
-        onVerified?.(user);
-      })
-
-      if (typeof window !== 'undefined') {
-        (window as any)[flagKey] = true;
-      }
-    }
-  }, [authenticated])
-
+  }, [appId, ready, authenticated, login, logout, onLogin]);
 
   const buttonText = useMemo(() => {
     if (loading) return `Signing ${authenticated ? 'out' : 'in'}…`;
@@ -90,7 +74,11 @@ export function PrivyAuthButton({
   return (
     <>
       <Stack display="contents" alignItems="center" justifyContent="center" justifyItems={"center"} >
-        {authenticated && <Text> {user?.google?.name ? null : "Wallet ID: "} <b>{user?.google?.name || user?.wallet?.id}</b> </Text>}
+        {authenticated && user && (
+          <Text>
+            <b>{user?.username}</b>
+          </Text>
+        )}
         <Button
           color="primary"
           variant="contained"

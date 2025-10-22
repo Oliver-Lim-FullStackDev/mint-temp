@@ -1,22 +1,12 @@
 import { Injectable, UnauthorizedException } from '@nestjs/common';
 import type { Currency } from '../dto/currency.dto';
-import {
-  BalanceRequestDto,
-  BalanceResponseDto,
-} from '../dto/balance.dto';
-import {
-  DebitRequestDto,
-  DebitResponseDto,
-} from '../dto/debit.dto';
-import {
-  CreditRequestDto,
-  CreditResponseDto,
-} from '../dto/credit.dto';
+import { BalanceRequestDto, BalanceResponseDto } from '../dto/balance.dto';
+import { DebitRequestDto, DebitResponseDto } from '../dto/debit.dto';
+import { CreditRequestDto, CreditResponseDto } from '../dto/credit.dto';
 import { HeroGamingClient } from 'src/shared/hero-gaming.client';
 import { HeroGamingApiRoutes } from 'src/shared/hero-gaming-api-routes';
 import { WalletProvider } from '../interfaces/wallet-provider.interface';
 import { SessionService } from '../../session/session.service';
-
 
 @Injectable()
 export class HeroGamingWalletProvider implements WalletProvider {
@@ -33,9 +23,7 @@ export class HeroGamingWalletProvider implements WalletProvider {
     const externalPlayerId = `${session.player.internalId}_${currency}`;
 
     if (!externalPlayerId) {
-      throw new UnauthorizedException(
-        `Missing externalPlayerId for currency ${currency}`,
-      );
+      throw new UnauthorizedException(`Missing externalPlayerId for currency ${currency}`);
     }
     return externalPlayerId;
   }
@@ -47,8 +35,8 @@ export class HeroGamingWalletProvider implements WalletProvider {
       { externalPlayerId },
       {
         Authorization: `Basic ${process.env.HEROGAMING_MINT_API_TOKEN}`,
-        basicAuth: true
-      }
+        basicAuth: true,
+      },
     );
 
     if (data.message) {
@@ -73,7 +61,7 @@ export class HeroGamingWalletProvider implements WalletProvider {
     };
     const data = await this.hg.vx.post<DebitResponseDto>(HeroGamingApiRoutes.mint.debit, payload, {
       Authorization: `Basic ${process.env.HEROGAMING_MINT_API_TOKEN}`,
-      basicAuth: true
+      basicAuth: true,
     });
     return {
       balance: data.balance,
@@ -91,7 +79,7 @@ export class HeroGamingWalletProvider implements WalletProvider {
     };
     const data = await this.hg.vx.post<CreditResponseDto>(HeroGamingApiRoutes.mint.credit, payload, {
       Authorization: `Basic ${process.env.HEROGAMING_MINT_API_TOKEN}`,
-      basicAuth: true
+      basicAuth: true,
     });
     return {
       balance: data.balance,

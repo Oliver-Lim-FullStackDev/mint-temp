@@ -1,5 +1,4 @@
 import React from 'react';
-import { varAlpha } from 'minimal-shared/utils';
 
 import { Box, Typography } from '../core';
 
@@ -39,24 +38,7 @@ export function EmptyContent({
     px: 3,
   };
 
-  const filledSx: SxProps<Theme> = filled
-    ? {
-      borderRadius: (theme: Theme) => {
-        const br = theme.shape.borderRadius;
-        const num = typeof br === 'number' ? br : parseFloat(br as string);
-        return num * 2;
-      },
-      backgroundColor: (theme: Theme) =>
-        // @ts-ignore
-        varAlpha(theme.vars.palette.grey['500Channel'], 0.04),
-      border: (theme: Theme) =>
-        `dashed 1px ${varAlpha(
-          // @ts-ignore
-          theme.vars.palette.grey['500Channel'],
-          0.08
-        )}`,
-    }
-    : {};
+  const filledSx: SxProps<Theme> = {};
 
   const mergeSx = (propSx?: SxProps<Theme>) =>
     propSx
@@ -81,7 +63,7 @@ export function EmptyContent({
         src={
           imgUrl ||
           // `${CONFIG.assetsDir}/assets/icons/empty/ic-content.svg`
-          `${process.env.NEXT_PUBLIC_ASSETS_DIR}/assets/icons/empty/ic-content.svg`
+          `${process.env.NEXT_PUBLIC_ASSETS_DIR || ''}/assets/icons/empty/ic-content.svg`
         }
         {...slotProps?.img}
         sx={[{ width: 1, maxWidth: 160 }, ...imgSx]}

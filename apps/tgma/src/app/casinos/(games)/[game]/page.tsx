@@ -3,7 +3,7 @@ import React from 'react';
 import { notFound, redirect } from 'next/navigation';
 import { apiFetch } from '@mint/client';
 import type { SlotGameInitDto } from '@/modules/games/components/mint-slots/mint-game-slots.dto';
-import type { Game } from '@/modules/games/games.types';
+import type { Game } from '@mint/types';
 import { ErrorPage } from '@/components/error-page';
 import { GameView } from './view';
 
@@ -32,7 +32,7 @@ export default async function Page({ params }: NextPageProps) {
   // 3. If this is a Mint game, also fetch init spin & config
   if (game.provider === 'mint') {
     try {
-      initial = await apiFetch(`/games/${gameParam}/init`);
+      initial = await apiFetch(`/games/mint/${gameParam}/init`);
     } catch (e: any) {
       // Could show an error page or fallback
       // redirect('/error');

@@ -8,13 +8,7 @@ import { SharedModule } from 'src/shared/shared.module';
 @Module({
   imports: [SharedModule],
   controllers: [StoreController],
-  providers: [
-    StoreService,
-    TonConversionService,
-    StarsConversionService,
-  ],
-  exports: [
-    StoreService,
-  ],
+  providers: [StoreService, TonConversionService, StarsConversionService],
+  exports: [StoreService],
 })
 export class StoreModule {}

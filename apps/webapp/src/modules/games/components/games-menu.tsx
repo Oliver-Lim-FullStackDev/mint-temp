@@ -8,8 +8,8 @@ import { usePathname } from '@mint/ui/minimals/routes/hooks';
 import { paths } from '@/routes/paths';
 
 const CATEGORIES = [
-  { icon: 'solar:gamepad-bold', iconWidth: 24, value: paths.casinos.root, label: 'Casino Games' },
-  { icon: 'games:minty-spins-icon', iconWidth: 24, value: paths.casinos.details('minty-spins'), label: 'Minty Spins' },
+  { icon: 'solar:gamepad-bold', iconWidth: 24, value: paths.casino.root, label: 'Casino Games' },
+  { icon: 'games:minty-spins-icon', iconWidth: 24, value: paths.casino.details('minty-spins'), label: 'Minty Spins' },
 ];
 
 interface GamesMenuProps {

@@ -47,6 +47,16 @@ declare module '@mui/material/styles' {
   // primary, secondary, info, success, warning, error
   interface PaletteColor extends PaletteColorExtend {}
   interface SimplePaletteColorOptions extends Partial<PaletteColorExtend> {}
+  
+  // Add primary-2 color to the palette
+  interface Palette {
+    'primary-2': PaletteColor;
+    'error-2': PaletteColor;
+  }
+  interface PaletteOptions {
+    'primary-2'?: PaletteColorOptions;
+    'error-2'?: PaletteColorOptions;
+  }
 }
 
 /**
@@ -113,6 +123,10 @@ declare module '@mui/material/Badge' {
  */
 declare module '@mui/material/Button' {
   interface ButtonPropsVariantOverrides extends ButtonExtendVariant {}
+  interface ButtonPropsColorOverrides {
+    'primary-2': true;
+    'error-2': true;
+  }
 }
 
 /**

@@ -82,7 +82,10 @@ class VersionedClient {
   ): Promise<T> {
     // Check if the Token is still valid and refresh it if needed
     if (!customHeaders.authorization && !customHeaders?.basicAuth) {
-      this.token = this.heroGamingClient.getSessionIdFromHeaders() ?? '';
+      const sessionToken = this.heroGamingClient.getSessionIdFromHeaders();
+      if (sessionToken) {
+        this.token = sessionToken;
+      }
     }
     const headers = this.buildHeaders(customHeaders);
 

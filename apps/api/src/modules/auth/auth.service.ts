@@ -1,11 +1,12 @@
 // apps/api/src/modules/auth/auth.service.ts
-import { TonProofPayload } from '@mint/types';
+import { PrivyAuthToken, PrivyLinkedAccount, PrivyVerificationPayload, TonProofPayload } from '@mint/types';
 import { Inject, Injectable, UnauthorizedException } from '@nestjs/common';
 import { REQUEST } from '@nestjs/core';
-import { PrivyClient } from '@privy-io/server-auth';
+import { PrivyClient, User as PrivyUser } from '@privy-io/server-auth';
 import { Request } from 'express';
 import { HeroGamingApiRoutes } from 'src/shared/hero-gaming-api-routes';
 import { HeroGamingClient } from 'src/shared/hero-gaming.client';
+import { PrivyLoginInput } from 'src/shared/hero-gaming.types';
 import { SessionService } from '../session/session.service';
 import { TonPurchaseService } from '../transaction/ton-purchase.service';
 import { TelegramAuthDto, TonLoginDto, TonProofDetails } from './auth.dto';
@@ -13,7 +14,13 @@ import { User } from './auth.types';
 import { errorHandler } from './lib/fn-errors';
 import { generateNonce, generateUserData, hashNonce } from './lib/fn-generators';
 import { getTgUserPic } from './lib/fn-telegram';
-import { extractClientType, extractIpAddress, isDurationElapsed, isValidTelegramHash, validateTonSignature } from './lib/fn-validators';
+import {
+  extractClientType,
+  extractIpAddress,
+  isDurationElapsed,
+  isValidTelegramHash,
+  validateTonSignature,
+} from './lib/fn-validators';
 
 const nonceStorage: Map<string, string> = new Map();
 @Injectable()
@@ -131,7 +138,6 @@ export class AuthService {
     const clientType = extractClientType(this.request);
     const tgUserPic = await getTgUserPic(isValidTGUser.id!);
 
-
     const telegramRegisterPayload: Record<string, any> = {
       username: username,
       country_code: process.env.HEROGAMING_FRONTEND_COUNTRY_CODE || 'GB',
@@ -221,17 +227,54 @@ export class AuthService {
   }
 
   /**
-   * Verify Privy identity token server-side and return the Privy user
+   * Verify Privy identity token and authenticate user
    * @param idToken - Privy identity token
+   * @param body - Verification payload containing referral data
    */
-  async verifyPrivyToken(idToken: string): Promise<any> {
+  async verifyPrivyToken(idToken: string, body: PrivyVerificationPayload): Promise<User> {
     if (!this.privyClient) {
       throw new UnauthorizedException('Privy client not configured on server');
     }
 
     try {
-      const user = await this.privyClient.verifyAuthToken(idToken);
-      return user;
+      const authToken: PrivyAuthToken = await this.privyClient.verifyAuthToken(idToken);
+      const user: PrivyUser = await this.privyClient.getUser({ idToken });
+      
+      const reversedUserId = authToken.userId.replace('did:privy:', '').split('').reverse().join('');
+      const { username: generatedUsername } = generateUserData(reversedUserId, {
+        prefix: 'prv_',
+        maxLength: 16,
+      });
+      
+      const username = user?.google?.name || user?.telegram?.username || user?.email?.address || generatedUsername;
+      const userWallets = (user?.linkedAccounts as unknown as PrivyLinkedAccount[])?.filter(
+        (account): account is PrivyLinkedAccount => ['wallet', 'smart_wallet'].includes(account?.type)
+      ) || [];
+
+      const did: PrivyLoginInput = {
+        userId: authToken.userId,
+        external_data: {
+          username,
+        },
+      };
+
+      const sessionData = await this.sessionService.privySession(
+        did,
+        body?.referralId,
+        body?.referrerId
+      );
+      
+      if (!sessionData?.token) {
+        throw new UnauthorizedException('Error: No Session Token were found');
+      }
+      
+      return {
+        id: authToken.userId,
+        wallet: [...userWallets],
+        username: username || sessionData?.player?.username,
+        token: sessionData?.token,
+        player: sessionData?.player,
+      };
     } catch (error) {
       console.error('Invalid Privy identity token:', error);
       throw new UnauthorizedException('Authentication failed');

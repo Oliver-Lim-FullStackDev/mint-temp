@@ -200,7 +200,7 @@ export const HistoryTransactions: React.FC<HistoryTransactionsProps> = ({
                         {activeTab === 'purchases' ? 'No purchases, yet.' : 'No records found.'}
                       </Text>
                       {activeTab === 'purchases' && (
-                        <Link onClick={afterClick} component={RouterLink} href={paths.store}>
+                        <Link onClick={afterClick} component={RouterLink} href="">
                           Visit Store
                         </Link>
                       )}

@@ -8,7 +8,7 @@ import { Text } from '@mint/ui/components';
 import { RankingShareButton } from '@/modules/account/components/ranking-share-button';
 import { GamesList } from '@/modules/games/components/games-list';
 import { GamesMenu } from '@/modules/games/components/games-menu';
-import type { Game } from '@/modules/games/games.types';
+import type { Game } from '@mint/types';
 import { paths } from '@/routes/paths';
 
 let CAROUSEL_GAME_IDS = {
@@ -70,23 +70,9 @@ export function CasinoView({ games, hasError = false }: CasinoViewProps) {
     }
   ]
 
-  const sortedGames = useMemo(() => {
-    const activeGames = [...games].sort((a, b) => {
-      const orderA = typeof a.sort_order === 'number' ? a.sort_order : Number.MAX_SAFE_INTEGER;
-      const orderB = typeof b.sort_order === 'number' ? b.sort_order : Number.MAX_SAFE_INTEGER;
-
-      if (orderA !== orderB) {
-        return orderA - orderB;
-      }
-
-      const titleA = a.title ?? a.slug ?? '';
-      const titleB = b.title ?? b.slug ?? '';
-
-      return titleA.localeCompare(titleB, undefined, { sensitivity: 'base' });
-    });
-
-    return [...activeGames, ...commingSoonGames];
-  }, [games]);
+  const sortedGames = useMemo(() => [...games, ...commingSoonGames]
+    .sort((a, b) => (b.provider === 'mint' ? 1 : 0) - (a.provider === 'mint' ? 1 : 0)),
+    [games]);
 
   const showEmptyState = hasError || !sortedGames.length;
 

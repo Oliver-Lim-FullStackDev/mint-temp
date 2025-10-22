@@ -1,11 +1,11 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { mintApi } from '@mint/client';
+import { searchGames, type GamesSearchRequest } from './searchGames';
 
 // POST filtered games
 export async function POST(req: NextRequest) {
   try {
-    const body = await req.json();
-    const result = await mintApi.post('/games/search', body);
+    const body = (await req.json()) as GamesSearchRequest;
+    const result = await searchGames(body);
     return NextResponse.json(result);
   } catch (error) {
     console.error('Error searching games:', error);

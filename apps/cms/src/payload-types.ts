@@ -164,8 +164,12 @@ export interface Media {
  */
 export interface Banner {
   id: number;
-  title: string;
+  section: 'home' | 'products' | 'about' | 'contact';
+  type: 'image' | 'video' | 'carousel';
+  title?: string | null;
   subtitle?: string | null;
+  image?: (number | null) | Media;
+  video?: (number | null) | Media;
   tags?:
     | {
         tag?: string | null;
@@ -176,9 +180,28 @@ export interface Banner {
     label?: string | null;
     url?: string | null;
   };
-  background?: (number | null) | Media;
-  section: 'home' | 'products' | 'about' | 'contact';
-  type: 'standard' | 'carousel';
+  carousel?:
+    | {
+        title?: string | null;
+        subtitle?: string | null;
+        tags?:
+          | {
+              tag?: string | null;
+              id?: string | null;
+            }[]
+          | null;
+        actionButton?: {
+          label?: string | null;
+          url?: string | null;
+        };
+        slideType: 'image' | 'video';
+        slideImage?: (number | null) | Media;
+        slideVideo?: (number | null) | Media;
+        id?: string | null;
+        blockName?: string | null;
+        blockType: 'slide';
+      }[]
+    | null;
   published?: boolean | null;
   updatedAt: string;
   createdAt: string;
@@ -289,8 +312,12 @@ export interface MediaSelect<T extends boolean = true> {
  * via the `definition` "banners_select".
  */
 export interface BannersSelect<T extends boolean = true> {
+  section?: T;
+  type?: T;
   title?: T;
   subtitle?: T;
+  image?: T;
+  video?: T;
   tags?:
     | T
     | {
@@ -303,9 +330,33 @@ export interface BannersSelect<T extends boolean = true> {
         label?: T;
         url?: T;
       };
-  background?: T;
-  section?: T;
-  type?: T;
+  carousel?:
+    | T
+    | {
+        slide?:
+          | T
+          | {
+              title?: T;
+              subtitle?: T;
+              tags?:
+                | T
+                | {
+                    tag?: T;
+                    id?: T;
+                  };
+              actionButton?:
+                | T
+                | {
+                    label?: T;
+                    url?: T;
+                  };
+              slideType?: T;
+              slideImage?: T;
+              slideVideo?: T;
+              id?: T;
+              blockName?: T;
+            };
+      };
   published?: T;
   updatedAt?: T;
   createdAt?: T;

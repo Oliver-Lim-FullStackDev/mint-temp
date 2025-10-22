@@ -159,3 +159,6 @@ out/
 .vercel
 
 jsr.json
+
+# visual studio code
+.vscode/

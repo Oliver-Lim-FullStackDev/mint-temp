@@ -20,7 +20,7 @@ export function NotFoundView() {
         badgeText="Play & Win"
         badgeBgColor="var(--secondary-main)"
         badgeTextColor="#293C00"
-        badgeButtonLink={paths.casinos.root}
+        badgeButtonLink={paths.casino.root}
       />
     </ServerMainLayout>
   );

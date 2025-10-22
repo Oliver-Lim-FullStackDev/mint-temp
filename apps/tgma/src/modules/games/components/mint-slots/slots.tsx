@@ -43,7 +43,7 @@ export default function Slots({ initial, onSpinStart, onSpinEnd, onWin, result, 
       },
       mode: 'server',
       result: undefined,
-      sounds: initial.config.sounds
+      sounds: initial.config?.sounds || undefined
     };
   }, [initial, result]);
 

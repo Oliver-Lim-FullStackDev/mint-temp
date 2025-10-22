@@ -1,40 +1,19 @@
-// TODO move type to types package for both API and webapp
-export interface Game {
-  id: string;
-  title: string;
-  provider: string;
-  displayProvider: string;
-  imageUrl: string;
-  titleUrl: string;
+import { RawGame } from '@mint/types';
 
+export type {
+  Game,
+  GameCategory,
+  GameProvider,
+  RawGame,
+  RawGameCategory,
+  RawGameProvider,
+  RawGameProviderDetails,
+  RawGameProviderValue,
+  RawGameTag,
+} from '@mint/types';
 
-  // rtp: string;
-  // hideRtp: boolean;
-  // volatility: string;
-  // minBetCents: number;
-  // maxBetCents: number;
-  // biggestWinCents: string;
-}
-
-export interface RawGame {
-  id: string;
-  title: string;
-  provider: string;
-  displayProvider?: string;
-  imageUrl: string;
-  titleUrl: string;
-
-  // seoName: string;
-  // rtp: string; // i.e. "96.16%"
-  // hideRtp: boolean;
-  // volatility: string; // i.e. "Medium"
-  // minBetCents: number; // i.e. 100
-  // maxBetCents: number; // i.e. 200000
-  // biggestWinCents: string; // i.e. "160000000";
-}
+export type HeroGameSearchBucket = RawGame[] | { data: RawGame[] };
 
 export interface GameSearchResponse {
-  result: {
-    data: RawGame[];
-  };
+  result: Record<string, HeroGameSearchBucket>;
 }

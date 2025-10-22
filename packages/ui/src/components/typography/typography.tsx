@@ -1,3 +1,5 @@
+'use client';
+
 import type { TypographyProps as MuiTypographyProps } from '@mui/material';
 
 import React from 'react';
@@ -16,12 +18,24 @@ const colorConfig = {
 export type TypographyColor = keyof typeof colorConfig;
 
 // Typography variant types
-export type TypographyVariant = 
-  | 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6'
-  | 'subtitle1' | 'subtitle2' 
-  | 'body1' | 'body2' | 'body3' | 'body4'
-  | 'caption' | 'overline' | 'button'
-  | 'onboardingTitle' | 'onboardingBody'
+export type TypographyVariant =
+  | 'h1'
+  | 'h2'
+  | 'h3'
+  | 'h4'
+  | 'h5'
+  | 'h6'
+  | 'subtitle1'
+  | 'subtitle2'
+  | 'body1'
+  | 'body2'
+  | 'body3'
+  | 'body4'
+  | 'caption'
+  | 'overline'
+  | 'button'
+  | 'onboardingTitle'
+  | 'onboardingBody'
   | 'inherit';
 
 export interface TypographyProps extends Omit<MuiTypographyProps, 'color' | 'variant'> {
@@ -44,7 +58,7 @@ const typographyVariants = {
     },
   },
   h2: {
-    fontFamily: 'family/secondary', 
+    fontFamily: 'family/secondary',
     fontSize: '48px',
     fontWeight: '900',
     lineHeight: '64px',
@@ -57,7 +71,7 @@ const typographyVariants = {
   },
   h3: {
     fontFamily: 'family/secondary',
-    fontSize: '32px', 
+    fontSize: '32px',
     fontWeight: '700',
     lineHeight: '48px',
     letterSpacing: '0px',
@@ -70,7 +84,7 @@ const typographyVariants = {
   h4: {
     fontFamily: 'family/primary',
     fontSize: '24px',
-    fontWeight: '700', 
+    fontWeight: '700',
     lineHeight: '36px',
     letterSpacing: '0px',
     paragraphSpacing: '0px',
@@ -83,7 +97,7 @@ const typographyVariants = {
     fontFamily: 'family/primary',
     fontSize: '20px',
     fontWeight: '700',
-    lineHeight: '30px', 
+    lineHeight: '30px',
     letterSpacing: '0px',
     paragraphSpacing: '0px',
     '@media (max-width: 768px)': {
@@ -96,7 +110,7 @@ const typographyVariants = {
     fontSize: '18px',
     fontWeight: '600',
     lineHeight: '28px',
-    letterSpacing: '0px', 
+    letterSpacing: '0px',
     paragraphSpacing: '0px',
     '@media (max-width: 768px)': {
       fontSize: '17px',
@@ -227,41 +241,56 @@ const typographyVariants = {
 
 const StyledTypography = styled(MuiTypography)<TypographyProps>(({ color, variant, theme }) => ({
   // Apply custom color if provided
-  ...(color && typeof color === 'string' && color in colorConfig && {
-    color: colorConfig[color as TypographyColor],
-  }),
-  
+  ...(color &&
+    typeof color === 'string' &&
+    color in colorConfig && {
+      color: colorConfig[color as TypographyColor],
+    }),
+
   // Apply typography variant styles
-  ...(variant && variant in typographyVariants && {
-    ...typographyVariants[variant as keyof typeof typographyVariants],
-    // Map font family references to actual theme fonts
-    fontFamily: typographyVariants[variant as keyof typeof typographyVariants].fontFamily === 'family/secondary' 
-      ? theme.typography.fontSecondaryFamily 
-      : theme.typography.fontFamily,
-    // Map font weight references to actual values
-    fontWeight: (() => {
-      const weightMap = {
-        '400': theme.typography.fontWeightRegular,
-        '600': theme.typography.fontWeightSemiBold,
-        '700': theme.typography.fontWeightBold,
-        '900': 900,
-      };
-      const weightKey = typographyVariants[variant as keyof typeof typographyVariants].fontWeight as keyof typeof weightMap;
-      return weightMap[weightKey] || theme.typography.fontWeightRegular;
-    })(),
-  }),
+  ...(variant &&
+    variant in typographyVariants && {
+      ...typographyVariants[variant as keyof typeof typographyVariants],
+      // Map font family references to actual theme fonts
+      fontFamily:
+        typographyVariants[variant as keyof typeof typographyVariants].fontFamily ===
+        'family/secondary'
+          ? theme.typography.fontSecondaryFamily
+          : theme.typography.fontFamily,
+      // Map font weight references to actual values
+      fontWeight: (() => {
+        const weightMap = {
+          '400': theme.typography.fontWeightRegular,
+          '600': theme.typography.fontWeightSemiBold,
+          '700': theme.typography.fontWeightBold,
+          '900': 900,
+        };
+        const weightKey = typographyVariants[variant as keyof typeof typographyVariants]
+          .fontWeight as keyof typeof weightMap;
+        return weightMap[weightKey] || theme.typography.fontWeightRegular;
+      })(),
+    }),
 }));
 
 export const Typography = React.forwardRef<HTMLElement, TypographyProps>(
   ({ color, variant, ...other }, ref) => {
     // Use StyledTypography for custom variants or colors
-    if ((color && typeof color === 'string' && color in colorConfig) || 
-        (variant && variant in typographyVariants)) {
+    if (
+      (color && typeof color === 'string' && color in colorConfig) ||
+      (variant && variant in typographyVariants)
+    ) {
       return <StyledTypography ref={ref} color={color} variant={variant as any} {...other} />;
     }
-    
+
     // Otherwise, use the default MUI Typography
-    return <MuiTypography ref={ref} color={color as MuiTypographyProps['color']} variant={variant as any} {...other} />;
+    return (
+      <MuiTypography
+        ref={ref}
+        color={color as MuiTypographyProps['color']}
+        variant={variant as any}
+        {...other}
+      />
+    );
   }
 );
 
