@@ -1,13 +1,13 @@
-import { GameBridge } from '../bridge';
+import { GameBridge } from '../../bridge';
 import type {
   PaymentRequest,
   PlayerContext,
-} from '../bridge';
-import { InsufficientBalanceError, UnsupportedGameError } from '../errors';
-import type { GamePlayRequest, GamePlayResponse } from '../play';
-import type { GameInitRequest, GameInitResponse } from '../init';
-import type { RandomnessStrategy } from '../randomness';
-import type { GameEngineAdapter } from '../engine/types';
+} from '../../bridge';
+import { InsufficientBalanceError, UnsupportedGameError } from '../../errors';
+import type { GamePlayRequest, GamePlayResponse } from '../../play';
+import type { GameInitRequest, GameInitResponse } from '../../init';
+import type { RandomnessStrategy } from '../../randomness';
+import type { GameEngineAdapter } from '../types';
 import type {
   SlotGameConfig,
   SlotGameResult,

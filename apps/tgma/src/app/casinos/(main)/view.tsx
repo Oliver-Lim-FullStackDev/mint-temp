@@ -8,7 +8,7 @@ import { Text } from '@mint/ui/components';
 import { RankingShareButton } from '@/modules/account/components/ranking-share-button';
 import { GamesList } from '@/modules/games/components/games-list';
 import { GamesMenu } from '@/modules/games/components/games-menu';
-import type { Game } from '@/modules/games/games.types';
+import type { Game } from '@mint/types';
 import { paths } from '@/routes/paths';
 
 let CAROUSEL_GAME_IDS = {

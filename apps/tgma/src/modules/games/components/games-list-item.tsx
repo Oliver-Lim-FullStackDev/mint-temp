@@ -1,4 +1,4 @@
-import type { Game } from '../games.types';
+import type { Game } from '@mint/types';
 
 import { Text } from '@mint/ui/components';
 import { Box, Card, CardProps, Link } from '@mint/ui/components/core';

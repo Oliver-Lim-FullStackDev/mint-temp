@@ -1,5 +1,5 @@
 import { useQuery } from '@tanstack/react-query';
-import type { Game } from '../games.types';
+import type { Game } from '@mint/types';
 import { apiFetch } from '@mint/client';
 
 const defaultParams = {
@@ -26,7 +26,7 @@ export function useGames(params: SearchParams = {}) {
           method: 'POST',
           body: payload,
         });
-        
+
         return data as Game[];
       } catch {
         throw new Error('Failed to get filtered games');

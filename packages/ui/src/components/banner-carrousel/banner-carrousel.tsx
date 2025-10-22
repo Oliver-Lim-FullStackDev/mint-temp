@@ -1,11 +1,12 @@
-// TODO move to @mint/ui and use from there
+'use client';
+
 import type { EmblaPluginType } from 'embla-carousel';
 import Autoplay from 'embla-carousel-autoplay';
 import Fade from 'embla-carousel-fade';
 import React from 'react';
 import Link from 'next/link';
 
-import { Text } from "@mint/ui/components";
+import { Text } from '@mint/ui/components';
 import { Box } from '@mint/ui/components/core';
 import { Carousel, CarouselDotButtons, useCarousel } from '@mint/ui/components/carousel';
 
@@ -15,6 +16,8 @@ export interface CarrouselItem {
   title: string;
   subtitle: string;
   gameLink?: string;
+  tags?: { id: string; tag: string }[];
+  actionButton?: { label: string; url: string };
 }
 
 export interface BannerCarrouselProps {
@@ -25,7 +28,10 @@ export interface BannerCarrouselProps {
 }
 
 // Carousel slide component
-const CarouselSlideItem: React.FC<{ item: CarrouselItem; height: string | number }> = ({ item, height }) => {
+const CarouselSlideItem: React.FC<{
+  item: CarrouselItem;
+  height: string | number;
+}> = ({ item, height }) => {
   const content = (
     <Box
       sx={{
@@ -63,10 +69,22 @@ const CarouselSlideItem: React.FC<{ item: CarrouselItem; height: string | number
           gap: '4px',
         }}
       >
-        <Text variant="body2" fontFamily='Red Hat Text' sx={{ color: 'var(--secondary-main)', opacity: 0.8 }}>
+        <Text
+          variant="body2"
+          fontFamily="Red Hat Text"
+          sx={{ color: 'var(--secondary-main)', opacity: 0.8 }}
+        >
           {item.subtitle}
         </Text>
-        <Text variant="h5" fontFamily='Mattone' sx={{ color: 'var(--primary-contrast-text)', fontWeight: 'bold', fontSize: '32px !important' }}>
+        <Text
+          variant="h5"
+          fontFamily="Mattone"
+          sx={{
+            color: 'var(--primary-contrast-text)',
+            fontWeight: 'bold',
+            fontSize: '32px !important',
+          }}
+        >
           {item.title}
         </Text>
       </Box>
@@ -122,7 +140,7 @@ export const BannerCarrousel: React.FC<BannerCarrouselProps> = ({
         backgroundColor: 'var(--grey-800)',
         boxShadow: `0 4px 24px 0 color(display-p3 1 1 1 / 0.08) inset, 0 1px 1px 0 color(display-p3 0.0886 1 0.8937 / 0.25) inset, 0 -1px 1px 0 color(display-p3 0 0 0 / 0.25) inset, var(--card-x1, 0) var(--card-y1, 0) var(--card-blur1, 2px) var(--card-spread1, 0) var(--shadow-20, color(display-p3 0 0 0 / 0.20)), var(--card-x2, 0) var(--card-y2, 12px) var(--card-blur2, 24px) var(--card-spread2, -4px) var(--shadow-12, color(display-p3 0 0 0 / 0.12))`,
         backdropFilter: 'blur(4px)',
-        mt: 2
+        mt: 2,
       }}
     >
       <Carousel carousel={carousel}>

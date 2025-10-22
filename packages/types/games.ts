@@ -1,4 +1,3 @@
-// TODO move type to types package for both API and webapp
 export type Game = {
   id: string;
   displayProvider?: string;

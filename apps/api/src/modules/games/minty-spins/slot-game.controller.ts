@@ -1,16 +1,21 @@
-import { Body, Controller, Get, Param, Post } from '@nestjs/common';
 import type { GameInitResponse, GamePlayResponse, SlotGameConfig, SlotPlayResult } from '@mint/game-internal';
-import { SlotGameService } from './slot-game.service';
+
+import { Body, Controller, Get, Param, Post } from '@nestjs/common';
 import { PaymentParamsDto } from './dto/payment-params.dto';
 import { AcknowledgePaymentResponseDto } from './dto/acknowledge-payment-response.dto';
+import { SlotGameService } from './slot-game.service';
 
 interface PlayRequestBody {
   clientSeed?: string;
   wager?: number;
 }
 
+/**
+ * Note: this is the general API controller all direct game providers
+ * We started with Minty Spins but want to abstract it for access from the @mint/gamestudio-api
+ */
 @Controller()
-export class GameStudioController {
+export class SlotGameController {
   constructor(private readonly slotService: SlotGameService) {}
 
   @Get('games/:studioId/:gameId/init')

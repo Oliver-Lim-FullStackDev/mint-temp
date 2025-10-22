@@ -4,7 +4,7 @@ import { useEffect, useMemo, useRef } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { Box, Container } from '@mint/ui/components/core';
 import { Text, EmptyContent } from '@mint/ui/components';
-import BannerCarrousel, { CarrouselItem } from '@/components/banner-carrousel';
+import { BannerCarrousel, CarrouselItem } from '@mint/ui/components';
 import { GamesList } from '@/modules/games/components/games-list';
 import type { Game } from '@/modules/games/games.types';
 import { GAMES_CATEGORY_DEFINITIONS, DEFAULT_FILTERS } from '@/modules/games/state';

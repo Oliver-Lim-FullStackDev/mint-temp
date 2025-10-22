@@ -18,10 +18,7 @@
     "**/*.tsx",
     ".next/types/**/*.ts",
     "../../packages/types/**/*.ts",
-    "../../packages/client/**/*.ts",
-    "../../packages/gamestudio-api/**/*.ts",
-    "../../packages/game-internal/**/*.ts",
-    // "../../packages/ui/.next/types/**/*.ts"
+    "../../packages/client/**/*.ts"
   ],
   "exclude": [
     "node_modules"

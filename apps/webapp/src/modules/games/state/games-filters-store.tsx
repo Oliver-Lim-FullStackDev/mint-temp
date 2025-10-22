@@ -238,10 +238,8 @@ function mergeFilters(current: GamesFilters, patch: Partial<GamesFilters>): Game
 export function useGamesFilters() {
   const store = useGamesFiltersStore();
   const router = useRouter();
-  const { filters, defaults } = useStore(store, (state) => ({
-    filters: state.filters,
-    defaults: state.defaults,
-  }));
+  const filters = useStore(store, (state) => state.filters);
+  const defaults = useStore(store, (state) => state.defaults);
 
   const updateUrl = useCallback(
     (nextFilters: GamesFilters) => {

@@ -4,7 +4,7 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { AuthModule } from './modules/auth/auth.module';
 import { GamesModule } from './modules/games/games.module';
-import { SlotGameModule } from './modules/games/slots/slot-game.module';
+import { SlotGameModule } from './modules/games/minty-spins/slot-game.module';
 import { SessionModule } from './modules/session/session.module';
 import { TokenModule } from './modules/session/token.module';
 import { StoreModule } from './modules/store/store.module';

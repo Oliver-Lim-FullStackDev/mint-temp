@@ -1,6 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
 import { mintApi } from '@mint/client';
-import type { Game } from '../games.types';
+import type { Game } from '@mint/types';
 
 export function useGame(id?: string) {
   return useQuery({

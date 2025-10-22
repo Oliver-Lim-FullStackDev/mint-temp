@@ -22,7 +22,7 @@ export interface MintSlotsConfig {
       payout: number;
     };
     rewards: {
-      [key: string]: Record<Currency, number>
+      [key: string]: Record<string, number>
     };
   };
 

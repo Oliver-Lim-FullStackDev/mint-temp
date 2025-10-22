@@ -1,5 +1,8 @@
 import type { Request } from 'express';
+import type { Currency } from '../../wallet/dto/currency.dto';
 
+import { Injectable, ForbiddenException, Inject, Scope, NotFoundException } from '@nestjs/common';
+import { REQUEST } from '@nestjs/core';
 import {
   GameBridge,
   GameDefinition,
@@ -12,17 +15,14 @@ import {
   PlayerProvider,
   PlayerUnauthorizedError,
   RandomnessStrategy,
-  MintySpinsConfig,
   SlotGameConfig,
   SlotPlayResult,
   SlotGameEngine,
 } from '@mint/game-internal';
-import { Injectable, ForbiddenException, Inject, Scope, NotFoundException } from '@nestjs/common';
-import { REQUEST } from '@nestjs/core';
 import { ProvablyFairService } from '../../provably-fair/pf.service';
 import { WalletService } from '../../wallet/wallet.service';
 import { SessionService } from '../../session/session.service';
-import type { Currency } from '../../wallet/dto/currency.dto';
+import { MintySpinsConfig } from './slot-game.config';
 
 @Injectable({ scope: Scope.REQUEST })
 export class SlotGameService {

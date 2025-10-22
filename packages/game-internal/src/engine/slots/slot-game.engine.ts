@@ -1,4 +1,4 @@
-import { MintGameEngine, MintGameContext } from '../engine/mint-game.engine';
+import { MintGameEngine, MintGameContext } from '../mint-game.engine';
 import type {
   SlotGameConfig,
   SlotGameResult,

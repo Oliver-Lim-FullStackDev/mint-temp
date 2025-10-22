@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 import React from 'react';
 import { CasinoView } from '@/app/casinos/(main)/view';
-import type { Game } from '@/modules/games/games.types';
+import type { Game } from '@mint/types';
 import { apiFetch } from '@mint/client';
 
 export const metadata: Metadata = {

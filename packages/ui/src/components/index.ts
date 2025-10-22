@@ -8,6 +8,4 @@ export * from './glass-box';
 export * from './glass-card';
 export * from './glass-dialog';
 export * from './typography';
-
-
-
+export * from './banner-carrousel';

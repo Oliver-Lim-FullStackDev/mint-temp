@@ -1,4 +1,5 @@
-import type { RandomnessConfig } from '../randomness';
+import type { MintSlotsConfig } from '@mint/slots';
+import type { RandomnessConfig } from '../../randomness';
 
 export type SlotGrid = string[][];
 
@@ -29,35 +30,6 @@ export interface SlotPlayResult extends SlotGameResult {
   rewards: SlotRewards | null;
 }
 
-export interface MintSlotsConfig {
-  gameId: string;
-  currency: string;
-  initialSpins: number;
-  initialCredits: number;
-  spinCost: number;
-  images?: {
-    path: string;
-  };
-  symbolWeights: Record<string, number>;
-  payouts: {
-    enableMatchMultipliers: boolean;
-    horizontalMatches: Partial<Record<number, number>>;
-    diagonalMatches: Partial<Record<number, number>>;
-    symbolCounts: Partial<Record<string, Partial<Record<number, number>>>>;
-    jackpot: {
-      symbol: string;
-      count: number;
-      payout: number;
-    };
-    rewards: Record<string, Record<string, number>>;
-  };
-  sounds: {
-    start: string;
-    end: string;
-    win: string;
-  };
-}
-
 export interface VisualWinCombo {
   key: string;
   label: string;
@@ -75,4 +47,4 @@ export interface SlotVisualsConfig {
 export type SlotGameConfig = MintSlotsConfig & {
   visuals: SlotVisualsConfig;
   randomness: RandomnessConfig;
-};
+}
