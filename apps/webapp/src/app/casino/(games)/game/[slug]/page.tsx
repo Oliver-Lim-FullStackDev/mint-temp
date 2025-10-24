@@ -22,7 +22,7 @@ export default async function Page({ params }: NextPageProps) {
   // 2. Fetch game metadata
   let game: Game = {} as Game;
   try {
-    // game = await apiFetch(`/games/${gameParam}`);
+    game = await apiFetch(`/games/${gameParam}`);
   } catch {
     notFound();
   }

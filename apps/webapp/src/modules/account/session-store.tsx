@@ -22,6 +22,8 @@ type SessionState = {
   updateBalancesFromRewards: (rewards: CampaignReward[]) => void;
   updateBalancesFromRewardObject: (rewards: Record<string, number>, multiplier?: number) => void;
   updateBalanceAmount: (currency: string, newAmount: number) => void;
+  syncCurrencyMetadata: (currencyCode: string, metadata: { enabled?: boolean }) => void;
+  setSelectedCurrency: (currencyCode: string) => void;
 };
 
 const getBalances = (obj: any): Record<string, PlayerAccount> | null =>
@@ -168,6 +170,46 @@ export const sessionStore = createStore<SessionState>()((set, get) => ({
         },
       };
     }),
+
+  syncCurrencyMetadata: (currencyCode, metadata) =>
+    set((s) => {
+      const balances = getBalances(s.session);
+      if (!balances) return s;
+
+      const currentBalance = balances[currencyCode];
+      if (!currentBalance) return s;
+
+      return {
+        session: {
+          ...s.session,
+          player: {
+            ...s.session.player,
+            balances: {
+              ...balances,
+              [currencyCode]: { ...currentBalance, ...metadata }
+            },
+          },
+        },
+      };
+    }),
+
+  setSelectedCurrency: (currencyCode) =>
+    set((s) => {
+      if (!s.session?.player?.account) return s;
+
+      return {
+        session: {
+          ...s.session,
+          player: {
+            ...s.session.player,
+            account: {
+              ...s.session.player.account,
+              selected_currency: currencyCode,
+            },
+          },
+        },
+      };
+    }),
 }));
 
 // --- React bindings (2-arg `useStore` only) ---
@@ -202,6 +244,8 @@ export const useSetSession = () => useStore(sessionStore, (s) => s.setSession);
 
 export const useClearSession = () => useStore(sessionStore, (s) => s.clearSession);
 
+export const useSyncCurrencyMetadata = () => useStore(sessionStore, (s) => s.syncCurrencyMetadata);
+
 export const useSetLoading = () => useStore(sessionStore, (s) => s.setLoading);
 
 export const useSetError = () => useStore(sessionStore, (s) => s.setError);
@@ -211,3 +255,5 @@ export const useUpdateBalancesFromRewards = () => useStore(sessionStore, (s) => 
 export const useUpdateBalancesFromRewardObject = () => useStore(sessionStore, (s) => s.updateBalancesFromRewardObject);
 
 export const useUpdateBalanceAmount = () => useStore(sessionStore, (s) => s.updateBalanceAmount);
+
+export const useSetSelectedCurrency = () => useStore(sessionStore, (s) => s.setSelectedCurrency);

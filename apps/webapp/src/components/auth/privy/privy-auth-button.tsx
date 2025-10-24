@@ -2,7 +2,7 @@
 
 import { useUserAuth } from '@/modules/privy/auth/context/user-auth-privy-provider';
 import { PRIVY_FLAG_KEY } from '@/modules/privy/auth/providers/privy-auth-provider';
-import { Button, Stack } from '@mint/ui';
+import { Button, Stack } from '@mint/ui/components/core';
 import { Text } from '@mint/ui/components';
 import { usePrivy } from '@privy-io/react-auth';
 import { useCallback, useMemo, useState } from 'react';
@@ -41,7 +41,7 @@ export function PrivyAuthButton({
   const handleClick = useCallback(async () => {
     setError(null);
     setLoading(true);
-    
+
     if (authenticated) {
       await logout();
       clearUser();

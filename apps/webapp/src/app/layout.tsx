@@ -53,6 +53,50 @@ const myFont = localFont({
   ],
 });
 
+// Manrope font configuration
+const manropeFont = localFont({
+  src: [
+    {
+      path: '../../public/fonts/Manrope/static/Manrope-ExtraLight.ttf',
+      weight: '200',
+      style: 'normal',
+    },
+    {
+      path: '../../public/fonts/Manrope/static/Manrope-Light.ttf',
+      weight: '300',
+      style: 'normal',
+    },
+    {
+      path: '../../public/fonts/Manrope/static/Manrope-Regular.ttf',
+      weight: '400',
+      style: 'normal',
+    },
+    {
+      path: '../../public/fonts/Manrope/static/Manrope-Medium.ttf',
+      weight: '500',
+      style: 'normal',
+    },
+    {
+      path: '../../public/fonts/Manrope/static/Manrope-SemiBold.ttf',
+      weight: '600',
+      style: 'normal',
+    },
+    {
+      path: '../../public/fonts/Manrope/static/Manrope-Bold.ttf',
+      weight: '700',
+      style: 'normal',
+    },
+    {
+      path: '../../public/fonts/Manrope/static/Manrope-ExtraBold.ttf',
+      weight: '800',
+      style: 'normal',
+    },
+  ],
+  variable: '--font-manrope',
+  preload: true,
+  display: 'swap',
+});
+
 export const viewport: Viewport = {
   width: 'device-width',
   initialScale: 1,
@@ -95,7 +139,7 @@ export default async function RootLayout({ children }: RootLayoutProps) {
   console.info('token', sessionStore.getState()?.session?.token);
 
   return (
-    <html lang={appConfig.lang} dir={appConfig.dir} suppressHydrationWarning className={myFont.className}>
+    <html lang={appConfig.lang} dir={appConfig.dir} suppressHydrationWarning className={`${myFont.className} ${manropeFont.variable}`}>
       <head>
         {/* Google Tag Manager */}
         <script
@@ -225,6 +269,57 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
         <link
           rel="preload"
           href="/fonts/Red_Hat_Mono/static/RedHatMono-Bold.ttf"
+          as="font"
+          type="font/ttf"
+          crossOrigin="anonymous"
+        />
+
+        {/* Manrope Fonts */}
+        <link
+          rel="preload"
+          href="/fonts/Manrope/static/Manrope-Regular.ttf"
+          as="font"
+          type="font/ttf"
+          crossOrigin="anonymous"
+        />
+        <link
+          rel="preload"
+          href="/fonts/Manrope/static/Manrope-Medium.ttf"
+          as="font"
+          type="font/ttf"
+          crossOrigin="anonymous"
+        />
+        <link
+          rel="preload"
+          href="/fonts/Manrope/static/Manrope-Bold.ttf"
+          as="font"
+          type="font/ttf"
+          crossOrigin="anonymous"
+        />
+        <link
+          rel="preload"
+          href="/fonts/Manrope/static/Manrope-SemiBold.ttf"
+          as="font"
+          type="font/ttf"
+          crossOrigin="anonymous"
+        />
+        <link
+          rel="preload"
+          href="/fonts/Manrope/static/Manrope-Light.ttf"
+          as="font"
+          type="font/ttf"
+          crossOrigin="anonymous"
+        />
+        <link
+          rel="preload"
+          href="/fonts/Manrope/static/Manrope-ExtraLight.ttf"
+          as="font"
+          type="font/ttf"
+          crossOrigin="anonymous"
+        />
+        <link
+          rel="preload"
+          href="/fonts/Manrope/static/Manrope-ExtraBold.ttf"
           as="font"
           type="font/ttf"
           crossOrigin="anonymous"

@@ -46,6 +46,7 @@ export function GamesFiltersBar({
   const providerOptions = useMemo(() => [{ value: '', label: 'All providers' }, ...providers], [providers]);
   const sortOptions: { value: GamesSortOrder; label: string }[] = useMemo(
     () => [
+      { value: '', label: 'Featured' },
       { value: 'ASC', label: 'A-Z' },
       { value: 'DESC', label: 'Z-A' },
     ],

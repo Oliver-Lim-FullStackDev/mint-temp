@@ -9,12 +9,10 @@ import TransactionHistory from '@/modules/account/components/account-info-area/s
 import { useUIStore } from '@/modules/ui/ui-store';
 import { paths } from '@/routes/paths';
 import { Container } from '@mint/ui/components/core';
-import { useTheme } from '@mint/ui/components/core/styles';
 import { useRouter } from 'next/navigation';
 
 
 export default function AccountPageView() {
-  const theme = useTheme();
   const router = useRouter();
   const { accountSelectedTab, setAccountTab } = useUIStore();
 

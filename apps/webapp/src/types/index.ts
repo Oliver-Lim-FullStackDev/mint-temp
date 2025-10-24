@@ -47,6 +47,7 @@ export interface NonceResponse {
 }
 
 export interface PlayerAccount {
+  id: number;
   currency: string;
   balanceCents: number;
   moneyBalanceCents: number;
@@ -56,6 +57,9 @@ export interface PlayerAccount {
   usdBalanceCents: number;
   main: boolean;
   selected: boolean;
+  selected_currency: string;
+  selected_currency_cents: number;
+  enabled: boolean;
 }
 
 export interface Player {

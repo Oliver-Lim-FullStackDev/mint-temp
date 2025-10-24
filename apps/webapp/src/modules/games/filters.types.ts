@@ -1,6 +1,7 @@
 import type { Game } from '@/modules/games/games.types';
 
-export type GamesSortOrder = 'ASC' | 'DESC';
+export type GamesSortOrder = '' | 'ASC' | 'DESC';
+export type GamesOrderParam = Exclude<GamesSortOrder, ''>;
 
 export type GamesCategoryOption = {
   slug: string;
@@ -23,7 +24,7 @@ export type GamesFilters = {
 export type GamesQueryParams = {
   category?: string;
   search?: string;
-  order?: GamesSortOrder;
+  order?: GamesOrderParam;
   provider?: string;
   limit?: number;
   offset?: number;

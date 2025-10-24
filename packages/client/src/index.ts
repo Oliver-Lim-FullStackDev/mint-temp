@@ -81,7 +81,7 @@ export async function getServerSession(): Promise<any | null> {
   }
 }
 
-type FetchMethod = 'GET' | 'POST' | 'PUT' | 'DELETE';
+type FetchMethod = 'GET' | 'POST' | 'PUT' | 'PATCH' | 'DELETE';
 
 export interface ApiFetchOptions extends RequestInit {
   body?: any;
@@ -154,6 +154,9 @@ export const mintApi = {
 
   put: <T = any>(path: string, body?: any, init?: RequestInit) =>
     request<T>('PUT', path, body, init),
+
+  patch: <T = any>(path: string, body?: any, init?: RequestInit) =>
+    request<T>('PATCH', path, body, init),
 
   del: <T = any>(path: string, body?: any, init?: RequestInit) =>
     request<T>('DELETE', path, body, init),

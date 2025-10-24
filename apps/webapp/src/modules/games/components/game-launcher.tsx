@@ -15,7 +15,7 @@ export function GameLauncher({ game, mode }: { game: Game; mode: string }) {
   const frameRef = useRef<any>(null);
 
   useEffect(() => {
-    if (!frameRef.current.gameUrl) {
+    if (!frameRef.current?.gameUrl) {
       return;
     }
 

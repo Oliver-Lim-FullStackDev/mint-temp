@@ -16,7 +16,7 @@ export function buildGamesQuery(filters: GamesFilters): GamesQueryParams {
     query.search = filters.search.trim();
   }
 
-  if (filters.order && filters.order !== 'ASC') {
+  if (filters.order) {
     query.order = filters.order;
   }
 

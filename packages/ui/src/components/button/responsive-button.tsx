@@ -2,8 +2,8 @@
 
 import type { ReactNode } from 'react';
 
-import { useTheme } from '../core/styles';
-import { Slide, Button, useMediaQuery } from '../core';
+import { Slide, Button } from '../core';
+import { useTheme, useMediaQuery } from '../core/styles';
 
 import type { Breakpoint ,  ButtonProps} from '../core';
 

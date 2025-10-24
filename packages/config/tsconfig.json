@@ -30,7 +30,7 @@
       "@mint/slots/*": ["../../packages/mint-slots/src/*"],
       "@mint/mui": ["../../packages/mui"],
       "@mint/mui/*": ["../../packages/mui/src/*"],
-      "@mint/ui": ["../../packages/ui/src/components/core"],
+      "@mint/ui": ["../../packages/ui/src"],
       "@mint/ui/*": ["../../packages/ui/src/*"],
       "@mint/ui/minimals/*": ["../../packages/mui/src/*"],
       "@mint/ui/components/*": [

@@ -108,7 +108,20 @@ export async function GET(request: NextRequest) {
     const category = searchParams.get('category') ?? undefined;
     const search = searchParams.get('q') ?? undefined;
     const provider = searchParams.get('provider')?.trim() || undefined;
-    const order = (searchParams.get('order') ?? 'ASC').toUpperCase() === 'DESC' ? 'DESC' : 'ASC';
+    const orderParam = searchParams.get('order');
+    const order = (() => {
+      const normalised = orderParam?.toString().trim().toUpperCase();
+
+      if (normalised === 'DESC') {
+        return 'DESC' as const;
+      }
+
+      if (normalised === 'ASC') {
+        return 'ASC' as const;
+      }
+
+      return undefined;
+    })();
     const limitParam = searchParams.get('limit');
     const offsetParam = searchParams.get('offset');
 

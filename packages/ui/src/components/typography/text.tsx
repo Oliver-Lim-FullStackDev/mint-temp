@@ -20,7 +20,8 @@ export type FontFamily =
   | 'Mattone'
   | 'Red Hat Display'
   | 'Red Hat Mono'
-  | 'Red Hat Text';
+  | 'Red Hat Text'
+  | 'Manrope';
 
 // Typography variant types
 export type TextVariant =
@@ -249,7 +250,11 @@ export const Text = React.forwardRef<HTMLElement, TextProps>(
     }
 
   if (fontFamily) {
-    computedSx.fontFamily = fontFamily;
+    if (fontFamily === 'Manrope') {
+      computedSx.fontFamily = 'var(--font-manrope), sans-serif';
+    } else {
+      computedSx.fontFamily = fontFamily;
+    }
   }
 
   if (centered) {

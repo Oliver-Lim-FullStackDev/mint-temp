@@ -2,7 +2,7 @@
 
 import { alpha, styled, useMediaQuery, useTheme } from '@mint/ui/components/core/styles';
 import { Ref, useEffect, useRef, type ReactNode } from 'react';
-
+import { usePathname } from 'next/navigation';
 import { AccountMenuDropdown } from '@/modules/account/components';
 import {
   Avatar,
@@ -17,8 +17,18 @@ import type { IconifyName } from '@mint/ui/components/iconify';
 import { Iconify } from '@mint/ui/components/iconify';
 import { useDropdown } from '@mint/ui/hooks';
 import PrivyAuthButton from '../auth/privy/privy-auth-button';
-import { paths } from '@/routes/paths';
 import { navData as mainNavData } from '@/layouts/nav-config-main';
+import { HeaderWallet } from './header-wallet';
+
+type HeaderNavItem = {
+  id: string;
+  label: string;
+  active?: boolean;
+  icon?: ReactNode;
+  iconName?: IconifyName;
+  iconSrc?: string;
+  onClick?: () => void;
+};
 
 type HeaderWallet = {
   balanceLabel?: string;
@@ -152,7 +162,10 @@ function DefaultUtilityIcon() {
 }
 
 function HeaderNavItemButton({ item }) {
-  const { active = window.location.pathname.includes(item.path), title, onClick } = item;
+  const { icon, title, onClick, path } = item;
+
+  const pathname = usePathname(); // SSR-safe hook
+  const active = pathname.includes(path);
 
   return (
     <Box
@@ -181,11 +194,11 @@ function HeaderNavItemButton({ item }) {
       )}
 
       <Button
-        href={item.path}
+        href={path}
         color="inherit"
         startIcon={(
           <Iconify
-            icon={item.icon}
+            icon={icon}
             width={20}
             height={20}
             sx={{
@@ -382,7 +395,7 @@ export function MainHeader({
               spacing={{ xs: 1, sm: 1.5 }}
               sx={{ flexShrink: 0 }}
             >
-              <HeaderWalletSummary {...(wallet ?? {})} />
+              <HeaderWallet />
               {actionsToRender.map((action) => (
                 <HeaderUtilityButton
                   key={action.id}

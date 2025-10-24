@@ -22,16 +22,24 @@ export const GAMES_CATEGORY_DEFINITIONS: GamesCategoryDefinition[] = [
 export const DEFAULT_FILTERS: GamesFilters = {
   category: 'all',
   search: '',
-  order: 'ASC',
+  order: '',
   provider: '',
 };
 
 export function sanitiseOrder(value: string | null | undefined): GamesSortOrder {
-  if (value && value.toUpperCase() === 'DESC') {
-    return 'DESC';
-  }
+  const normalised = value?.toString().trim().toUpperCase();
 
-  return 'ASC';
+  switch (normalised) {
+    case 'DESC':
+      return 'DESC';
+    case 'ASC':
+      return 'ASC';
+    case 'FEATURED':
+    case '':
+      return '';
+    default:
+      return DEFAULT_FILTERS.order;
+  }
 }
 
 export function normaliseCategory(category: string | null | undefined): string {

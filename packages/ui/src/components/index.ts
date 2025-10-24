@@ -7,5 +7,8 @@ export * from './empty-content';
 export * from './glass-box';
 export * from './glass-card';
 export * from './glass-dialog';
+export * from './switch';
 export * from './typography';
 export * from './banner-carrousel';
+export * from './button';
+export * from './wallet';

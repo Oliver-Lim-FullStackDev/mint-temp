@@ -10,39 +10,52 @@ export const metadata: Metadata = {
 };
 
 export default async function Page() {
+  const baseUrl = process.env.NEXT_PUBLIC_PAYLOAD_URL!;
+
+  // Fetch de banners
   const banners = await apiFetch('/cms/banners');
 
-  // Transform banners data to carrousel items
+  // Transform banners to carrousel items
   const carrouselItems = banners.flatMap((b: any) => {
-    if (b.type === 'carousel') {
-      // Every slide inside the carousel
+    if (b.type === 'carousel' && Array.isArray(b.carousel)) {
       return b.carousel.map((slide: any) => ({
         id: slide.id,
-        bgCover:
-          slide.slideImage?.url ||
-          slide.slideVideo?.url ||
-          '/images/default-banner.jpg',
+        bgCover: slide.slideImage?.url
+          ? `${baseUrl}${slide.slideImage.url}`
+          : undefined,
+        videoUrl: slide.slideVideo?.url
+          ? `${baseUrl}${slide.slideVideo.url}`
+          : undefined,
         title: slide.title,
         subtitle: slide.subtitle,
-        gameLink: slide.actionButton?.url,
         tags: slide.tags || [],
+        gameLink: slide.actionButton
+          ? { label: slide.actionButton.label, url: slide.actionButton.url }
+          : null,
       }));
     } else {
-      // Banners imagen/video simples
       return {
         id: b.id,
-        bgCover: b.image?.url || b.video?.url || '/images/default-banner.jpg',
+        bgCover: b.image?.url ? `${baseUrl}${b.image.url}` : undefined,
+        videoUrl: b.video?.url ? `${baseUrl}${b.video.url}` : undefined,
         title: b.title,
         subtitle: b.subtitle,
-        gameLink: b.actionButton?.url,
         tags: b.tags || [],
+        gameLink: b.actionButton
+          ? { label: b.actionButton.label, url: b.actionButton.url }
+          : null,
       };
     }
   });
 
   return (
     <>
-      <BannerCarrousel carrouselItems={carrouselItems} height={480} />
+      <BannerCarrousel
+        carrouselItems={carrouselItems}
+        height={360}
+        autoPlay={true}
+        autoPlayInterval={5000}
+      />
       <HomeView />
     </>
   );

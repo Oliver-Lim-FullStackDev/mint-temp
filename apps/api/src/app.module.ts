@@ -2,6 +2,7 @@ import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
+import { AccountsModule } from './modules/accounts/accounts.module';
 import { AuthModule } from './modules/auth/auth.module';
 import { GamesModule } from './modules/games/games.module';
 import { SessionModule } from './modules/session/session.module';
@@ -18,6 +19,7 @@ import { TransactionModule } from './modules/transaction/transaction.module';
 import { PartnersModule } from './modules/partners/partners.module';
 import { CmsModule } from './modules/cms/cms.module';
 import { PaymentsModule } from './modules/payments/payments.module';
+import { CurrenciesModule } from './modules/currencies/currencies.module';
 
 @Module({
   imports: [
@@ -25,22 +27,24 @@ import { PaymentsModule } from './modules/payments/payments.module';
       isGlobal: true,
       envFilePath: [`.env.${process.env.NODE_ENV}`, '.env'],
     }),
+    AccountsModule,
     AuthModule,
+    CmsModule,
+    ConversionModule,
+    CurrenciesModule,
     DropsModule,
     GamesModule,
     InventoryModule,
     MissionsModule,
+    PartnersModule,
+    PaymentsModule,
     SessionModule,
     SlotGameModule,
     SportsbookModule,
     StoreModule,
-    WalletModule,
     TokenModule,
-    ConversionModule,
     TransactionModule,
-    PartnersModule,
-    CmsModule,
-    PaymentsModule,
+    WalletModule,
   ],
   controllers: [AppController],
   providers: [AppService],

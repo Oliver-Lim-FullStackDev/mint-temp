@@ -24,12 +24,19 @@ export class HeroGamesTransformer {
     return [];
   }
 
-  static normaliseOrder(order?: 'ASC' | 'DESC'): string {
-    if (order === 'DESC') {
-      return 'DESC';
-    }
+  static normaliseOrder(order?: 'ASC' | 'DESC' | string): string {
+    const normalised = order?.toString().trim().toLowerCase() ?? '';
 
-    return 'sort_order';
+    switch (normalised) {
+      case 'desc':
+        return 'title_desc';
+      case 'asc':
+        return 'title_asc';
+      case '':
+      case 'featured':
+      default:
+        return '';
+    }
   }
 
   static normaliseProviderSlug(value: string): string {

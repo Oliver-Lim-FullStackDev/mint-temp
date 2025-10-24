@@ -51,7 +51,7 @@ export class GamesService {
   }
 
   async findAll(): Promise<Game[]> {
-    const order = HeroGamesTransformer.normaliseOrder('ASC');
+    const order = HeroGamesTransformer.normaliseOrder('');
 
     const response = await this.hg.v2.post<GameSearchResponse>(HeroGamingApiRoutes.gamesSearch, {
       q: {
@@ -79,11 +79,19 @@ export class GamesService {
     limit?: number;
     offset?: number;
     search?: string;
-    order?: 'ASC' | 'DESC';
+    order?: '' | 'ASC' | 'DESC';
     provider?: string;
     providers?: string[];
   }): Promise<Game[]> {
-    const { tags = [], limit = 9999, offset = 0, search, order = 'ASC', provider, providers = [] } = params;
+    const {
+      tags = [],
+      limit = 9999,
+      offset = 0,
+      search,
+      order = '',
+      provider,
+      providers = [],
+    } = params;
 
     const effectiveTags = [...new Set(tags.map((tag) => tag.toLowerCase()))];
 
@@ -104,7 +112,6 @@ export class GamesService {
     const limitForRequest = limit ?? 999;
     const heroLimit = Math.max(offset ? limitForRequest + offset : limitForRequest, 1);
     const heroOrder = HeroGamesTransformer.normaliseOrder(order);
-
     const baseBucket = HeroGamesTransformer.buildSearchBucket({
       limit: heroLimit,
       order: heroOrder,
@@ -123,13 +130,20 @@ export class GamesService {
 
     const rawHeroGames = HeroGamesTransformer.extractGamesFromResponse(response, bucketsToRead);
 
-    const dedupedHeroGames = rawHeroGames.reduce<Record<string, Game>>((acc, rawGame) => {
-      const mapped = this.transform(rawGame);
-      acc[mapped.id] = mapped;
-      return acc;
-    }, {});
+    const seenHeroGameIds = new Set<string>();
+    const heroGamesInOrder: Game[] = [];
 
-    let heroGames = Object.values(dedupedHeroGames);
+    rawHeroGames.forEach((rawGame) => {
+      const mapped = this.transform(rawGame);
+      if (seenHeroGameIds.has(mapped.id)) {
+        return;
+      }
+
+      seenHeroGameIds.add(mapped.id);
+      heroGamesInOrder.push(mapped);
+    });
+
+    let heroGames = heroGamesInOrder;
 
     if (normalizedProviders.length) {
       heroGames = heroGames.filter((game) => {

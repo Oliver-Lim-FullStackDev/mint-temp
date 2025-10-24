@@ -177,6 +177,25 @@
   --brand-highlight: var(--p-light);
 
   /* ======================================
+   * GLOBAL BUTTON COLORS
+   * ====================================== */
+  --global-inherit-bgcolor: #FFFFFF;
+  --global-inherit-hover: #B7B9BD;
+  --primary-main: #00967C;
+  --primary-dark: #00795F;
+  --secondary-main: #00F9C7;
+  --secondary-dark: #00B28B;
+  --info-main: #00BEE1;
+  --info-dark: #0070A5;
+  --success-main: #00CD38;
+  --success-dark: #00934B;
+  --warning-main: #FFA100;
+  --warning-dark: #D16300;
+  --error-main: #FF2000;
+  --error-dark: #DB0000;
+  --action-disabled-bgcolor: rgba(150, 154, 160, 0.2);
+
+  /* ======================================
    * SEMANTIC COLORS
    * ====================================== */
   --semantic-online: #22C55E;

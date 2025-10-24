@@ -12,12 +12,15 @@ import { Carousel, CarouselDotButtons, useCarousel } from '@mint/ui/components/c
 
 export interface CarrouselItem {
   id: string;
-  bgCover: string;
-  title: string;
-  subtitle: string;
-  gameLink?: string;
+  bgCover?: string;
+  videoUrl?: string;
+  title?: string;
+  subtitle?: string;
   tags?: { id: string; tag: string }[];
-  actionButton?: { label: string; url: string };
+  gameLink?: {
+    label: string | null;
+    url: string | null;
+  };
 }
 
 export interface BannerCarrouselProps {
@@ -28,54 +31,80 @@ export interface BannerCarrouselProps {
 }
 
 // Carousel slide component
-const CarouselSlideItem: React.FC<{
-  item: CarrouselItem;
-  height: string | number;
-}> = ({ item, height }) => {
-  const content = (
-    <Box
-      sx={{
-        position: 'relative',
-        width: '100%',
-        height,
-        backgroundImage: `url(${item.bgCover})`,
-        backgroundSize: 'cover',
-        backgroundPosition: 'center',
-        backgroundRepeat: 'no-repeat',
-        display: 'flex',
-        alignItems: 'flex-end',
-        padding: '24px',
-        cursor: item.gameLink ? 'pointer' : 'default',
-        borderRadius: 'var(--card-radius, 16px)',
-        overflow: 'hidden',
-        '&::before': {
-          content: '""',
+const CarouselSlideItem: React.FC<{ item: CarrouselItem; height: string | number }> = ({
+  item,
+  height,
+}) => (
+  <Box
+    sx={{
+      position: 'relative',
+      width: '100%',
+      height,
+      borderRadius: 'var(--card-radius, 16px)',
+      overflow: 'hidden',
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+      '&::before': {
+        content: '""',
+        position: 'absolute',
+        top: 0,
+        left: 0,
+        right: 0,
+        bottom: 0,
+        background: 'linear-gradient(180deg, transparent 0%, rgba(0, 0, 0, 0.7) 100%)',
+        zIndex: 1,
+      },
+    }}
+  >
+    {item.videoUrl ? (
+      <video
+        src={item.videoUrl}
+        autoPlay
+        muted
+        loop
+        playsInline
+        style={{
+          width: '100%',
+          height: '100%',
+          objectFit: 'cover',
           position: 'absolute',
           top: 0,
           left: 0,
-          right: 0,
-          bottom: 0,
-          background: 'linear-gradient(180deg, transparent 0%, rgba(0, 0, 0, 0.7) 100%)',
-          zIndex: 1,
-        },
-      }}
-    >
+        }}
+      />
+    ) : item.bgCover ? (
       <Box
         sx={{
-          position: 'relative',
-          zIndex: 2,
-          display: 'flex',
-          flexDirection: 'column',
-          gap: '4px',
+          width: '100%',
+          height: '100%',
+          backgroundImage: `url(${item.bgCover})`,
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+          backgroundRepeat: 'no-repeat',
+          position: 'absolute',
+          top: 0,
+          left: 0,
         }}
-      >
-        <Text
-          variant="body2"
-          fontFamily="Red Hat Text"
-          sx={{ color: 'var(--secondary-main)', opacity: 0.8 }}
-        >
-          {item.subtitle}
-        </Text>
+      />
+    ) : null}
+
+    <Box
+      sx={{
+        position: 'relative',
+        zIndex: 2,
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        justifyContent: 'center',
+        textAlign: 'center',
+        gap: '8px',
+        padding: '24px',
+        width: '100%',
+      }}
+    >
+      {/* Title */}
+      {item.title && (
         <Text
           variant="h5"
           fontFamily="Mattone"
@@ -87,34 +116,60 @@ const CarouselSlideItem: React.FC<{
         >
           {item.title}
         </Text>
-      </Box>
+      )}
+
+      {/* Subtitle */}
+      {item.subtitle && (
+        <Text
+          variant="body2"
+          fontFamily="Red Hat Text"
+          sx={{ color: 'var(--secondary-main)', opacity: 0.8 }}
+        >
+          {item.subtitle}
+        </Text>
+      )}
+
+      {/* Button */}
+      {item.gameLink?.url && item.gameLink?.label && (
+        <Link
+          href={item.gameLink.url}
+          target="_blank"
+          style={{ textDecoration: 'none', display: 'inline-block' }}
+        >
+          <Box
+            component="button"
+            sx={{
+              backgroundColor: 'rgba(255, 255, 255, 0.1)',
+              color: 'white',
+              border: '1px solid rgba(255, 255, 255, 0.3)',
+              padding: '8px 16px',
+              borderRadius: '8px',
+              cursor: 'pointer',
+              fontWeight: 'bold',
+              fontFamily: 'Red Hat Text',
+              transition: 'background 0.2s ease, border 0.2s ease',
+              '&:hover': {
+                backgroundColor: 'rgba(255, 255, 255, 0.2)',
+                borderColor: 'rgba(255, 255, 255, 0.5)',
+              },
+            }}
+          >
+            {item.gameLink.label}
+          </Box>
+        </Link>
+      )}
     </Box>
-  );
-
-  if (item.gameLink) {
-    return (
-      <Link href={item.gameLink} style={{ textDecoration: 'none', display: 'block' }}>
-        {content}
-      </Link>
-    );
-  }
-
-  return content;
-};
+  </Box>
+);
 
 export const BannerCarrousel: React.FC<BannerCarrouselProps> = ({
   carrouselItems,
   autoPlay = true,
   autoPlayInterval = 5000,
-  height = '200px',
+  height = '360px',
 }) => {
-  // Setup Embla Carousel with fade effect and autoplay
-  const plugins: EmblaPluginType[] = [];
+  const plugins: EmblaPluginType[] = [Fade()];
 
-  // Add fade plugin
-  plugins.push(Fade());
-
-  // Add autoplay plugin if enabled
   if (autoPlay && carrouselItems.length > 1) {
     plugins.push(Autoplay({ delay: autoPlayInterval, stopOnInteraction: false }));
   }
@@ -122,7 +177,7 @@ export const BannerCarrousel: React.FC<BannerCarrouselProps> = ({
   const carousel = useCarousel(
     {
       loop: carrouselItems.length > 1,
-      duration: 50, // Faster transition for fade effect
+      duration: 50,
     },
     plugins
   );
@@ -138,7 +193,15 @@ export const BannerCarrousel: React.FC<BannerCarrouselProps> = ({
         borderRadius: 'var(--card-radius, 16px)',
         overflow: 'hidden',
         backgroundColor: 'var(--grey-800)',
-        boxShadow: `0 4px 24px 0 color(display-p3 1 1 1 / 0.08) inset, 0 1px 1px 0 color(display-p3 0.0886 1 0.8937 / 0.25) inset, 0 -1px 1px 0 color(display-p3 0 0 0 / 0.25) inset, var(--card-x1, 0) var(--card-y1, 0) var(--card-blur1, 2px) var(--card-spread1, 0) var(--shadow-20, color(display-p3 0 0 0 / 0.20)), var(--card-x2, 0) var(--card-y2, 12px) var(--card-blur2, 24px) var(--card-spread2, -4px) var(--shadow-12, color(display-p3 0 0 0 / 0.12))`,
+        boxShadow: `0 4px 24px 0 color(display-p3 1 1 1 / 0.08) inset,
+                    0 1px 1px 0 color(display-p3 0.0886 1 0.8937 / 0.25) inset,
+                    0 -1px 1px 0 color(display-p3 0 0 0 / 0.25) inset,
+                    var(--card-x1, 0) var(--card-y1, 0)
+                    var(--card-blur1, 2px) var(--card-spread1, 0)
+                    var(--shadow-20, color(display-p3 0 0 0 / 0.20)),
+                    var(--card-x2, 0) var(--card-y2, 12px)
+                    var(--card-blur2, 24px) var(--card-spread2, -4px)
+                    var(--shadow-12, color(display-p3 0 0 0 / 0.12))`,
         backdropFilter: 'blur(4px)',
         mt: 2,
       }}
