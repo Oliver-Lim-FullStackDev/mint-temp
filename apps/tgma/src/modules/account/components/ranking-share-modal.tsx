@@ -5,8 +5,8 @@ import { Box, Button, Stack } from '@mint/ui/components/core';
 import { alpha, useTheme } from '@mint/ui/components/core/styles';
 import { GlassBox, Text } from '@mint/ui/components';
 import { Iconify } from '@mint/ui/components/iconify';
-import { useUserAuth } from '@/modules/telegram/context/user-auth-telegram-provider';
-import { ListItemCoin } from '@/components/list/rankings/list-item-coin';
+import { useUserAuth } from 'src/modules/telegram/context/user-auth-telegram-provider';
+import { ListItemCoin } from 'src/components/list/rankings/list-item-coin';
 
 // Light swipe animation when highlighted
 const sxBtnLightSwipe = {

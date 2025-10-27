@@ -3,7 +3,7 @@ import { StoreItem } from '../../store/types';
 import { PaymentMethodHandler, PurchaseResult } from '../types';
 import { useTonPurchase } from '../../store/hooks/useStorePurchase';
 import { v4 as uuidv4 } from 'uuid';
-import { useUserAuth } from '@/modules/ton/auth/context/user-auth-ton-provider';
+import { useUserAuth } from 'src/modules/ton/auth/context/user-auth-ton-provider';
 import { PriceResponse } from '@mint/types';
 
 const RECEIVER_ADDRESS = process.env.NEXT_PUBLIC_RECEIVER_ADDRESS_TON_WALLET;

@@ -4,8 +4,8 @@ import { useEffect, useState, useRef } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
 import { Box, Typography, Button, CircularProgress } from "@mint/ui/components/core";
 import { Iconify } from "@mint/ui/components/iconify";
-import { useSocialMediaMission } from "@/modules/missions/hooks/useSocialMediaMission";
-import { SocialNetwork } from "@/modules/missions/config/social-media-config";
+import { useSocialMediaMission } from "src/modules/missions/hooks/useSocialMediaMission";
+import { SocialNetwork } from "src/modules/missions/config/social-media-config";
 
 export default function SocialRedirectPage() {
   const searchParams = useSearchParams();

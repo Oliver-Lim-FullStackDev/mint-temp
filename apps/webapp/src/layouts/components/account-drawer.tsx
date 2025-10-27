@@ -5,11 +5,11 @@ import type { IconButtonProps } from '@mint/ui/components/core';
 import { Box, Stack, Link, Portal } from '@mint/ui/components/core';
 import { Text } from '@mint/ui/components';
 import { Scrollbar } from '@mint/ui/components/scrollbar';
-import { RouterLink } from '@mint/ui/minimals/routes/components';
-import { HistoryTransactions, ProfileSummary, StreakInfo, SupportSection, TermsPrivacySection } from '@/modules/account/components';
-import { useClearSession, useSession } from '@/modules/account/session-store';
-import { useUI } from '@/modules/ui/use-ui';
-import { paths } from '@/routes/paths';
+import { RouterLink } from '@mint/mui/routes/components';
+import { HistoryTransactions, ProfileSummary, StreakInfo, SupportSection, TermsPrivacySection } from 'src/modules/account/components';
+import { useClearSession, useSession } from 'src/modules/account/session-store';
+import { useUI } from 'src/modules/ui/use-ui';
+import { paths } from 'src/routes/paths';
 import { AccountButton } from './account-button';
 
 

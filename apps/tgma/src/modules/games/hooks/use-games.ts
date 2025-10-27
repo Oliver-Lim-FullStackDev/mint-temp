@@ -5,17 +5,20 @@ import { apiFetch } from '@mint/client';
 const defaultParams = {
   tags: ['mint', 'originals', 'tinyrex'],
   limit: 9999, // no limit for now
+  order: 'sort_order' as const,
 };
 
 type SearchParams = {
   tags?: string[];
   limit?: number;
+  order?: string;
 };
 
 export function useGames(params: SearchParams = {}) {
   const payload = {
     tags: params.tags ?? defaultParams.tags,
     limit: params.limit ?? defaultParams.limit,
+    order: params.order ?? defaultParams.order,
   };
 
   return useQuery({

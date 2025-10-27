@@ -5,8 +5,8 @@ import { Text } from '@mint/ui/components';
 import { Avatar, Box, CircularProgress } from '@mint/ui/components/core';
 import { useTheme } from '@mint/ui/components/core/styles';
 import { Iconify } from '@mint/ui/components/iconify';
-import { useUserAuth } from '@/modules/telegram/context/user-auth-telegram-provider';
-import { useUI } from '@/modules/ui/use-ui';
+import { useUserAuth } from 'src/modules/telegram/context/user-auth-telegram-provider';
+import { useUI } from 'src/modules/ui/use-ui';
 
 interface LeaderboardUser {
   id: string;

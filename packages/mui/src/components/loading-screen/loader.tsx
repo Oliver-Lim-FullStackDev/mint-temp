@@ -1,6 +1,6 @@
 'use client';
 
-import { Box, Typography, CircularProgress } from '@mint/ui/components/core';
+import { Box, Typography, CircularProgress } from '@mui/material';
 
 export default function Loader() {
   return (

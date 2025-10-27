@@ -1,4 +1,4 @@
-import { useUserAuth } from '@/modules/privy/auth/context/user-auth-privy-provider';
+import { useUserAuth } from 'src/modules/privy/auth/context/user-auth-privy-provider';
 import { PriceResponse } from '@mint/types';
 import { useTonAddress, useTonConnectUI } from '@tonconnect/ui-react';
 import { v4 as uuidv4 } from 'uuid';

@@ -1,7 +1,7 @@
 'use client';
 
 import { useLayoutEffect } from 'react';
-import { sessionStore } from '@/modules/account/session-store';
+import { sessionStore } from 'src/modules/account/session-store';
 
 export function SessionHydrator({ session }: { session: any }) {
   useLayoutEffect(() => {

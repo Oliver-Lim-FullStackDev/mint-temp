@@ -1,13 +1,13 @@
 'use client';
 
-import { AccountInfoArea, type TabData } from '@/modules/account/components/account-info-area';
-import AccountSecurity from '@/modules/account/components/account-info-area/sections/account-sections/account-security';
-import ProfileInformation from '@/modules/account/components/account-info-area/sections/account-sections/profile-information';
-import ResponsibleGaming from '@/modules/account/components/account-info-area/sections/account-sections/responsible-gaming';
-import AffiliateProgram from '@/modules/account/components/account-info-area/sections/affiliate-sections/affiliate-program';
-import TransactionHistory from '@/modules/account/components/account-info-area/sections/transactions-sections/transaction-history';
-import { useUIStore } from '@/modules/ui/ui-store';
-import { paths } from '@/routes/paths';
+import { AccountInfoArea, type TabData } from 'src/modules/account/components/account-info-area';
+import AccountSecurity from 'src/modules/account/components/account-info-area/sections/account-sections/account-security';
+import ProfileInformation from 'src/modules/account/components/account-info-area/sections/account-sections/profile-information';
+import ResponsibleGaming from 'src/modules/account/components/account-info-area/sections/account-sections/responsible-gaming';
+import AffiliateProgram from 'src/modules/account/components/account-info-area/sections/affiliate-sections/affiliate-program';
+import TransactionHistory from 'src/modules/account/components/account-info-area/sections/transactions-sections/transaction-history';
+import { useUIStore } from 'src/modules/ui/ui-store';
+import { paths } from 'src/routes/paths';
 import { Container } from '@mint/ui/components/core';
 import { useRouter } from 'next/navigation';
 

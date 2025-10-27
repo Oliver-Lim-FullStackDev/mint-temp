@@ -1,7 +1,7 @@
 import type { PaymentMethodHandler, PurchaseResult } from '../types';
 import { v4 as uuidv4 } from 'uuid';
-import { useTelegram } from '@/hooks/useTelegram';
-import { useUserAuth } from '@/modules/telegram/context/user-auth-telegram-provider';
+import { useTelegram } from 'src/hooks/useTelegram';
+import { useUserAuth } from 'src/modules/telegram/context/user-auth-telegram-provider';
 import { StoreItem } from '../../store/types';
 import { useStarsPurchase } from '../../store/hooks/useStorePurchase';
 import { useCreateTelegramInvoice } from './telegram-invoice.service';

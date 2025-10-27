@@ -3,6 +3,11 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
+    "dev:proxy": "pnpm turbo run dev:proxy --filter=@mint/infra",
+    "dev:webapp": "pnpm turbo run dev:https:proxy --filter=@mint/webapp...",
+    "dev:tgma": "pnpm turbo run dev:https:proxy --filter=@mint/tgma...",
+    "dev:api": "pnpm turbo run dev:https:proxy --filter=@mint/api...",
+
     "ci:packages:build": "pnpm run packages:build",
     "ci:packages:deps": "pnpm i --filter=\"./packages/*\"",
     "ci:packages:lint": "pnpm run packages:lint",
@@ -30,7 +35,7 @@
     "tslib": "catalog:",
     "tsx": "catalog:",
     "turbo": "catalog:",
-    "typescript": "^5.6.0",
+    "typescript": "^5.9.3",
     "vite": "catalog:",
     "vite-plugin-dts": "catalog:",
     "vite-plugin-mkcert": "catalog:",
@@ -38,7 +43,7 @@
     "vite-tsconfig-paths": "catalog:",
     "vitest": "^2.1.6"
   },
-  "packageManager": "pnpm@10.18.3",
+  "packageManager": "pnpm@10.19.0",
   "pnpm": {
     "overrides": {
       "react": "19",
@@ -47,6 +52,5 @@
       "@types/react-dom": "19",
       "@react-pdf/types": "2.7.0"
     }
-  },
-  "dependencies": {}
+  }
 }

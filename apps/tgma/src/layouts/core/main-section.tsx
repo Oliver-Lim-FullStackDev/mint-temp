@@ -1,7 +1,7 @@
 import type { SxProps, Theme } from '@mint/ui/components/core';
 import { Box } from '@mint/ui/components/core';
 import { mergeClasses } from '@mint/ui/minimal-shared';
-import { layoutClasses } from '@mint/ui/minimals/layouts/core/classes';
+import { layoutClasses } from '@mint/mui/layouts/core/classes';
 
 export type MainSectionProps = {
   children?: React.ReactNode;

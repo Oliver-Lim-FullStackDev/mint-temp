@@ -2,7 +2,7 @@
 
 import { useEffect, useMemo, useRef } from 'react';
 import Slot from '@mint/slots';
-import type { SlotGameInitDto,  SlotGameResultDto } from '@/modules/games/components/mint-slots/mint-game-slots.dto';
+import type { SlotGameInitDto,  SlotGameResultDto } from 'src/modules/games/components/mint-slots/mint-game-slots.dto';
 import '@mint/slots/slots.css';
 
 export interface SlotsProps {

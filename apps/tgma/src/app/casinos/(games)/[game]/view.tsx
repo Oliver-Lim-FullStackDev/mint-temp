@@ -3,9 +3,9 @@
 import React from 'react';
 import { Container } from '@mint/ui/components/core';
 import { EmptyContent } from '@mint/ui/components/empty-content';
-import { GameLauncher } from '@/modules/games/components/game-launcher';
-import { MintGameLauncher } from '@/modules/games/components/mint-game-launcher';
-import type { SlotGameInitDto } from '@/modules/games/components/mint-slots/mint-game-slots.dto';
+import { GameLauncher } from 'src/modules/games/components/game-launcher';
+import { MintGameLauncher } from 'src/modules/games/components/mint-game-launcher';
+import type { SlotGameInitDto } from 'src/modules/games/components/mint-slots/mint-game-slots.dto';
 import type { Game } from '@mint/types';
 
 interface GameViewProps {

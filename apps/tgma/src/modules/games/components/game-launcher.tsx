@@ -7,9 +7,9 @@ import { useRouter } from 'next/navigation';
 import { getServerSession } from '@mint/client';
 import { Box } from '@mint/ui/components/core';
 import { GameLauncherHeroGaming } from '@mint/ui/modules/games/game-launcher-herogaming';
-import { useSession, useSetSession } from '@/modules/account/session-store';
-import { useTelegramBackButton } from '@/hooks/useTelegramBackButton';
-import { paths } from '@/routes/paths';
+import { useSession, useSetSession } from 'src/modules/account/session-store';
+import { useTelegramBackButton } from 'src/hooks/useTelegramBackButton';
+import { paths } from 'src/routes/paths';
 
 export function GameLauncher({ game, mode }: { game: Game; mode: string }) {
   const { session } = useSession();

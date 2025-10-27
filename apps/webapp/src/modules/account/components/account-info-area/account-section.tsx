@@ -24,6 +24,8 @@ export const AccountSection: React.FC<AccountSectionProps> = ({
   return (
     <Box
       sx={{
+        // TODO fix ts errors
+        // @ts-ignore
         background: theme.palette.background.panel,
         backdropFilter: 'blur(5x)',
         boxShadow: 'inset 0px -1px 1px rgba(0, 0, 0, 0.25), inset 0px 1px 1px rgba(23, 255, 228, 0.25), inset 0px 4px 24px rgba(255, 255, 255, 0.08)',

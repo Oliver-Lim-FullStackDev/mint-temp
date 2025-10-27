@@ -1,7 +1,7 @@
 'use client';
 
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
-import { useSession } from '@/modules/account/session-store';
+import { useSession } from 'src/modules/account/session-store';
 
 export interface InventoryItem {
   id: number;

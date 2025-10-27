@@ -1,7 +1,7 @@
 'use client';
 
-import { ServerMainLayout } from '@/layouts/web/main/layout.server';
-import { paths } from '@/routes/paths';
+import { ServerMainLayout } from 'src/layouts/web/main/layout.server';
+import { paths } from 'src/routes/paths';
 import { ComingSoon } from '../coming-soon';
 
 // ----------------------------------------------------------------------

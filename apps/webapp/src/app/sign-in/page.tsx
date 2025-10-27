@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
 
-import { CONFIG } from '@/global-config';
+import { CONFIG } from 'src/global-config';
 
 import { SignInView } from './sign-in-view';
 

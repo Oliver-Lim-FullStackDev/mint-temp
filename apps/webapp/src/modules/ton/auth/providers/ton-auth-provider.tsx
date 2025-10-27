@@ -1,7 +1,7 @@
 'use client';
 
-import { useUserAuth } from '@/modules/privy/auth/context/user-auth-privy-provider';
-import { fetchNonce, registerTonProof } from '@/modules/ton/auth/lib/auth-client';
+import { useUserAuth } from 'src/modules/privy/auth/context/user-auth-privy-provider';
+import { fetchNonce, registerTonProof } from 'src/modules/ton/auth/lib/auth-client';
 import { Account, TonProofItemReplySuccess, useTonAddress, useTonConnectUI, useTonWallet } from '@tonconnect/ui-react';
 import { ReactNode, useEffect, useState } from 'react';
 

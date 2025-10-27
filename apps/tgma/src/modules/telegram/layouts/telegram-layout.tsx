@@ -1,6 +1,6 @@
 import type { ReactNode } from 'react';
 import { SxProps, Theme } from '@mint/ui/components/core';
-import { MainLayout } from '@/layouts/tgma/main/layout';
+import { MainLayout } from 'src/layouts/tgma/main/layout';
 
 interface TelegramLayoutProps {
   children: ReactNode;

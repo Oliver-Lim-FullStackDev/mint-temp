@@ -5,8 +5,8 @@ import { StoreItem } from '../types';
 import { SubProvider } from '../types/sub-provider.enum';
 import BaseItemCard from './base-item-card';
 import { ItemState } from '../utils/item-types';
-import { use8HourDailyRewards } from '@/hooks/use8HourDailyRewards';
-import CountdownTimer from '@/components/countdown-timer';
+import { use8HourDailyRewards } from 'src/hooks/use8HourDailyRewards';
+import CountdownTimer from 'src/components/countdown-timer';
 
 interface DailyItemCardProps {
   item: StoreItem;

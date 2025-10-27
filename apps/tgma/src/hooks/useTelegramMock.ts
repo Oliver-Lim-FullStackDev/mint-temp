@@ -1,4 +1,4 @@
-import { useClientOnce } from '@/hooks/useClientOnce';
+import { useClientOnce } from 'src/hooks/useClientOnce';
 import {
   isTMA,
   mockTelegramEnv,

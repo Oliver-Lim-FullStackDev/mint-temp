@@ -4,30 +4,30 @@ import localFont from 'next/font/local';
 import { getServerSession as _getServerSession } from '@mint/client';
 import { AppRouterCacheProvider } from '@mui/material-nextjs/v15-appRouter';
 import { InitColorSchemeScript } from '@mint/ui/components/core';
-import { LocalizationProvider } from '@mint/ui/minimals/locales';
-import { I18nProvider } from '@mint/ui/minimals/locales/i18n-provider';
-import { detectLanguage } from '@mint/ui/minimals/locales/server';
-import { themeConfig, ThemeProvider } from '@mint/ui/minimals/theme';
-import { primary } from '@mint/ui/minimals/theme/core/palette';
+import { LocalizationProvider } from '@mint/mui/locales';
+import { I18nProvider } from '@mint/mui/locales/i18n-provider';
+import { detectLanguage } from '@mint/mui/locales/server';
+import { themeConfig, ThemeProvider } from '@mint/mui/theme';
+import { primary } from '@mint/mui/theme/core/palette';
 // TODO Instead of JWT Make this work with TON + Session
-import { AuthProvider } from '@mint/ui/minimals/auth/context/jwt';
-import { MotionLazy } from '@mint/ui/components/animate/motion-lazy';
+import { AuthProvider } from '@mint/mui/auth/context/jwt';
+import { MotionLazy } from '@mint/mui/components/animate/motion-lazy';
 import { ProgressBar } from '@mint/ui/components/progress-bar';
-import { defaultSettings, SettingsProvider } from '@mint/ui/components/settings';
-import { detectSettings } from '@mint/ui/components/settings/server';
+import { defaultSettings, SettingsProvider } from '@mint/mui/components/settings';
+import { detectSettings } from '@mint/mui/components/settings/server';
 
-import { CONFIG } from '@/global-config';
-import { TonConnectProvider, UserAuthProvider } from '@/modules/ton/providers';
-import { sessionStore } from '@/modules/account/session-store';
-import { QueryProvider } from '@/providers/query-provider';
-import { AuthGuard } from '@/components/auth/auth-guard';
-import AppBody from '@/components/app-body';
-import { OmnistonProviderWrapper } from '@/components/providers/omniston-provider';
+import { CONFIG } from 'src/global-config';
+import { TonConnectProvider, UserAuthProvider } from 'src/modules/ton/providers';
+import { sessionStore } from 'src/modules/account/session-store';
+import { QueryProvider } from 'src/providers/query-provider';
+import { AuthGuard } from 'src/components/auth/auth-guard';
+import AppBody from 'src/components/app-body';
+import { OmnistonProviderWrapper } from 'src/components/providers/omniston-provider';
+import { SessionHydrator } from 'src/components/session-hydrator';
+import PrivyProviders from 'src/components/providers/privy-provider';
+import { PrivyAuthProvider } from 'src/modules/privy/providers';
 
 import '@mint/ui/global.css';
-import { SessionHydrator } from '@/components/session-hydrator';
-import PrivyProviders from '@/components/providers/privy-provider';
-import { PrivyAuthProvider } from '@/modules/privy/providers';
 
 // Cache so that it triggers only once on app load
 const getServerSession = cache(async () => _getServerSession());

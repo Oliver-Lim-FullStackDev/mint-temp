@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { mintApi } from '@mint/client';
 import type { Game, GameProvider } from '@mint/types';
-import { GAMES_CATEGORY_DEFINITIONS } from '@/modules/games/state';
+import { GAMES_CATEGORY_DEFINITIONS } from 'src/modules/games/state';
 import { searchGames, type GamesSearchRequest } from './search/searchGames';
 
 type ProviderOption = {

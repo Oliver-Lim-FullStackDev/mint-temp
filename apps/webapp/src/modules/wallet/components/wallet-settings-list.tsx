@@ -4,10 +4,10 @@ import { useMemo, useState } from 'react';
 import { Box, Stack, FormControlLabel } from '@mint/ui/components/core';
 import { Iconify } from '@mint/ui/components/iconify';
 import { CurrencyItem, Text, MintSwitch } from '@mint/ui/components';
-import { useCurrencies, CurrencyType } from '@/hooks/useCurrencies';
-import { useSession } from '@/modules/account/session-store';
-import { useWalletSettings, useSetShowFiatValues, useSetHideZeroBalances } from '@/modules/wallet/wallet-store';
-import { useUpdateAccount } from '@/hooks/useUpdateAccount';
+import { useCurrencies, CurrencyType } from 'src/hooks/useCurrencies';
+import { useSession } from 'src/modules/account/session-store';
+import { useWalletSettings, useSetShowFiatValues, useSetHideZeroBalances } from 'src/modules/wallet/wallet-store';
+import { useUpdateAccount } from 'src/hooks/useUpdateAccount';
 
 export function WalletSettingsList() {
   const { session } = useSession();

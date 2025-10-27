@@ -2,8 +2,8 @@
 
 import { useEffect, useState, ReactNode } from 'react';
 import { Account, TonProofItemReplySuccess, useTonAddress, useTonConnectUI, useTonWallet } from '@tonconnect/ui-react';
-import { useUserAuth } from '@/modules/ton/auth/context/user-auth-ton-provider';
-import { fetchNonce, registerTonProof } from '@/modules/ton/auth/lib/auth-client';
+import { useUserAuth } from 'src/modules/ton/auth/context/user-auth-ton-provider';
+import { fetchNonce, registerTonProof } from 'src/modules/ton/auth/lib/auth-client';
 
 interface AuthGuardProps {
   children: ReactNode;

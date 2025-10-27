@@ -3,12 +3,12 @@
 import { useState, useRef } from 'react';
 import { Box, Stack, Typography, IconButton, Portal, ClickAwayListener } from '@mint/ui/components/core';
 import { Iconify } from '@mint/ui/components/iconify';
-import { useSession } from '@/modules/account/session-store';
-import { useShowFiatValues } from '@/modules/wallet/wallet-store';
-import { useSessionPolling } from '@/hooks/useSessionPolling';
-import { useCurrencies } from '@/hooks/useCurrencies';
-import { WalletDialog } from '@/modules/wallet';
-import { getCurrencyIconKey, CurrencyType } from '@/utils/currency';
+import { useSession } from 'src/modules/account/session-store';
+import { useShowFiatValues } from 'src/modules/wallet/wallet-store';
+import { useSessionPolling } from 'src/hooks/useSessionPolling';
+import { useCurrencies } from 'src/hooks/useCurrencies';
+import { WalletDialog } from 'src/modules/wallet';
+import { getCurrencyIconKey, CurrencyType } from 'src/utils/currency';
 
 export function HeaderWallet() {
   const { session } = useSession();

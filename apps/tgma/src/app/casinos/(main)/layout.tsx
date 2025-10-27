@@ -1,5 +1,5 @@
 import React from 'react';
-import { ServerMainLayout } from '@/layouts/tgma/main/layout.server';
+import { ServerMainLayout } from 'src/layouts/tgma/main/layout.server';
 
 type Props = {
   children: React.ReactNode

@@ -1,8 +1,8 @@
 import type { Metadata } from 'next';
 import React from 'react';
-import { CasinoView } from '@/app/casinos/(main)/view';
 import type { Game } from '@mint/types';
 import { apiFetch } from '@mint/client';
+import { CasinoView } from 'src/app/casinos/(main)/view';
 
 export const metadata: Metadata = {
   title: 'Mint.io | Casinos',
@@ -13,6 +13,7 @@ export const metadata: Metadata = {
 const DEFAULT_SEARCH_PARAMS = {
   tags: ['mint', 'originals', 'tinyrex'],
   limit: 9999,
+  order: 'sort_order' as const,
 };
 
 export default async function Page() {

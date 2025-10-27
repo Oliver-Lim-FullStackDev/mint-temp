@@ -1,5 +1,5 @@
 import React from 'react';
-import { TelegramWrapper } from '@/modules/telegram/components/telegram-wrapper';
+import { TelegramWrapper } from 'src/modules/telegram/components/telegram-wrapper';
 import { TelegramGuard } from './TelegramGuard';
 import { HomeView } from './view';
 

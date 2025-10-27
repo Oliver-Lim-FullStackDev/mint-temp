@@ -5,13 +5,13 @@ import type { IconButtonProps } from '@mint/ui/components/core';
 import { Box, Stack, Link, Portal } from '@mint/ui/components/core';
 import { Text } from '@mint/ui/components';
 import { Scrollbar } from '@mint/ui/components/scrollbar';
-import { RouterLink } from '@mint/ui/minimals/routes/components';
-import { HistoryTransactions, LeadershipRanking, ProfileSummary, StreakInfo, SupportSection, TermsPrivacySection } from '@/modules/account/components';
-import RankingProfileSection from '@/modules/account/components/ranking-profile-section';
-import { useUserAuth } from '@/modules/telegram/context/user-auth-telegram-provider';
-import { useUI } from '@/modules/ui/use-ui';
-import { useTelegramBackButton } from '@/hooks/useTelegramBackButton';
-import { paths } from '@/routes/paths';
+import { RouterLink } from '@mint/mui/routes/components';
+import { HistoryTransactions, LeadershipRanking, ProfileSummary, StreakInfo, SupportSection, TermsPrivacySection } from 'src/modules/account/components';
+import RankingProfileSection from 'src/modules/account/components/ranking-profile-section';
+import { useUserAuth } from 'src/modules/telegram/context/user-auth-telegram-provider';
+import { useUI } from 'src/modules/ui/use-ui';
+import { useTelegramBackButton } from 'src/hooks/useTelegramBackButton';
+import { paths } from 'src/routes/paths';
 import { AccountButton } from './account-button';
 
 

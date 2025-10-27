@@ -4,8 +4,8 @@ import { memo } from 'react';
 import { Text } from '@mint/ui/components';
 import { Stack } from '@mint/ui/components/core';
 import { Iconify } from '@mint/ui/components/iconify';
-import { useFormatBalance } from '@/hooks/useFormatBalance';
-import { BalanceType } from '@/utils/number-formatting';
+import { useFormatBalance } from 'src/hooks/useFormatBalance';
+import { BalanceType } from 'src/utils/number-formatting';
 
 export type CoinType = 'XPP' | 'MBX' | 'RTP' | 'STARS';
 

@@ -5,13 +5,13 @@ import { useQuery } from '@tanstack/react-query';
 import { Box, Container } from '@mint/ui/components/core';
 import { Text, EmptyContent } from '@mint/ui/components';
 import { BannerCarrousel, CarrouselItem } from '@mint/ui/components';
-import { GamesList } from '@/modules/games/components/games-list';
-import type { Game } from '@/modules/games/games.types';
+import { GamesList } from 'src/modules/games/components/games-list';
+import type { Game } from 'src/modules/games/games.types';
 import {
   GAMES_CATEGORY_DEFINITIONS,
   DEFAULT_FILTERS,
-} from '@/modules/games/state';
-import { paths } from '@/routes/paths';
+} from 'src/modules/games/state';
+import { paths } from 'src/routes/paths';
 import {
   buildGamesQuery,
   GamesCategoryNav,
@@ -23,7 +23,7 @@ import {
   type GamesQueryKey,
   useGamesFilters,
   fetchGames,
-} from '@/modules/games';
+} from 'src/modules/games';
 
 let CAROUSEL_GAME_IDS = {
   octogame: '14098',

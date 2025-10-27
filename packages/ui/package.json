@@ -3,7 +3,24 @@
   "version": "1.0.0",
   "description": "",
   "exports": {
-    ".": "./src/index.ts"
+    "./global.css": "./src/global.css",
+    "./emotion": {
+      "types": "./src/emotion.ts",
+      "default": "./src/emotion.ts"
+    },
+    "./es-toolkit": {
+      "types": "./src/es-toolkit.ts",
+      "default": "./src/es-toolkit.ts"
+    },
+    "./framer-motion": {
+      "types": "./src/framer-motion.ts",
+      "default": "./src/framer-motion.ts"
+    },
+    "./minimal-shared": {
+      "types": "./src/minimal-shared.ts",
+      "default": "./src/minimal-shared.ts"
+    },
+    "./*": "./src/*"
   },
   "type": "module",
   "scripts": {

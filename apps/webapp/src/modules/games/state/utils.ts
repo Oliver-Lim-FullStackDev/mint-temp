@@ -1,4 +1,4 @@
-import { paths } from '@/routes/paths';
+import { paths } from 'src/routes/paths';
 import type { GamesFilters, GamesSortOrder } from '../filters.types';
 
 export type GamesCategoryDefinition = {

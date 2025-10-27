@@ -4,9 +4,9 @@ import { useState } from 'react';
 import { Box, IconButton, Stack, Tabs, Tab } from '@mint/ui/components/core';
 import { GlassDialog, Text } from '@mint/ui/components';
 import { Iconify } from '@mint/ui/components/iconify';
-import { useSession } from '@/modules/account/session-store';
-import { WalletSettingsList } from '@/modules/wallet/components/wallet-settings-list';
-import { CurrencySelector } from '@/modules/wallet/components/currency-selector';
+import { useSession } from 'src/modules/account/session-store';
+import { WalletSettingsList } from 'src/modules/wallet/components/wallet-settings-list';
+import { CurrencySelector } from 'src/modules/wallet/components/currency-selector';
 
 interface WalletSettingsDialogProps {
   open: boolean;

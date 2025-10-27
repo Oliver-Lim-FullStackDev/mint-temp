@@ -1,14 +1,15 @@
 'use client';
 
 import type { EmblaPluginType } from 'embla-carousel';
-import Autoplay from 'embla-carousel-autoplay';
-import Fade from 'embla-carousel-fade';
+
 import React from 'react';
 import Link from 'next/link';
+import Fade from 'embla-carousel-fade';
+import Autoplay from 'embla-carousel-autoplay';
+import { Carousel, useCarousel, CarouselDotButtons } from '../carousel';
 
-import { Text } from '@mint/ui/components';
-import { Box } from '@mint/ui/components/core';
-import { Carousel, CarouselDotButtons, useCarousel } from '@mint/ui/components/carousel';
+import { Box } from '../core';
+import { Text } from '../typography';
 
 export interface CarrouselItem {
   id: string;

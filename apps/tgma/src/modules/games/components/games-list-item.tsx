@@ -3,8 +3,8 @@ import type { Game } from '@mint/types';
 import { Text } from '@mint/ui/components';
 import { Box, Card, CardProps, Link } from '@mint/ui/components/core';
 import { useTheme } from '@mint/ui/components/core/styles';
-import { RouterLink } from '@mint/ui/minimals/routes/components';
-import BadgeBox from '@/components/button/badge-box';
+import { RouterLink } from '@mint/mui/routes/components';
+import BadgeBox from 'src/components/button/badge-box';
 
 type GamesListItemProps = CardProps & {
   game: Game;
@@ -93,7 +93,7 @@ export function GamesListItem({ game, detailsHref, sx, ...other }: GamesListItem
       ...sx, position: 'relative',
       border: '0.5px solid color(display-p3 1 1 1 / 0.10)',
       borderRadius: 1,
-      boxShadow: theme.vars.customShadows.z16,
+      boxShadow: theme.shadows[16],
 
       aspectRatio: '658 / 1000',
       overflow: 'hidden',

@@ -9,13 +9,13 @@ import {
   isTMA,
 } from '@telegram-apps/sdk-react';
 import { useColorScheme, useTheme } from '@mint/ui/components/core/styles';
-import { useRouter } from '@mint/ui/minimals/routes/hooks';
-import { UserAuthTelegramProvider } from '@/modules/telegram/context/user-auth-telegram-provider';
-import { useLaunchParams } from '@/hooks/useLaunchParams';
-import { useTelegramMock } from '@/hooks/useTelegramMock';
-import { useClientOnce } from '@/hooks/useClientOnce';
-import { setLocale } from '@/core/i18n/locale';
-import { init } from '@/core/init';
+import { useRouter } from '@mint/mui/routes/hooks';
+import { UserAuthTelegramProvider } from 'src/modules/telegram/context/user-auth-telegram-provider';
+import { useLaunchParams } from 'src/hooks/useLaunchParams';
+import { useTelegramMock } from 'src/hooks/useTelegramMock';
+import { useClientOnce } from 'src/hooks/useClientOnce';
+import { setLocale } from 'src/core/i18n/locale';
+import { init } from 'src/core/init';
 
 export function TelegramWrapper({ children }: PropsWithChildren) {
   const router = useRouter();

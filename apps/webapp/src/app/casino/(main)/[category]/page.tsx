@@ -1,6 +1,6 @@
-import { CasinoView } from '@/app/casino/(main)/view';
-import { loadGamesInitialData } from '@/app/casino/(main)/loader';
-import { CasinoHydrationBoundary } from '@/app/casino/(main)/hydrate';
+import { CasinoView } from 'src/app/casino/(main)/view';
+import { loadGamesInitialData } from 'src/app/casino/(main)/loader';
+import { CasinoHydrationBoundary } from 'src/app/casino/(main)/hydrate';
 
 type PageProps = {
   params: Promise<{ category: string }>;

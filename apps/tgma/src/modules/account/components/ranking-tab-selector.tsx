@@ -1,7 +1,7 @@
 'use client';
 
-import TabSelector, { TabOption } from '@/components/core/tab-selector';
-import { useUI } from '@/modules/ui/use-ui';
+import TabSelector, { TabOption } from 'src/components/core/tab-selector';
+import { useUI } from 'src/modules/ui/use-ui';
 import { Box } from '@mint/ui/components/core';
 import { memo, useCallback } from 'react';
 

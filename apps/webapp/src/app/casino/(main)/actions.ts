@@ -2,8 +2,8 @@
 
 import { cookies } from 'next/headers';
 
-import type { GamesSortOrder } from '@/modules/games';
-import { DEFAULT_FILTERS } from '@/modules/games/state/utils';
+import type { GamesSortOrder } from 'src/modules/games';
+import { DEFAULT_FILTERS } from 'src/modules/games/state/utils';
 
 import {
   GAMES_COOKIE_MAX_AGE,

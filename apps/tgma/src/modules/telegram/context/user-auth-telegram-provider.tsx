@@ -1,13 +1,13 @@
 'use client';
 
 // TODO migrate to webapp
-import type { User } from '@/types';
+import type { User } from 'src/types';
 import type { WebApp } from '@twa-dev/types';
 
 import { createContext, ReactNode, useContext, useEffect, useState } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { mintApi } from '@mint/client';
-import { useTelegramAuth } from '@/hooks/useTelegramAuth';
+import { useTelegramAuth } from 'src/hooks/useTelegramAuth';
 
 interface UserAuthContextType {
   user: User | null;

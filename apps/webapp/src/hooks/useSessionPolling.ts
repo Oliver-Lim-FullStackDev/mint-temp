@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { getServerSession } from '@mint/client';
-import { useShowFiatValues } from '@/modules/wallet/wallet-store';
-import { useSetSession } from '@/modules/account/session-store';
+import { useShowFiatValues } from 'src/modules/wallet/wallet-store';
+import { useSetSession } from 'src/modules/account/session-store';
 
 /**
  * Hook that automatically refetches session data every 5 seconds

@@ -1,7 +1,7 @@
 'use client';
 
-import { useSetSession } from '@/modules/account/session-store';
-import type { User } from '@/types';
+import { useSetSession } from 'src/modules/account/session-store';
+import type { User } from 'src/types';
 import { getServerSession } from '@mint/client';
 import { useSearchParams } from 'next/navigation';
 import { createContext, ReactNode, useContext, useEffect, useState } from 'react';

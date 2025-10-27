@@ -2,9 +2,9 @@ import type { Metadata } from 'next';
 import React from 'react';
 import { notFound, redirect } from 'next/navigation';
 import { apiFetch } from '@mint/client';
-import type { SlotGameInitDto } from '@/modules/games/components/mint-slots/mint-game-slots.dto';
+import type { SlotGameInitDto } from 'src/modules/games/components/mint-slots/mint-game-slots.dto';
 import type { Game } from '@mint/types';
-import { ErrorPage } from '@/components/error-page';
+import { ErrorPage } from 'src/components/error-page';
 import { GameView } from './view';
 
 

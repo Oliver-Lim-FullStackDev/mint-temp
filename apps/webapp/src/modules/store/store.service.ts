@@ -3,7 +3,7 @@
 import { useState, useCallback } from 'react';
 import { useTonAddress, useTonConnectUI } from '@tonconnect/ui-react';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
-import { useInventory } from '@/hooks/useInventory';
+import { useInventory } from 'src/hooks/useInventory';
 import { useTonWalletPayment } from '../payment-methods';
 import type { StoreItem, Purchase, CurrentPurchaseWithSecret, PaymentMethod } from './types';
 import { SubProvider } from './types/sub-provider.enum';

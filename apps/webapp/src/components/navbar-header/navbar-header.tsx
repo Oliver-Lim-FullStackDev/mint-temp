@@ -5,8 +5,8 @@ import { Box, Button } from '@mint/ui/components/core';
 import { GlassBox, InfoDialog, Text } from '@mint/ui/components';
 import { useInfoDialog } from '@mint/ui/hooks';
 import { Iconify } from '@mint/ui/components/iconify';
-import { useFormatBalance } from '@/hooks/useFormatBalance';
-import { useBalances } from '@/modules/account/session-store';
+import { useFormatBalance } from 'src/hooks/useFormatBalance';
+import { useBalances } from 'src/modules/account/session-store';
 import { NavbarHeaderPlaceholder } from './navbar-header-placeholder';
 
 // ----------------------------------------------------------------------

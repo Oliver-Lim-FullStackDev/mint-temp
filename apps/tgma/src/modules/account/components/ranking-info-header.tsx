@@ -3,7 +3,7 @@
 import { memo, useCallback } from 'react';
 import { InfoDialog, Text } from '@mint/ui/components';
 import { useInfoDialog } from '@mint/ui/hooks';
-import { PageHeader } from '@/components/headers/page-header';
+import { PageHeader } from 'src/components/headers/page-header';
 
 export function RankingInfoHeader() {
   const { isOpen, openDialog, closeDialog, title, content } = useInfoDialog();

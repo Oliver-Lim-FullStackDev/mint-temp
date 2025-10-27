@@ -1,4 +1,4 @@
-import { ServerMainLayout } from '@/layouts/web/main/layout.server';
+import { ServerMainLayout } from 'src/layouts/web/main/layout.server';
 
 type Props = {
   children: React.ReactNode;

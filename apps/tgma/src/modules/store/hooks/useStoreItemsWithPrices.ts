@@ -1,5 +1,5 @@
 import { useQuery } from '@tanstack/react-query';
-import type { StoreItem } from '@/modules/store/types';
+import type { StoreItem } from 'src/modules/store/types';
 
 export function useStoreItemsWithPrices() {
   return useQuery({

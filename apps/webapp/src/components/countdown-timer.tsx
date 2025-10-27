@@ -1,7 +1,7 @@
 'use client';
 
 import { Box, Typography } from '@mint/ui/components/core';
-import { CountdownState } from '@/hooks/use8HourDailyRewards';
+import { CountdownState } from 'src/hooks/use8HourDailyRewards';
 
 interface CountdownTimerProps {
   countdown: CountdownState;

@@ -1,11 +1,13 @@
 # Changelog
 
-## v2.0 — 2025-10-23
+## v2.0 — 2025-10-27
 
 ### Changelog (v2.0)
+- Upgrade to NextJS v16.0 [#869axpujd](https://app.clickup.com/t/869axpujd) ![core](https://img.shields.io/badge/core-%20?color=D84208)
 - Add ASC sort order for all Games endpoints [#869axczw9](https://app.clickup.com/t/869axczw9) ![gaming](https://img.shields.io/badge/gaming-%20?color=86841F) ![hg api](https://img.shields.io/badge/hg%20api-%20?color=37EA6E)
-- Implement CMS Banners across all Pages [#869avw0xe](https://app.clickup.com/t/869avw0xe) ![cms](https://img.shields.io/badge/cms-%20?color=E45692) ![ui](https://img.shields.io/badge/ui-%20?color=c377e0)
+- Implement CMS Banners in Casino Lobby [#869avw0xe](https://app.clickup.com/t/869avw0xe) ![cms](https://img.shields.io/badge/cms-%20?color=E45692) ![ui](https://img.shields.io/badge/ui-%20?color=c377e0)
 - Implement Banners CMS API for the UI Casino Page Header [#869auqq7g](https://app.clickup.com/t/869auqq7g) ![cms](https://img.shields.io/badge/cms-%20?color=E45692) ![marketing](https://img.shields.io/badge/marketing-%20?color=248F7D)
+- Search & Filters Logic & UI [#869auhz15](https://app.clickup.com/t/869auhz15) ![api](https://img.shields.io/badge/api-%20?color=12A594) ![gaming](https://img.shields.io/badge/gaming-%20?color=86841F)
 - Clone TON Auth to New Privy Auth [#869aubnum](https://app.clickup.com/t/869aubnum) ![enhanced (hero)](https://img.shields.io/badge/enhanced%20%28hero%29-%20?color=f2d600) ![hg api](https://img.shields.io/badge/hg%20api-%20?color=37EA6E)
 - Setup Vercel WebApp & Shared ENV variables between tgma <> webapp [#869aua9z1](https://app.clickup.com/t/869aua9z1) ![ci](https://img.shields.io/badge/ci-%20?color=2E74F5)
 - Payload CMS for Banners & Promos [#869anq1b5](https://app.clickup.com/t/869anq1b5) 

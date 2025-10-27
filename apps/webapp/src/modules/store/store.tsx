@@ -1,10 +1,10 @@
 'use client';
 
-import { PageHeader } from '@/components/headers/page-header';
+import { PageHeader } from 'src/components/headers/page-header';
 import { InfoDialog } from '@mint/ui/components';
 import { useInfoDialog } from '@mint/ui/hooks';
 import { Box, Container } from '@mint/ui/components/core';
-import Loader from '@mint/ui/components/loading-screen/loader';
+import { Loader } from '@mint/ui/components/loading-screen';
 import ErrorState from './components/error-state';
 import ItemsList from './components/items-list';
 import PurchaseSuccessModal from './components/purchase-success-modal';

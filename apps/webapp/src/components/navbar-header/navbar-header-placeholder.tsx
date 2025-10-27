@@ -3,7 +3,7 @@ import { Box, Button } from '@mint/ui/components/core';
 import { Text } from '@mint/ui/components';
 import { AnimateBorder } from '@mint/ui/components/animate';
 import { Iconify } from '@mint/ui/components/iconify';
-import { useFormatBalance } from '@/hooks/useFormatBalance';
+import { useFormatBalance } from 'src/hooks/useFormatBalance';
 
 export type NavbarHeaderProps = {};
 

@@ -1,7 +1,7 @@
 import { apiFetch } from '@mint/client';
 import { EmptyContent } from '@mint/ui/components';
 import { Container } from '@mint/ui/components/core';
-import Betby from '@/modules/sportsbook/components/betby';
+import Betby from 'src/modules/sportsbook/components/betby';
 
 export async function SportsView() {
   let response;

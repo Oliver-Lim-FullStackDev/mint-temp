@@ -1,4 +1,4 @@
-import { NonceResponse, TonProofPayload, User } from '@/types';
+import { NonceResponse, TonProofPayload, User } from 'src/types';
 import { mintApi } from '@mint/client';
 import { Account, TonProofItemReplySuccess } from '@tonconnect/ui-react';
 

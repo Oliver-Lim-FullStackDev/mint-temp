@@ -1,12 +1,32 @@
 import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
-import { paths } from '@/routes/paths';
+import { paths } from 'src/routes/paths';
 
-export function middleware(request: NextRequest) {
+const isFilePath = (p: string) => /\.[^/]+$/.test(p); // e.g. .js, .css, .png, .map, etc.
+
+export function proxy(request: NextRequest) {
   const { href, pathname, searchParams } = request.nextUrl;
   const protocol = request.headers.get('x-forwarded-proto') ?? 'http';
   const host = request.headers.get('host'); // satisfies local domains too
   const origin = `${protocol}://${host}`;
+
+  const hasCompletedOnBoarding = request.cookies.get('onboarding-completed')?.value === 'true';
+
+  /**
+   * Redirect to /onboarding
+   */
+  if (!hasCompletedOnBoarding && !isFilePath(pathname) && !pathname.endsWith(paths.onboarding)) {
+    const onboardingUrl = new URL(paths.onboarding, origin);
+    return NextResponse.redirect(onboardingUrl, 302);
+  }
+
+  /**
+   * Redirect homepage to /casinos
+   */
+  if (pathname === '/') {
+    const homeUrl = new URL(paths.casinos.root, origin);
+    return NextResponse.redirect(homeUrl, 302);
+  }
 
   /**
    * VERCEL

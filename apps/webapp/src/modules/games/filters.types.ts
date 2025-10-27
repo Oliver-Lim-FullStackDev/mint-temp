@@ -1,4 +1,4 @@
-import type { Game } from '@/modules/games/games.types';
+import type { Game } from 'src/modules/games/games.types';
 
 export type GamesSortOrder = '' | 'ASC' | 'DESC';
 export type GamesOrderParam = Exclude<GamesSortOrder, ''>;

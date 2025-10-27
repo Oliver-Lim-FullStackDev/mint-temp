@@ -3,9 +3,9 @@
 import React, { useMemo } from 'react';
 import Image from 'next/image';
 import { TonConnectButton, useTonAddress, useTonConnectUI } from '@tonconnect/ui-react';
-import { useFormatBalance } from '@/hooks/useFormatBalance';
-import { useSession } from '@/modules/account/session-store';
-import { useUI } from '@/modules/ui/use-ui';
+import { useFormatBalance } from 'src/hooks/useFormatBalance';
+import { useSession } from 'src/modules/account/session-store';
+import { useUI } from 'src/modules/ui/use-ui';
 import {
   Avatar,
   Box,

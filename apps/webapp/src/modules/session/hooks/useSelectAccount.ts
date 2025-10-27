@@ -1,5 +1,5 @@
 import { useMutation } from '@tanstack/react-query';
-import { useSession, useUpdateBalance } from '@/modules/account/session-store';
+import { useSession, useUpdateBalance } from 'src/modules/account/session-store';
 import { apiFetch } from '@mint/client';
 
 interface SelectAccountParams {

@@ -13,10 +13,10 @@ import {
 } from '@mint/ui/components/core';
 import { GlassBox } from '@mint/ui/components';
 import { Iconify } from '@mint/ui/components/iconify';
-import { useSession } from '@/modules/account/session-store';
-import { useUserAuth } from '@/modules/telegram/context/user-auth-telegram-provider';
-import { useUI } from '@/modules/ui/use-ui';
-import { useFormatBalance } from '@/hooks/useFormatBalance';
+import { useSession } from 'src/modules/account/session-store';
+import { useUserAuth } from 'src/modules/telegram/context/user-auth-telegram-provider';
+import { useUI } from 'src/modules/ui/use-ui';
+import { useFormatBalance } from 'src/hooks/useFormatBalance';
 import { PROFILE_BACKGROUND_TEXTURE } from '../constants/background-images';
 import { useGameResources } from '../hooks/useAccountData';
 // import { ReferralSection } from './referral-section';

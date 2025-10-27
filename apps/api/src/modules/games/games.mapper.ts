@@ -32,6 +32,8 @@ export const GameMapper = {
           .filter((category): category is GameCategory => Boolean(category))
       : [];
 
+    const sortOrder = raw.sortOrder;
+
     return {
       id: raw.id,
       title: raw.title,
@@ -43,6 +45,7 @@ export const GameMapper = {
       titleUrl: raw.titleUrl,
       categories,
       tags,
+      sortOrder,
     };
   },
 };

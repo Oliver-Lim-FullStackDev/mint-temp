@@ -6,7 +6,7 @@ import React, { useEffect, useRef } from 'react';
 import { getServerSession } from '@mint/client';
 import { Box } from '@mint/ui/components/core';
 import { GameLauncherHeroGaming } from '@mint/ui/modules/games/game-launcher-herogaming';
-import { useSession, useSetSession } from '@/modules/account/session-store';
+import { useSession, useSetSession } from 'src/modules/account/session-store';
 
 export function GameLauncher({ game, mode }: { game: Game; mode: string }) {
   const { session } = useSession();

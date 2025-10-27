@@ -3,13 +3,7 @@
   "compilerOptions": {
     "baseUrl": ".",
     "rootDir": "../..",
-    "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.app.tsbuildinfo",
-    "allowSyntheticDefaultImports": true,
-    "allowArbitraryExtensions": true,
-    "noImplicitAny": false,
-
-    "plugins": [{ "name": "next" }],
-    "noEmit": true
+    "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.app.tsbuildinfo"
   },
   "include": [
     "global.d.ts",
@@ -21,8 +15,7 @@
     "../../packages/client/**/*.ts"
   ],
   "exclude": [
-    "node_modules",
-    "../../packages/ui"
+    "node_modules"
   ],
   "references": []
 }

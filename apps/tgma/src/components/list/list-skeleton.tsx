@@ -23,7 +23,7 @@ export function ListItemSkeleton({
             display: 'flex',
             borderRadius: 2,
             bgcolor: 'background.paper',
-            border: `solid 1px ${theme.vars.palette.divider}`,
+            border: `solid 1px ${theme.vars?.palette.divider || 0}`,
           }),
           ...(Array.isArray(sx) ? sx : [sx]),
         ]}
@@ -64,7 +64,7 @@ export function ListItemSkeleton({
           borderRadius: 2,
           flexDirection: 'column',
           bgcolor: 'background.paper',
-          border: `solid 1px ${theme.vars.palette.divider}`,
+          border: `solid 1px ${theme.vars?.palette.divider || 0}`,
         }),
         ...(Array.isArray(sx) ? sx : [sx]),
       ]}

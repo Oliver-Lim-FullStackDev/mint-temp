@@ -4,8 +4,8 @@ import { type FC } from 'react';
 import { useLocale } from 'next-intl';
 import { Select } from '@mint/ui/components/core';
 
-import { localesMap } from '@/core/i18n/config';
-import { setLocale } from '@/core/i18n/locale';
+import { localesMap } from 'src/core/i18n/config';
+import { setLocale } from 'src/core/i18n/locale';
 
 export const LocaleSwitcher: FC = () => {
   const locale = useLocale();

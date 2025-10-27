@@ -5,14 +5,14 @@ import { Box, Stack } from '@mint/ui/components/core';
 import { GlassDialog, WalletButton, CircleIconButton, WalletTabs, Text } from '@mint/ui/components';
 import { Iconify } from '@mint/ui/components/iconify';
 import { getServerSession } from '@mint/client';
-import { useCurrencies } from '@/hooks/useCurrencies';
-import { useSelectAccount } from '@/modules/session/hooks';
-import { useSessionPolling } from '@/hooks/useSessionPolling';
-import { CurrencyType } from '@/utils/currency';
-import { useSession, useSetSession } from '@/modules/account/session-store';
-import { WalletSettingsList } from '@/modules/wallet/components/wallet-settings-list';
-import { CurrencySelector } from '@/modules/wallet/components/currency-selector';
-import { WalletCurrencyItem } from '@/modules/wallet/components/wallet-currency-item';
+import { useCurrencies } from 'src/hooks/useCurrencies';
+import { useSelectAccount } from 'src/modules/session/hooks';
+import { useSessionPolling } from 'src/hooks/useSessionPolling';
+import { CurrencyType } from 'src/utils/currency';
+import { useSession, useSetSession } from 'src/modules/account/session-store';
+import { WalletSettingsList } from 'src/modules/wallet/components/wallet-settings-list';
+import { CurrencySelector } from 'src/modules/wallet/components/currency-selector';
+import { WalletCurrencyItem } from 'src/modules/wallet/components/wallet-currency-item';
 
 interface WalletDialogProps {
   open: boolean;

@@ -28,7 +28,7 @@ This module provides a comprehensive account management system with modular comp
 Displays user profile information including avatar, stats, XP progress, and resources.
 
 ```tsx
-import { ProfileSummary } from '@/modules/account/components';
+import { ProfileSummary } from 'src/modules/account/components';
 
 <ProfileSummary apiConfig={customApiConfig} />
 ```
@@ -37,7 +37,7 @@ import { ProfileSummary } from '@/modules/account/components';
 Shows current streak information with claim functionality.
 
 ```tsx
-import { StreakInfo } from '@/modules/account/components';
+import { StreakInfo } from 'src/modules/account/components';
 
 <StreakInfo apiConfig={customApiConfig} />
 ```
@@ -46,7 +46,7 @@ import { StreakInfo } from '@/modules/account/components';
 Displays transaction history in a table format.
 
 ```tsx
-import { HistoryTransactions } from '@/modules/account/components';
+import { HistoryTransactions } from 'src/modules/account/components';
 
 <HistoryTransactions maxRows={5} apiConfig={customApiConfig} />
 ```
@@ -57,7 +57,7 @@ import { HistoryTransactions } from '@/modules/account/components';
 Main hook for fetching all account data.
 
 ```tsx
-import { useAccountData } from '@/modules/account/hooks/useAccountData';
+import { useAccountData } from 'src/modules/account/hooks/useAccountData';
 
 const { data, isLoading, error } = useAccountData({
   baseUrl: 'https://api.example.com',

@@ -2,8 +2,8 @@ import type { Metadata } from 'next';
 import React from 'react';
 import { notFound } from 'next/navigation';
 import { apiFetch } from '@mint/client';
-import type { Game } from '@/modules/games/games.types';
-import { ErrorPage } from '@/components/error-page';
+import type { Game } from 'src/modules/games/games.types';
+import { ErrorPage } from 'src/components/error-page';
 import { GameView } from './view';
 
 export const dynamic = 'force-dynamic';

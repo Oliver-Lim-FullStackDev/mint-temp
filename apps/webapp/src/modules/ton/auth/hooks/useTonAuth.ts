@@ -4,7 +4,7 @@ import {
   useTonAddress,
   useTonWallet
 } from "@tonconnect/ui-react";
-import { useUserAuth } from "@/modules/privy/auth/context/user-auth-privy-provider";
+import { useUserAuth } from "src/modules/privy/auth/context/user-auth-privy-provider";
 
 export function useTonAuth() {
   const address = useTonAddress();

@@ -1,7 +1,7 @@
 export const dynamic = "force-dynamic";
 
-import { Store } from '@/modules/store';
-import { getStoreItems } from '@/modules/store/server';
+import { Store } from 'src/modules/store';
+import { getStoreItems } from 'src/modules/store/server';
 
 export default async function StorePage() {
   const initialItems = await getStoreItems();

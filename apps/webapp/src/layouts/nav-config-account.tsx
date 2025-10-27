@@ -1,6 +1,6 @@
 import { Iconify } from '@mint/ui/components/iconify';
 
-import type { AccountDrawerProps } from '@mint/ui/minimals/layouts/components/account-drawer';
+import type { AccountDrawerProps } from '@mint/mui/layouts/components/account-drawer';
 
 // ----------------------------------------------------------------------
 

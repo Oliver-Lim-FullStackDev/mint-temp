@@ -2,11 +2,11 @@
 
 import React, { useState } from 'react';
 import { Text } from '@mint/ui/components';
-import { useReceiptsList } from '@/modules/store/hooks/useReceipts';
-import type { Receipt } from '@/modules/store/types';
-import { SubProvider } from '@/modules/store/types/sub-provider.enum';
-import { useUI } from '@/modules/ui/use-ui';
-import { paths } from '@/routes/paths';
+import { useReceiptsList } from 'src/modules/store/hooks/useReceipts';
+import type { Receipt } from 'src/modules/store/types';
+import { SubProvider } from 'src/modules/store/types/sub-provider.enum';
+import { useUI } from 'src/modules/ui/use-ui';
+import { paths } from 'src/routes/paths';
 import {
   Link,
   Skeleton,
@@ -23,7 +23,7 @@ import {
   TableRow,
   TabType,
 } from '@mint/ui/components/table';
-import { RouterLink } from '@mint/ui/minimals/routes/components';
+import { RouterLink } from '@mint/mui/routes/components';
 import type { HistoryTransaction } from '../hooks/useAccountData';
 import { useAccountHistory } from '../hooks/useAccountData';
 

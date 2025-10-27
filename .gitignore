@@ -160,5 +160,6 @@ out/
 
 jsr.json
 
-# visual studio code
-.vscode/
+# VS Code
+.vscode/*
+!.vscode/launch_sample.json

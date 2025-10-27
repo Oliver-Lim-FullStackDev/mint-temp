@@ -3,7 +3,7 @@
 import { alpha, styled, useMediaQuery, useTheme } from '@mint/ui/components/core/styles';
 import { Ref, useEffect, useRef, type ReactNode } from 'react';
 import { usePathname } from 'next/navigation';
-import { AccountMenuDropdown } from '@/modules/account/components';
+import { AccountMenuDropdown } from 'src/modules/account/components';
 import {
   Avatar,
   Box,
@@ -17,7 +17,7 @@ import type { IconifyName } from '@mint/ui/components/iconify';
 import { Iconify } from '@mint/ui/components/iconify';
 import { useDropdown } from '@mint/ui/hooks';
 import PrivyAuthButton from '../auth/privy/privy-auth-button';
-import { navData as mainNavData } from '@/layouts/nav-config-main';
+import { navData as mainNavData } from 'src/layouts/nav-config-main';
 import { HeaderWallet } from './header-wallet';
 
 type HeaderNavItem = {

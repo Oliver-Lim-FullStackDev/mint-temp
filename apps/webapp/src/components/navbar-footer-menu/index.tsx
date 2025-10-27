@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
-import { paths } from '@/routes/paths';
+import { paths } from 'src/routes/paths';
 import { Box, Stack } from '@mint/ui/components/core';
 import { GlassBox, Text } from '@mint/ui/components';
 import { Iconify } from '@mint/ui/components/iconify';

@@ -7,8 +7,8 @@ import {
   type GamesQueryParams,
   buildGamesQuery,
   fetchGames,
-} from '@/modules/games';
-import { DEFAULT_FILTERS, normaliseCategory, sanitiseOrder } from '@/modules/games/state/utils';
+} from 'src/modules/games';
+import { DEFAULT_FILTERS, normaliseCategory, sanitiseOrder } from 'src/modules/games/state/utils';
 
 import { GAMES_ORDER_COOKIE, GAMES_PROVIDER_COOKIE } from './preferences';
 

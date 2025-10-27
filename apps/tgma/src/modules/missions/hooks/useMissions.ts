@@ -1,6 +1,6 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { mintApi, getServerSession } from '@mint/client';
-import { useSetSession } from '@/modules/account/session-store';
+import { useSetSession } from 'src/modules/account/session-store';
 
 export interface CampaignReward {
   amount: number;

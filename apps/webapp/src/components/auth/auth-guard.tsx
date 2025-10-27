@@ -2,9 +2,9 @@
 
 import { useEffect, ReactNode } from 'react';
 import { usePathname, useRouter } from 'next/navigation';
-import { paths } from '@/routes/paths';
-import { isPublicPage } from '@/lib/auth/public-pages';
-import { useSession } from '@/modules/account/session-store';
+import { paths } from 'src/routes/paths';
+import { isPublicPage } from 'src/lib/auth/public-pages';
+import { useSession } from 'src/modules/account/session-store';
 
 interface AuthGuardProps {
   children: ReactNode;

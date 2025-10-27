@@ -28,6 +28,8 @@ export class HeroGamesTransformer {
     const normalised = order?.toString().trim().toLowerCase() ?? '';
 
     switch (normalised) {
+      case 'sort_order':
+        return 'sort_order';
       case 'desc':
         return 'title_desc';
       case 'asc':

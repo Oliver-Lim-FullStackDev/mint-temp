@@ -1,4 +1,4 @@
-import type { User } from '@/types';
+import type { User } from 'src/types';
 import { apiFetch } from '@mint/client';
 
 type VerifyPayload = {

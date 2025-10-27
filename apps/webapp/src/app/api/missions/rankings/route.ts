@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-// import { mockLeaderboardData } from '@/components/list/rankings/mocked-users';
+// import { mockLeaderboardData } from 'src/components/list/rankings/mocked-users';
 import { mintApi } from '@mint/client';
 
 

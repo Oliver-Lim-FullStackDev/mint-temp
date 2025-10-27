@@ -1,14 +1,7 @@
 import type { NavSectionProps } from '@mint/ui/components/nav-section';
-import { SvgColor } from '@mint/ui/components/svg-color';
 
-import { CONFIG } from '@/global-config';
-import { paths } from '@/routes/paths';
-
-// ----------------------------------------------------------------------
-
-const icon = (name: string) => (
-  <SvgColor src={`${CONFIG.assetsDir}/assets/icons/navbar/${name}.svg`} />
-);
+import { CONFIG } from 'src/global-config';
+import { paths } from 'src/routes/paths';
 
 // ----------------------------------------------------------------------
 

@@ -2,13 +2,13 @@
 
 import React from 'react';
 import { Box, Stack } from '@mint/ui/components/core';
-import { useUI } from '@/modules/ui/use-ui';
-import RankingInfoHeader from '@/modules/account/components/ranking-info-header';
-// import RankingShareButton from '@/modules/account/components/ranking-share-button';
-import RankingTabSelector from '@/modules/account/components/ranking-tab-selector';
-import { RankedListContent } from '@/components/list/rankings/ranked-list';
-import TopRankedList from '@/components/list/rankings/top-ranked-list';
-import { RankingShareButton } from '@/modules/account/components/ranking-share-button';
+import { useUI } from 'src/modules/ui/use-ui';
+import RankingInfoHeader from 'src/modules/account/components/ranking-info-header';
+// import RankingShareButton from 'src/modules/account/components/ranking-share-button';
+import RankingTabSelector from 'src/modules/account/components/ranking-tab-selector';
+import { RankedListContent } from 'src/components/list/rankings/ranked-list';
+import TopRankedList from 'src/components/list/rankings/top-ranked-list';
+import { RankingShareButton } from 'src/modules/account/components/ranking-share-button';
 
 export interface LeaderBoardListItem {
   id: string;

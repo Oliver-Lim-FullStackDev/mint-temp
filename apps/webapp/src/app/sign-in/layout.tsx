@@ -1,6 +1,6 @@
-import { AuthSplitLayout } from '@mint/ui/minimals/layouts/auth-split';
+import { AuthSplitLayout } from '@mint/mui/layouts/auth-split';
 
-import { GuestGuard } from '@mint/ui/minimals/auth/guard';
+import { GuestGuard } from '@mint/mui/auth/guard';
 
 // ----------------------------------------------------------------------
 

@@ -7,11 +7,11 @@ import { Box, Button, CircularProgress } from '@mint/ui/components/core';
 import { GlassCard, InfoDialog, Text } from '@mint/ui/components';
 import { useInfoDialog } from '@mint/ui/hooks';
 import TabSelector, { TabOption } from '@mint/ui/components/tab/tab-selector';
-import Loader from '@mint/ui/components/loading-screen/loader';
+import { Loader } from '@mint/ui/components/loading-screen';
 import { Iconify } from '@mint/ui/components/iconify';
 
-import { useUpdateBalance, useBalances, useUpdateBalancesFromRewards } from '@/modules/account/session-store';
-import { PageHeader } from '@/components/headers/page-header';
+import { useUpdateBalance, useBalances, useUpdateBalancesFromRewards } from 'src/modules/account/session-store';
+import { PageHeader } from 'src/components/headers/page-header';
 import { useMissions, useOptInCampaign, type Campaign, type CampaignReward } from './hooks/useMissions';
 import { useSocialMediaMission } from './hooks/useSocialMediaMission';
 

@@ -1,6 +1,6 @@
 import { useCallback } from 'react';
 import { useOptInCampaign } from './useMissions';
-import { useUpdateBalance, useBalances, useUpdateBalancesFromRewards } from '@/modules/account/session-store';
+import { useUpdateBalance, useBalances, useUpdateBalancesFromRewards } from 'src/modules/account/session-store';
 import {
   shouldUseSocialMediaWorkflow,
   getPlatformFromCampaignKey,

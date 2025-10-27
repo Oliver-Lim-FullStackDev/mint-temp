@@ -1,8 +1,8 @@
 
 'use client';
 
-import { useUIStore } from '@/modules/ui/ui-store';
-import { paths } from '@/routes/paths';
+import { useUIStore } from 'src/modules/ui/ui-store';
+import { paths } from 'src/routes/paths';
 import { Box } from '@mint/ui/components/core';
 import { useTheme } from '@mint/ui/components/core/styles';
 import { useRouter } from 'next/navigation';
@@ -116,9 +116,13 @@ export const AccountMenuDropdown: React.FC<UserMenuListProps> = ({ isOpen, onMen
         right: triggerRef ? 'auto' : { xs: 48, sm: 96, lg: 128 },
         zIndex: 'var(--layout-modal-zIndex, 10003)',
         minWidth: 220,
+        // TODO fix ts errors
+        // @ts-ignore
         background: theme.palette.primary.darker,
         borderRadius: 2,
-        boxShadow: theme.vars.customShadows.z24,
+        // TODO fix ts errors
+        // @ts-ignore
+        boxShadow: theme.vars?.customShadows.z24,
         p: 1.5,
       }}
     >

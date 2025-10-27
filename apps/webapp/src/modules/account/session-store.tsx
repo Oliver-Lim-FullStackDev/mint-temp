@@ -1,5 +1,5 @@
-import type { PlayerAccount } from '@/types';
-import type { CampaignReward } from '@/modules/missions/hooks/useMissions';
+import type { PlayerAccount } from 'src/types';
+import type { CampaignReward } from 'src/modules/missions/hooks/useMissions';
 import { useStore } from 'zustand';
 import { createStore } from 'zustand/vanilla';
 import { useShallow } from 'zustand/react/shallow';

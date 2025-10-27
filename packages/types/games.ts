@@ -20,6 +20,7 @@ export interface Game {
   backgroundOverlayImageAlignment?: string;
   jackpotValue?: number;
   jackpotCurrency?: string;
+  sortOrder?: number;
 }
 
 export interface RawGame extends Omit<Game, 'categories' | 'tags'> {
@@ -30,6 +31,7 @@ export interface RawGame extends Omit<Game, 'categories' | 'tags'> {
   providerName?: string;
   categories?: RawGameCategory[];
   tags?: RawGameTag[];
+  sortOrder?: number;
 }
 
 export type RawGameCategory = GameCategory & {

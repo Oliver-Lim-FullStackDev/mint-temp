@@ -1,6 +1,6 @@
 'use client';
 
-import { useInventory } from '@/hooks/useInventory';
+import { useInventory } from 'src/hooks/useInventory';
 import { StoreItem } from '../types';
 import { SubProvider } from '../types/sub-provider.enum';
 import ItemCardFactory from './item-card-factory';

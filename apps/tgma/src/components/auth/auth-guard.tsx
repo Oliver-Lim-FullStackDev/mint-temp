@@ -2,9 +2,9 @@
 
 import { useEffect, ReactNode } from 'react';
 import { usePathname, useRouter } from 'next/navigation';
-import { paths } from '@/routes/paths';
-import { isPublicPage } from '@/lib/auth/public-pages';
-import { useUserAuth } from '@/modules/telegram/context/user-auth-telegram-provider';
+import { paths } from 'src/routes/paths';
+import { isPublicPage } from 'src/lib/auth/public-pages';
+import { useUserAuth } from 'src/modules/telegram/context/user-auth-telegram-provider';
 
 interface AuthGuardProps {
   children: ReactNode;

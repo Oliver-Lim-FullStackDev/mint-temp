@@ -1,9 +1,9 @@
 'use client';
 
+import type { Game } from '@mint/types';
 import { Container } from '@mint/ui/components/core';
 import { EmptyContent } from '@mint/ui/components';
-import { GameLauncher } from '@/modules/games/components/game-launcher';
-import type { Game } from '@/modules/games/games.types';
+import { GameLauncher } from 'src/modules/games/components/game-launcher';
 
 interface GameViewProps {
   game: Game;

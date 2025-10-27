@@ -5,16 +5,16 @@ import React, { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 
 import { Alert, Box, IconButton, InputAdornment, Link, LoadingButton } from '@mint/ui/components/core';
-import { RouterLink } from '@mint/ui/minimals/routes/components';
-import { useRouter } from '@mint/ui/minimals/routes/hooks';
-import { paths } from '@mint/ui/minimals/routes/paths';
+import { RouterLink } from '@mint/mui/routes/components';
+import { useRouter } from '@mint/mui/routes/hooks';
+import { paths } from '@mint/mui/routes/paths';
 
 import { Field, Form } from '@mint/ui/components/hook-form';
 import { Iconify } from '@mint/ui/components/iconify';
 
-import { FormHead } from '@mint/ui/minimals/auth/components/form-head';
-import { useAuthContext } from '@mint/ui/minimals/auth/hooks';
-import { getErrorMessage } from '@mint/ui/minimals/auth/utils';
+import { FormHead } from '@mint/mui/auth/components/form-head';
+import { useAuthContext } from '@mint/mui/auth/hooks';
+import { getErrorMessage } from '@mint/mui/auth/utils';
 
 // ----------------------------------------------------------------------
 

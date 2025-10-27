@@ -27,8 +27,8 @@ import {
   normaliseCategory,
   sanitiseOrder,
 } from './utils';
-import { paths } from '@/routes/paths';
-import { rememberGamesOrder, rememberGamesProvider } from '@/app/casino/(main)/actions';
+import { paths } from 'src/routes/paths';
+import { rememberGamesOrder, rememberGamesProvider } from 'src/app/casino/(main)/actions';
 
 type GamesFiltersState = {
   filters: GamesFilters;

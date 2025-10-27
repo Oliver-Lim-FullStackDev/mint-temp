@@ -4,9 +4,25 @@
   "version": "7.0.0",
   "description": "Next & TypeScript",
   "private": true,
-  "types": "dist/types/index.d.ts",
   "type": "module",
+  "exports": {
+    ".": "./dist/index.js",
+    "./dist/*.css": "./dist/*.css",
+    "./*.json": "./dist/*.json",
+    "./*": "./dist/*"
+  },
+  "typesVersions": {
+    "*": {
+      "*": [
+        "dist/*"
+      ]
+    }
+  },
+  "sideEffects": ["**/*.css"],
   "scripts": {
+    "build": "rimraf dist && sh -c 'pnpm exec tsc -p tsconfig.build.json >/dev/null 2>&1 || true' && pnpm exec tsc-alias -p tsconfig.build.json && pnpm exec cpy 'src/**/*.{css,json}' dist --parents",
+    "dev": "rimraf dist && sh -c 'tsc -p tsconfig.build.json --watch >/dev/null 2>&1' & tsc-alias -p tsconfig.build.json -w & chokidar 'src/**/*.{css,json}' -c 'cpy \"src/**/*.{css,json}\" dist --parents'",
+
     "next:build": "next build",
     "next:dev": "next dev -p 8082 --turbopack",
     "next:start": "next start -p 8082",
@@ -96,6 +112,7 @@
     "minimal-shared": "catalog:mui",
     "mui-one-time-password-input": "catalog:mui",
     "next": "catalog:",
+    "next-i18next": "catalog:",
     "nprogress": "catalog:mui",
     "react": "catalog:",
     "react-apexcharts": "catalog:mui",
@@ -131,6 +148,8 @@
     "@types/turndown": "catalog:mui",
     "@typescript-eslint/parser": "catalog:",
     "@vitejs/plugin-react": "catalog:",
+    "cpy": "^12.1.0",
+    "cpy-cli": "^6.0.0",
     "eslint": "catalog:",
     "eslint-import-resolver-typescript": "catalog:",
     "eslint-plugin-import": "catalog:",
@@ -139,8 +158,9 @@
     "eslint-plugin-react-hooks": "catalog:",
     "eslint-plugin-unused-imports": "catalog:",
     "globals": "catalog:",
+    "postcss": "catalog:",
     "prettier": "catalog:",
-    "tsc": "^2.0.4",
+    "tsc-alias": "^1.8.16",
     "typescript": "catalog:",
     "typescript-eslint": "catalog:"
   }

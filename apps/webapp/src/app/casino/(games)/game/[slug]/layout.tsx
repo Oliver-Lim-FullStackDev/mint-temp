@@ -1,5 +1,5 @@
-import { ServerMainLayout } from '@/layouts/web/main/layout.server';
-import { MainContentOnlyLayout } from '@/layouts/web/main-content-only/layout';
+import { ServerMainLayout } from 'src/layouts/web/main/layout.server';
+import { MainContentOnlyLayout } from 'src/layouts/web/main-content-only/layout';
 
 type NextLayoutProps = import('.next/types/app/casino/(games)/game/[slug]/layout').LayoutProps
 

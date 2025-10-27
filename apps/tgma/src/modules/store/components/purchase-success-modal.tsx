@@ -9,7 +9,7 @@ import {
 } from '@mint/ui/components/core';
 import { useRouter } from 'next/navigation';
 import { CurrentPurchaseWithSecret } from '../types';
-import { paths } from '@/routes/paths';
+import { paths } from 'src/routes/paths';
 
 interface PurchaseSuccessModalProps {
   currentPurchase: CurrentPurchaseWithSecret;

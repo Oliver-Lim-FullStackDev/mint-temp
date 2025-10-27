@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { Purchase } from '@/types';
+import { Purchase } from 'src/types';
 import { mintApi } from '@mint/client';
 
 // Simulated storage for purchases - in a real app, this would be a database

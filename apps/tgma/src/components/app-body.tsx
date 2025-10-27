@@ -1,5 +1,5 @@
 import React from 'react';
-import { TelegramSafeTop } from '@/modules/telegram/components/telegram-safe-top';
+import { TelegramSafeTop } from 'src/modules/telegram/components/telegram-safe-top';
 
 type Props = { children: React.ReactNode };
 

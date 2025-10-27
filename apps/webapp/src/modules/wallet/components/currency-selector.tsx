@@ -3,9 +3,9 @@
 import { Box, Grid } from '@mint/ui/components/core';
 import { Iconify } from '@mint/ui/components/iconify';
 import { SelectableButton, Text } from '@mint/ui/components';
-import { useCurrencies, CurrencyType } from '@/hooks/useCurrencies';
-import { useSession } from '@/modules/account/session-store';
-import { useSelectCurrency } from '@/modules/session/hooks';
+import { useCurrencies, CurrencyType } from 'src/hooks/useCurrencies';
+import { useSession } from 'src/modules/account/session-store';
+import { useSelectCurrency } from 'src/modules/session/hooks';
 
 export function CurrencySelector() {
   const { session } = useSession();

@@ -1,10 +1,10 @@
 /* @Ported from @mint/ui */
 import { Box, Breakpoint } from '@mint/ui/components/core';
-import { UIProvider } from '@/modules/ui/ui-context';
-import type { LayoutSectionProps } from '@/layouts/core/layout-section';
-import type { MainSectionProps } from '@/layouts/core/main-section';
-import { LayoutSection } from '@/layouts/core/layout-section';
-import { MainSection } from '@/layouts/core/main-section';
+import { UIProvider } from 'src/modules/ui/ui-context';
+import type { LayoutSectionProps } from 'src/layouts/core/layout-section';
+import type { MainSectionProps } from 'src/layouts/core/main-section';
+import { LayoutSection } from 'src/layouts/core/layout-section';
+import { MainSection } from 'src/layouts/core/main-section';
 
 type LayoutBaseProps = Pick<LayoutSectionProps, 'sx' | 'children' | 'cssVars'>;
 

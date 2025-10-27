@@ -1,7 +1,7 @@
 'use client';
 
-import TelegramLayout from '@/modules/telegram/layouts/telegram-layout';
-import { paths } from '@/routes/paths';
+import TelegramLayout from 'src/modules/telegram/layouts/telegram-layout';
+import { paths } from 'src/routes/paths';
 import { ComingSoon } from '../coming-soon';
 
 // ----------------------------------------------------------------------

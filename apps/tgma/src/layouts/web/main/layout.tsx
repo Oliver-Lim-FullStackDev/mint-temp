@@ -1,21 +1,21 @@
 import type { NavSectionProps } from '@mint/ui/components/nav-section';
-import type { HeaderSectionProps } from '@mint/ui/minimals/layouts/core/header-section';
+import type { HeaderSectionProps } from '@mint/mui/layouts/core/header-section';
 
 import React from 'react';
 import { Text } from '@mint/ui/components';
 import { merge } from '@mint/ui/es-toolkit';
-import { HeaderSection } from '@mint/ui/minimals/layouts/core/header-section';
+import { HeaderSection } from '@mint/mui/layouts/core/header-section';
 import { Box, Breakpoint, Button } from '@mint/ui/components/core';
 import { Logo } from '@mint/ui/components/logo';
-import { paths } from '@/routes/paths';
-import { UIProvider } from '@/modules/ui/ui-context';
-import type { LayoutSectionProps } from '@/layouts/core/layout-section';
-import type { MainSectionProps } from '@/layouts/core/main-section';
-import { LayoutSection } from '@/layouts/core/layout-section';
-import { MainSection } from '@/layouts/core/main-section';
-import { AccountDrawer } from '@/layouts/components/account-drawer';
-import { NavbarHeader } from '@/components/navbar-header';
-import { ACCOUNT_DRAWER_PORTAL_ID } from '@/layouts/constants';
+import { paths } from 'src/routes/paths';
+import { UIProvider } from 'src/modules/ui/ui-context';
+import type { LayoutSectionProps } from 'src/layouts/core/layout-section';
+import type { MainSectionProps } from 'src/layouts/core/main-section';
+import { LayoutSection } from 'src/layouts/core/layout-section';
+import { MainSection } from 'src/layouts/core/main-section';
+import { AccountDrawer } from 'src/layouts/components/account-drawer';
+import { NavbarHeader } from 'src/components/navbar-header';
+import { ACCOUNT_DRAWER_PORTAL_ID } from 'src/layouts/constants';
 
 type LayoutBaseProps = Pick<LayoutSectionProps, 'sx' | 'children' | 'cssVars'>;
 

@@ -9,10 +9,10 @@ import { Text } from '@mint/ui/components';
 import { apiFetch } from '@mint/client';
 import { Box, Button, Divider } from '@mint/ui/components/core';
 import { Iconify } from '@mint/ui/components/iconify';
-import { flyTo } from '@/lib/animations/fly-to';
-import { useBalances, useUpdateBalanceAmount, useUpdateBalancesFromRewardObject } from '@/modules/account/session-store';
-import { GamesMenu } from '@/modules/games/components/games-menu';
-import { paths } from '@/routes/paths';
+import { flyTo } from 'src/lib/animations/fly-to';
+import { useBalances, useUpdateBalanceAmount, useUpdateBalancesFromRewardObject } from 'src/modules/account/session-store';
+import { GamesMenu } from 'src/modules/games/components/games-menu';
+import { paths } from 'src/routes/paths';
 import { MintGameSlotsWinsTable } from './mint-game-slots-wins-table';
 import { SlotGameInitDto, SlotGameResultDto } from './mint-game-slots.dto';
 import Slots from './slots';
@@ -297,7 +297,7 @@ export function MintGameSlots({
 }
 
 
-import { RankingShareButton } from '@/modules/account/components/ranking-share-button';
+import { RankingShareButton } from 'src/modules/account/components/ranking-share-button';
 import React from 'react';
 
 // Zero-config bridge so JSX sees a real React component

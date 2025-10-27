@@ -24,8 +24,8 @@ export class GameSearchDto {
   search?: string;
 
   @IsOptional()
-  @IsIn(['', 'ASC', 'DESC'])
-  order?: '' | 'ASC' | 'DESC';
+  @IsString()
+  order?: string;
 
   @IsOptional()
   @IsString()

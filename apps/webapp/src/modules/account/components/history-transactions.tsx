@@ -17,12 +17,12 @@ import {
   Skeleton,
   Stack,
 } from '@mint/ui/components/core';
-import { RouterLink } from '@mint/ui/minimals/routes/components';
-import { useReceiptsList } from '@/modules/store/hooks/useReceipts';
-import type { Receipt } from '@/modules/store/types';
-import { SubProvider } from '@/modules/store/types/sub-provider.enum';
-import { useUI } from '@/modules/ui/use-ui';
-import { paths } from '@/routes/paths';
+import { RouterLink } from '@mint/mui/routes/components';
+import { useReceiptsList } from 'src/modules/store/hooks/useReceipts';
+import type { Receipt } from 'src/modules/store/types';
+import { SubProvider } from 'src/modules/store/types/sub-provider.enum';
+import { useUI } from 'src/modules/ui/use-ui';
+import { paths } from 'src/routes/paths';
 import type { HistoryTransaction } from '../hooks/useAccountData';
 import { useAccountHistory } from '../hooks/useAccountData';
 

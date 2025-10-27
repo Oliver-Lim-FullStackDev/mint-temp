@@ -1,12 +1,12 @@
 'use client';
 
-import type { User } from '@/types';
+import type { User } from 'src/types';
 import type { WebApp } from '@twa-dev/types';
 
 import { createContext, ReactNode, useContext, useEffect, useState } from 'react';
 import { useSearchParams } from 'next/navigation';
 import { getServerSession } from '@mint/client';
-import { useSetSession } from '@/modules/account/session-store';
+import { useSetSession } from 'src/modules/account/session-store';
 
 interface UserAuthContextType {
   user: User | null;

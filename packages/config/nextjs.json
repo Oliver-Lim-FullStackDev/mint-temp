@@ -3,7 +3,11 @@
   "compilerOptions": {
     "plugins": [{ "name": "next" }],
     "allowJs": true,
-    "jsx": "preserve"
+    "jsx": "preserve",
+    "allowSyntheticDefaultImports": true,
+    "allowArbitraryExtensions": true,
+    "noImplicitAny": false,
+    "noEmit": true
   },
   "include": [
     "next-env.d.ts",

@@ -1,15 +1,15 @@
 'use client';
 
-import React, { useMemo } from 'react';
+import React from 'react';
 import { Box, Container } from '@mint/ui/components/core';
 import { EmptyContent } from '@mint/ui/components/empty-content';
-import BannerCarrousel, { CarrouselItem } from '@/components/banner-carrousel';
+import BannerCarrousel, { CarrouselItem } from 'src/components/banner-carrousel';
 import { Text } from '@mint/ui/components';
-import { RankingShareButton } from '@/modules/account/components/ranking-share-button';
-import { GamesList } from '@/modules/games/components/games-list';
-import { GamesMenu } from '@/modules/games/components/games-menu';
+import { RankingShareButton } from 'src/modules/account/components/ranking-share-button';
+import { GamesList } from 'src/modules/games/components/games-list';
+import { GamesMenu } from 'src/modules/games/components/games-menu';
 import type { Game } from '@mint/types';
-import { paths } from '@/routes/paths';
+import { paths } from 'src/routes/paths';
 
 let CAROUSEL_GAME_IDS = {
   octogame: '14098',
@@ -70,11 +70,9 @@ export function CasinoView({ games, hasError = false }: CasinoViewProps) {
     }
   ]
 
-  const sortedGames = useMemo(() => [...games, ...commingSoonGames]
-    .sort((a, b) => (b.provider === 'mint' ? 1 : 0) - (a.provider === 'mint' ? 1 : 0)),
-    [games]);
+  const gamesWithComingSoon = [...games, ...commingSoonGames];
 
-  const showEmptyState = hasError || !sortedGames.length;
+  const showEmptyState = hasError || !gamesWithComingSoon.length;
 
   const sampleCarrouselItems: CarrouselItem[] = [
     {
@@ -119,7 +117,7 @@ export function CasinoView({ games, hasError = false }: CasinoViewProps) {
         {showEmptyState ? (
           <EmptyContent filled title="No games found" sx={{ py: 10 }} />
         ) : (
-          <GamesList games={sortedGames} />
+          <GamesList games={gamesWithComingSoon} />
         )}
       </Box>
       <Box sx={{ my: 2 }}>

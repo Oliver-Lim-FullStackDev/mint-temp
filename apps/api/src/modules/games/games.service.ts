@@ -79,7 +79,7 @@ export class GamesService {
     limit?: number;
     offset?: number;
     search?: string;
-    order?: '' | 'ASC' | 'DESC';
+    order?: string;
     provider?: string;
     providers?: string[];
   }): Promise<Game[]> {

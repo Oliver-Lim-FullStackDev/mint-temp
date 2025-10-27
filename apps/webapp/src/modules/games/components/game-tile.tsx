@@ -2,10 +2,10 @@
 
 import React, { useMemo } from 'react';
 import { Box, CircularProgress, Typography } from '@mint/ui/components/core';
-import { useGame } from '@/modules/games/hooks/use-game';
-import type { Game } from '@/modules/games/games.types';
-import { Amount } from '@/components/amount';
-import { Translation } from '@/components/translation';
+import { useGame } from 'src/modules/games/hooks/use-game';
+import type { Game } from 'src/modules/games/games.types';
+import { Amount } from 'src/components/amount';
+import { Translation } from 'src/components/translation';
 
 interface CasinoGameTileProps extends Game {
   size: 'small' | 'medium' | 'large';

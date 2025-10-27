@@ -3,10 +3,10 @@
 import { useState, useEffect, useCallback } from 'react';
 import { useTonAddress, useTonConnectUI } from '@tonconnect/ui-react';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
-import { useTelegram } from '@/hooks/useTelegram';
-import { useSession } from '@/modules/account/session-store';
-import { useUserAuth } from '@/modules/telegram/context/user-auth-telegram-provider';
-import { useInventory } from '@/hooks/useInventory';
+import { useTelegram } from 'src/hooks/useTelegram';
+import { useSession } from 'src/modules/account/session-store';
+import { useUserAuth } from 'src/modules/telegram/context/user-auth-telegram-provider';
+import { useInventory } from 'src/hooks/useInventory';
 import { useTonWalletPayment, useTelegramStarsPayment } from '../payment-methods';
 import type { StoreItem, Purchase, CurrentPurchaseWithSecret, PaymentMethod } from './types';
 import { SubProvider } from './types/sub-provider.enum';

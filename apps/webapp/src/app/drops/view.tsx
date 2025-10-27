@@ -3,8 +3,8 @@
 import React from 'react';
 import Link from 'next/link';
 import { Text } from '@mint/ui/components';
-import { paths } from '@/routes/paths';
-import { ComingSoon } from '@/components/coming-soon';
+import { paths } from 'src/routes/paths';
+import { ComingSoon } from 'src/components/coming-soon';
 
 export function DropsView() {
   return (

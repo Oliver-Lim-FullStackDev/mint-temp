@@ -3,7 +3,7 @@
 import { Box } from '@mint/ui/components/core';
 import { Iconify } from '@mint/ui/components/iconify';
 import { CurrencyItem, Text } from '@mint/ui/components';
-import { Currency } from '@/hooks/useCurrencies';
+import { Currency } from 'src/hooks/useCurrencies';
 
 interface Account {
   id?: number;

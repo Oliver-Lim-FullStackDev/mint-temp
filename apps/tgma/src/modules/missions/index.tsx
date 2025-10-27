@@ -8,11 +8,11 @@ import { GlassCard } from '@mint/ui/components';
 import { Iconify } from '@mint/ui/components/iconify';
 
 import { InfoDialog, Text } from '@mint/ui/components';
-import Loader from '@mint/ui/components/loading-screen/loader';
+import { Loader } from '@mint/ui/components/loading-screen';
 import { useInfoDialog } from '@mint/ui/hooks';
-import { useUpdateBalance, useBalances, useUpdateBalancesFromRewards } from '@/modules/account/session-store';
-import TabSelector, { TabOption } from '@/components/core/tab-selector';
-import { PageHeader } from '@/components/headers/page-header';
+import { useUpdateBalance, useBalances, useUpdateBalancesFromRewards } from 'src/modules/account/session-store';
+import TabSelector, { TabOption } from 'src/components/core/tab-selector';
+import { PageHeader } from 'src/components/headers/page-header';
 import { useSocialMediaMission } from './hooks/useSocialMediaMission';
 import { useMissions, useOptInCampaign, type Campaign, type CampaignReward } from './hooks/useMissions';
 import { getPlatformFromCampaignKey, getSocialMediaConfig } from './config/social-media-config';

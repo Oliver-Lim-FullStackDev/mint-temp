@@ -3,7 +3,7 @@
 import Image from 'next/image';
 import { Box, Typography, Button } from '@mint/ui/components/core';
 import { GlassCard } from '@mint/ui/components';
-import Loader from '@mint/ui/components/loading-screen/loader';
+import { Loader } from '@mint/ui/components/loading-screen';
 import { useDrop, DropData, DropSectionItem } from './hooks/useDrop';
 
 export function Drops() {

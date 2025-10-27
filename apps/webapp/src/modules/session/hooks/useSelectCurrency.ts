@@ -1,5 +1,5 @@
 import { useMutation } from '@tanstack/react-query';
-import { useSetSelectedCurrency } from '@/modules/account/session-store';
+import { useSetSelectedCurrency } from 'src/modules/account/session-store';
 import { apiFetch } from '@mint/client';
 
 interface SelectCurrencyParams {

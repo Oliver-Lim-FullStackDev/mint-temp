@@ -3,9 +3,9 @@ import type { SxProps, Theme } from '@mint/ui/components/core';
 import { Box, ToggleButton, ToggleButtonGroup } from '@mint/ui/components/core';
 import { GlassBox, Text } from '@mint/ui/components';
 import { Iconify } from '@mint/ui/components/iconify';
-import { RouterLink } from '@mint/ui/minimals/routes/components';
-import { usePathname } from '@mint/ui/minimals/routes/hooks';
-import { paths } from '@/routes/paths';
+import { RouterLink } from '@mint/mui/routes/components';
+import { usePathname } from '@mint/mui/routes/hooks';
+import { paths } from 'src/routes/paths';
 
 const CATEGORIES = [
   { icon: 'solar:gamepad-bold', iconWidth: 24, value: paths.casino.root, label: 'Casino Games' },

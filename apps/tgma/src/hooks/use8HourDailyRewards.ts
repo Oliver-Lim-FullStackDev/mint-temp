@@ -1,6 +1,6 @@
 'use client';
 
-import { useSession, useUpdateBalancesFromRewardObject, useUpdateBalancesFromRewards } from '@/modules/account/session-store';
+import { useSession, useUpdateBalancesFromRewardObject, useUpdateBalancesFromRewards } from 'src/modules/account/session-store';
 import { toast } from '@mint/ui/components/snackbar';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useCallback, useEffect, useState } from 'react';

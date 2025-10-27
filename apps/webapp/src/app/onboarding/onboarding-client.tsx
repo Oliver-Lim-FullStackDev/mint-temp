@@ -6,7 +6,7 @@ import { useRouter } from 'next/navigation';
 import { apiFetch } from '@mint/client';
 import { Text } from "@mint/ui/components";
 import { Box, Button, Container, Typography } from '@mint/ui/components/core';
-import { paths } from '@/routes/paths';
+import { paths } from 'src/routes/paths';
 
 const REDIRECTS = {
   home: paths.casino.root,

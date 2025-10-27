@@ -1,7 +1,7 @@
 'use client';
 
-import { useUserAuth } from '@/modules/privy/auth/context/user-auth-privy-provider';
-import { verifyPrivyAuth } from '@/modules/privy/auth/lib/auth-client';
+import { useUserAuth } from 'src/modules/privy/auth/context/user-auth-privy-provider';
+import { verifyPrivyAuth } from 'src/modules/privy/auth/lib/auth-client';
 import { usePrivy } from '@privy-io/react-auth';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { ReactNode, useEffect } from 'react';

@@ -1,57 +1,32 @@
 # TGMA App
-Mint.io TGMA App
+Mint.io Telegram Mini App.
 
 ## Project setup
+Run dev setup from root [README](../../README.md)
 
+Once setup, from the root of the monorepo run:
 ```bash
-$ pnpm i
-```
-
-## Compile and run the project
-
-```bash
-# run local with proxy
-pnpm dev:https:proxy
+pnpm i
+# in 1 tab
+pnpm dev:infra
+# in another tab
+pnpm dev:webapp
 ```
 
 **URLs:**
 - TGMA App: https://mint.dev
-- Telegram: https://mint.dev/casinos?tgma
 - API (direct): https://api.mint.dev/api
+- Telegram: https://mint.dev/casinos?tgma
 
-### Environment Variables
+# Good to Knows
 
-The following environment variables are required for the Telegram Stars API:
-
-- `TELEGRAM_BOT_TOKEN` - Your Telegram Bot token for creating invoices
-- `NEXT_PUBLIC_MINT_ENV` - Select between "production" and "staging" to point to the correct env
-
-```bash
-NEXT_PUBLIC_MINT_URL=https://mint.dev
-NEXT_PUBLIC_SERVER_URL=https://api.mint.dev/api
-NEXT_PUBLIC_MINT_API_URL=https://api.mint.dev/api
-```
-
-### Notes
-
-- This is a demo implementation using in-memory storage
-- In production, you should use a proper database
-- Purchase data is stored in global memory and will be lost on server restart
-- Real payment verification should be implemented for production use
-
-# UI & Theme
-We're using Material UI.
+## UI & Theme
 See [/packages/ui](`../../packages/ui/README.md`)
 
-# CI & Deploy
-We use Vercel & Railway
+## CI & Deploy
+We use Vercel for app deployment and ENV vars.
 
-## Deploy from localhost
-- brew install railway
-- railway login
-- railway up (from the app )
-
-# Build Locally
+## Build Locally
 **To simply build the app run:** `pnpm build`
 
 **To build like Vercel:**
@@ -61,8 +36,8 @@ We use Vercel & Railway
 
 You should now be able to run local builds the same way as Vercel does.
 
-# Development
+## Add New Dependencies
 ```bash
-# Add an existing local package
+# Add an existing local package. -D for devDependencies 
 pnpm add -D @mint/my-lib
 ```

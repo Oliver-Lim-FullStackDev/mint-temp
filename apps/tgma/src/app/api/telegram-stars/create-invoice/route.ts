@@ -1,5 +1,5 @@
 import { mintApi } from '@mint/client';
-import { Item } from '@/types';
+import { Item } from 'src/types';
 import { NextRequest, NextResponse } from 'next/server';
 import { PurchaseData } from '@mint/types';
 

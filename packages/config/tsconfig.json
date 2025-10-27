@@ -19,6 +19,7 @@
     "strictNullChecks": true,
     "target": "ES2022",
     "outDir": "dist",
+    "resolvePackageJsonImports": true,
     "paths": {
       "@mint/config": ["../../packages/config"],
       "@mint/config/*": ["../../packages/config/*"],
@@ -28,22 +29,13 @@
       "@mint/game-internal/*": ["../../packages/game-internal/src/*"],
       "@mint/slots": ["../../packages/mint-slots"],
       "@mint/slots/*": ["../../packages/mint-slots/src/*"],
-      "@mint/mui": ["../../packages/mui"],
-      "@mint/mui/*": ["../../packages/mui/src/*"],
-      "@mint/ui": ["../../packages/ui/src"],
-      "@mint/ui/*": ["../../packages/ui/src/*"],
-      "@mint/ui/minimals/*": ["../../packages/mui/src/*"],
-      "@mint/ui/components/*": [
-        "../../packages/mui/src/components/*",
-        "../../packages/ui/src/components/*"
-      ],
 
-      // Relative-to-package-or-app folders
-      "@/*": ["./src/*"],
-      "@public/*": ["./public/*"],
+      "@mint/mui/*": ["../../packages/mui/dist/*"],
+      "@mint/ui/*": ["../../packages/ui/src/*"],
+
       // For the sake of drop-in updates to the mui module
       // this ensures ui can keep its internal imports with "src/*" path
-      "src/*": ["../../packages/mui/src/*"]
+      // "src/*": ["../../packages/mui/src/*"]
     }
   }
 }

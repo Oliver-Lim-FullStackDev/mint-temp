@@ -1,0 +1,135 @@
+{
+  "version": "2.0.0",
+  "configurations": [
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "dev:proxy",
+      "runtimeExecutable": "pnpm",
+      "runtimeArgs": ["run", "dev:proxy"],
+      "cwd": "${workspaceFolder}",
+      "console": "integratedTerminal",
+      "presentation": {
+        "hidden": false,
+        "group": "core",
+        "order": 10
+      }
+    },
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "api:proxy (inspect 9230)",
+      "runtimeExecutable": "pnpm",
+      "runtimeArgs": ["run", "dev:api"],
+      "cwd": "${workspaceFolder}",
+      "console": "integratedTerminal",
+      "env": { "NODE_OPTIONS": "--inspect=9230" },
+      "skipFiles": ["<node_internals>/**", "**/node_modules/**"],
+      "sourceMaps": true,
+      "presentation": {
+        "hidden": false,
+        "group": "core",
+        "order": 20
+      }
+    },
+    {
+      "type": "node",
+      "request": "attach",
+      "name": "Attach: API (9230)",
+      "port": 9230,
+      "restart": true,
+      "timeout": 30000,
+      "skipFiles": ["<node_internals>/**", "**/node_modules/**"],
+      "sourceMaps": true,
+      "presentation": {
+        "hidden": true
+      }
+    },
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "webapp:proxy (inspect 9231)",
+      "runtimeExecutable": "pnpm",
+      "runtimeArgs": ["run", "dev:webapp"],
+      "cwd": "${workspaceFolder}",
+      "console": "integratedTerminal",
+      "env": { "NODE_OPTIONS": "--inspect=9231" },
+      "skipFiles": ["<node_internals>/**", "**/node_modules/**"],
+      "sourceMaps": true,
+      "presentation": {
+        "hidden": false,
+        "group": "clients",
+        "order": 10
+      }
+    },
+    {
+      "type": "node",
+      "request": "attach",
+      "name": "Attach: Webapp (9231)",
+      "port": 9231,
+      "restart": true,
+      "timeout": 30000,
+      "skipFiles": ["<node_internals>/**", "**/node_modules/**"],
+      "sourceMaps": true,
+      "presentation": {
+        "hidden": true
+      }
+    },
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "tgma:proxy (inspect 9232)",
+      "runtimeExecutable": "pnpm",
+      "runtimeArgs": ["run", "dev:tgma"],
+      "cwd": "${workspaceFolder}",
+      "console": "integratedTerminal",
+      "env": { "NODE_OPTIONS": "--inspect=9232" },
+      "skipFiles": ["<node_internals>/**", "**/node_modules/**"],
+      "sourceMaps": true,
+      "presentation": {
+        "hidden": false,
+        "group": "clients",
+        "order": 20
+      }
+    },
+    {
+      "type": "node",
+      "request": "attach",
+      "name": "Attach: TGMA (9232)",
+      "port": 9232,
+      "restart": true,
+      "timeout": 30000,
+      "skipFiles": ["<node_internals>/**", "**/node_modules/**"],
+      "sourceMaps": true,
+      "presentation": {
+        "hidden": true
+      }
+    }
+  ],
+  "compounds": [
+    {
+      "name": "🧩 Core stack: proxy + API",
+      "configurations": ["dev:proxy", "api:proxy (inspect 9230)"],
+      "presentation": {
+        "group": "core",
+        "order": 5
+      }
+    },
+    {
+      "name": "🌐 Webapp client (with backend)",
+      "configurations": ["dev:proxy", "api:proxy (inspect 9230)", "webapp:proxy (inspect 9231)"],
+      "presentation": {
+        "group": "clients",
+        "order": 5
+      }
+    },
+    {
+      "name": "📱 TGMA client (with backend)",
+      "configurations": ["dev:proxy", "api:proxy (inspect 9230)", "tgma:proxy (inspect 9232)"],
+      "presentation": {
+        "group": "clients",
+        "order": 5
+      }
+    }
+  ]
+}

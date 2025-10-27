@@ -23,7 +23,7 @@ import { Scrollbar } from 'src/components/scrollbar';
 import { CustomPopover } from 'src/components/custom-popover';
 
 // TODO copy component into our ui instead and use that one
-import { TableHeadCustom, type TableHeadCellProps } from '../../../../../ui/src/components/table';
+import { TableHeadCustom, type TableHeadCellProps } from 'src/components/table';
 
 // ----------------------------------------------------------------------
 

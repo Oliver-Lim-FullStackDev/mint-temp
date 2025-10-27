@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { list } from './list';
 import { card } from './card';
 import { menu } from './menu';
